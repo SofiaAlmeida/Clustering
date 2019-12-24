@@ -94,7 +94,7 @@
 
 % Enlaces y colores
 \usepackage{hyperref}
-\usepackage[dvipsnames]{xcolor}
+\usepackage{xcolor}
 \definecolor{webgreen}{rgb}{0,0.5,0}
 \hypersetup{
   colorlinks=true,
@@ -104,11 +104,11 @@
 }
 
 %%% Bibliografía
-\usepackage[backend=biber]{biblatex}
-\DefineBibliographyStrings{spanish}{
-  urlseen = {Último acceso}
-}
-\addbibresource{IN-P2.bib}
+%\usepackage[backend=biber]{biblatex}
+%\DefineBibliographyStrings{spanish}{
+%  urlseen = {Último acceso}
+%}
+%\addbibresource{IN-P2.bib}
 
 %----------------------------------------------------------------------------------------
 %	TÍTULO
@@ -157,7 +157,7 @@ Subtítulo} % Subtitle
 		
 		{\Huge\bfseries \textit{Clustering}}\\[2\baselineskip] % Title
 		{\large\textit{Curso 2019/2020}}\\[4\baselineskip] % Subtitle or further description
-		{\Large\textsc{Sofía Almeida Bruno}\\\textsc{Daniel Bolaños Martínez}\\\textsc{José María Borrás Serrano}\\\textsc{Fernando de la Hoz Moreno}\\\textsc{Pedro Flores Crespo}\\\textsc{María Victoria Granados Pozo}} % Author name, lower case for consistent small caps
+		{\Large\textsc{Sofía Almeida Bruno}\\\textsc{Daniel Bolaños Martínez}\\\textsc{José María Borrás Serrano}\\\textsc{Fernando de la Hoz Moreno}\\\textsc{Pedro Manuel Flores Crespo}\\\textsc{María Victoria Granados Pozo}} % Author name, lower case for consistent small caps
 		
 		\vspace{0.4\textheight} % Whitespace between the title block and the publisher
 		
@@ -186,8 +186,20 @@ Subtítulo} % Subtitle
 % - Pasar a textit: clustering
 % TODO:
 % - Referenciar referencias...
+
+\section{Introducción}
+\section{Medidas}
+\section{Métodos de agrupamiento}
+\subsection{Jerárquicos}
+\subsection{No jerárquicos}
+\section{Número de clústeres}
+\section{Parte práctica}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %       REFERENCIAS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\printbibliography
+\newpage
+\section{Bibliografía}
+\nocite{*}
+\bibliographystyle{plain}
+\bibliography{referencias.bib}
 \end{document}
