@@ -16,13 +16,11 @@ import time
 
 import matplotlib.pyplot as plt
 import pandas as pd
-import numpy as np
 import os
 
 from sklearn.cluster import DBSCAN, KMeans, MeanShift, estimate_bandwidth
 from sklearn.cluster import AgglomerativeClustering
 
-from sklearn import cluster
 from sklearn import metrics
 from sklearn import preprocessing
 from math import floor
@@ -216,7 +214,7 @@ def ejecutarAlgoritmos(algoritmos, X, etiq, usadas, path):
 if __name__ == '__main__':  
     
   datos = pd.read_csv('iris.csv')
-  seed = 76592621
+  seed = 12345
   warnings.filterwarnings(action='ignore', category=FutureWarning)
   warnings.filterwarnings(action='ignore', category=RuntimeWarning)
   
@@ -239,13 +237,13 @@ if __name__ == '__main__':
   X_normal = preprocessing.normalize(X, norm='l2')
    
   # Algoritmos de clustering utilizados 
-  k_means1 = KMeans(init='k-means++', n_clusters=3, n_init=5, random_state=seed)
-  ms1 = MeanShift(bandwidth=estimate_bandwidth(X_normal, quantile=0.67, n_samples=400), bin_seeding=True)
-  ward1 = AgglomerativeClustering(n_clusters=3, linkage="ward")
-  db1 = DBSCAN(eps=0.12)
+  k_means = KMeans(init='k-means++', n_clusters=3, n_init=5, random_state=seed)
+  ms = MeanShift(bandwidth=estimate_bandwidth(X_normal, quantile=0.67, n_samples=400), bin_seeding=True)
+  ward = AgglomerativeClustering(n_clusters=3, linkage="ward")
+  db = DBSCAN(eps=0.12)
   
-  algoritmos1 = {('K-Means', k_means1), ('MeanShift', ms1), 
-               ('AggCluster', ward1), ('DBSCAN', db1)}
+  algoritmos1 = {('K-Means', k_means), ('MeanShift', ms), 
+               ('AggCluster', ward), ('DBSCAN', db)}
   
   path = "./imagenes/"
   
