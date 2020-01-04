@@ -37,6 +37,7 @@
 \usepackage[a4paper,margin=1in]{geometry}
 \usepackage[protrusion=true,expansion=true]{microtype}
 \usepackage{mathpazo}
+\usepackage{multirow}
 
 % Indentación de párrafos para Palatino
 \setlength{\parindent}{0pt}
@@ -210,11 +211,274 @@ El análisis cluster se aplica en numerosos campos como las ciencias naturales, 
 Para llevar a cabo un análisis cluster hay que realizar principalmente dos pasos:
 
 \begin{enumerate}
-\item Elegir una medida de proximidad.
+\item Elegir una medida de similitud.
 \item Elegir un algoritmo para construir los grupos. Hay dos grupos principales: de particionamiento y jerárquicos (que a su vez se dividen entre divisivos y aglomerativos)
 \end{enumerate}
 
-\section{Medidas}\label{sec:medidas}
+\section{Medidas de similitud}\label{sec:medidas de similitud}
+
+La mayoría de los esfuerzos para producir una estructura de grupo más simple a partir de un conjunto complejo de datos requiere una medida de 'cercanía' o  'similitud'. Habitualmente la subjetividad juega un papel importante en la elección de una medida de similitud, Algunas consideraciones importantes incluyen la naturaleza de las variables (discreta, continua, binaria), las escalas de las medidas (nominal, ordinal, intervalo) y conocimiento específico sobre el problema.
+
+Cuando los items (unidades o casos) son agrupados, la proximidad se suele indicar mediante alguna medida de la distancia. En contraste, las variables se suelen agrupar según los coeficientes de correlación o medidas de asociación
+
+\subsection{Distancias y coeficientes de similitud para parejas de tiems}
+
+Recordamos que la distancia euclídea entre dos observaciones p-dimensionales (items) $x' = [x_1,x_2,...,x_p]$ e $y'=[y_1,y_2,...,y_p]$ es
+
+$$ d(x,y) = \sqrt{(x_1-y_1)^2+(x_2-y_2)^2+...+(x_p-y_p})^2=\sqrt{(x-y)'(x-y)}$$
+
+La distancia estadística entre las mismas dos observaciones es de la forma:
+
+$$d(x,y)=\sqrt{(x-y)'A(x-y)} $$
+
+Normalmente, $A=S^{-1}$, donde $S$ contiene las varianzas y covarianzas de la muestra. Sin embargo, sin conocimiento previo de los distintos grupos, estas cantidades de las muestras no puede ser calculadas. Por esta razón, usualmente se prefiere la distancia euclídea para clustering.\\
+
+Otra medida de la distancia es a métrica de Minkowski
+
+$$ d(x,y)=[\sum_{i_1=1}^{p}{|x_i-y_i|^m}]^{1/m}$$
+
+Para $m=1$, $d(x,y)$ mide la distancia Manhattan entre dos puntos en p dimensiones. Para $m=2$,$d(x,y)$ se convierta en la distancia Euclídea. En general, variar $m$ cambia el peso dado a diferencias mayores y menores.\\
+
+Adicionalmente, dos medidas populares de "distancia" o disimilitud son las dadas por la métrica de Canberra y el coeficiente de Czekanowski. Ambas medidas están definidas únicamente para variables no negativas.\\
+
+Metrica de Canberra:       $ d(x,y)=\sum_{i=1}^{p}{\frac{|x_i-y_i|}{(x_i+y_i)}}$\\
+
+Coeficiente de Czekanowski:   $d(x,y)=1-\frac{2\sum_{i=1}^{p}{min(x_i,y_i)}}{\sum_{i=1}^{p}{(x_i+y_i}}$ \\
+
+Es aconsejable que cuando sea posible se utilicen distancias "verdaderas" para clustering, ésto es, distancias que verifiquen las siguientes propiedades: 
+$$d(P,Q)=d(Q,P)$$
+$$d(P,Q)>0\ si\ P\neq Q$$
+$$d(P,Q)=0\ si\ P=Q$$
+$$d(P,Q)\leq d(P,r)+d(R,Q)$$
+
+siendo P y Q dos puntos cualquiera y R un punto intermedio.\\ 
+
+Por otro lado, la mayoría de los algoritmos clustering aceptarán números de distancia que no satisfagan la desigualdad triangular.\\
+
+Cuando los items no puedan ser representados por medidas p-dimensionales significativas, las parejas de items se suelen comparar segú la presencia o ausencia de ciertas características. Items similares tienen más características en común que items desemejantes. La presencia o ausencia de una característica se puede describir matemáticamente introduciendo una variable binaria, que toma el valor 1 si la característica está presente y el valor 0 cuando la característica está ausente. 
+
+\begin{table}[]
+\begin{tabular}{llllll}
+       & \multicolumn{5}{c}{Variables} \\
+       & 1    & 2    & 3   & 4   & 5   \\
+Item i & 1    & 0    & 0   & 1   & 1   \\
+Item k & 1    & 1    & 0   & 1   & 0  
+\end{tabular}
+\end{table}
+
+En este caso, hay dos parejas 1-1, una pareja 0-0 y dos parejas que no coinciden.\\
+
+Sea $x_{ij}$ la puntuación (0 ó 1) de la j-ésima variable binaria en el i-ésimo item y sea $x_{kj}$ la puntuación de la j-ésima variable binaria en el k-ésimo item, con $j=1,2,...,p$. Entonces,
+
+$$(x_{ij}-x_{kj}^2) = \left \{ \begin{matrix} 0 & \mbox{si } x_{ij}=x_{kj}
+\\ 3n+1 & \mbox{si }x_{ij}\neq x_{kj}\end{matrix}\right.   $$
+
+y la distancia Euclídea al cuadrado, $\sum_{j=1}^p{(x_{ij}-x_{kj})^2}$, proporcionan una forma de contar el número de disparidades. Una distancia grande corresponde a muchas disparidades, es decir, items desemejantes. En el ejemplo anterior, el cuadrado de las distancia entre los items $i$ y $k$ sería
+
+$$\sum_{j=1}^5{(x_{ij}-x_{kj})^2}=(1-1)^2+(0-1)^2+(0-0)^2+(1-1)^2+(1-0)^2=2$$
+
+Aunque la distancia usada en el ejemplo anterior puede ser usada para medir la similitud, tiene la desventaja de que valora por igual las parejas 1-1 y 0-0. En algunos casos, una pareja 1-1 es una indicación mayor de similitud que una pareja 0-0. Por ejemplo, al agrupar gente, que dos personas sean capaz de leer griego antiguo es una evidencia mayor de similitud que la ausencia de dicha habilidad. Para reflejar este trato diferente entre las parejas de 1-1 y 0-0, se han sugerido diversos esquemas para definir los coeficientes de similitud.\\
+Para introducir dichos esquemas, vamos a organizar las frecuencias de las parejas que coinciden y las que no para los items $i$ y $k$ en la forma de una tabla de contingencia:
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+
+\begin{table}[]
+\begin{tabular}{ll|clc|c|l}
+\multicolumn{2}{l|}{\multirow{2}{*}{}} & \multicolumn{3}{c}{Item k} & \multicolumn{2}{c|}{\multirow{2}{*}{Total}} \\
+\multicolumn{2}{l|}{}                  & 1        &       & 0       & \multicolumn{2}{c|}{}                        \\ \hline
+\multirow{2}{*}{Item i}       & 1      & a        &       & b       & \multicolumn{2}{c|}{a+b}                     \\
+                              & 0      & c        &       & d       & \multicolumn{2}{c|}{c+d}                     \\ \hline
+\multicolumn{2}{l|}{Total}            & a+c      &       & b+d     & \multicolumn{2}{c|}{p=a+b+c+d}              
+\end{tabular}
+\end{table}
+%La tabla no se quiere poner en su sitio
+
+En esta tabla, $a$ representa la frecuencia de parejas 1-1, $b$ es la frecuencia de parejas 1-0 y así sucesivamente. Dadas las anteriores cinco parejas, $a=2$ y $b=c=d=1$.\\
+
+La siguiente tabla lista coeficientes de similitud comunes definidos en términos de frecuencias de la anterior tabla.
+
+\begin{table}[]
+\begin{tabular}{|ll|}
+\hline
+\multicolumn{2}{|l|}{Tabla 12.1 Coeficientes de similitud para items clustering}                                                                                                              \\ \hline
+\multicolumn{1}{|c}{Coeficiente} & \multicolumn{1}{c|}{Fundamento}                                                                                                                 \\ \hline
+1. $\frac{a+d}{p}$                              & Las parejas 1-1 y 0-0 ponderan lo mismo .                                                                                                       \\
+2.  $\frac{2(a+d)}{2(a+d)+b+c}$                            & Las parejas 1-1 y 0-0 ponderan el doble.                                                                                                        \\
+3.  $\frac{a+d}{a+d+2(b+c)}$                             & Las parejas que no coinciden ponderan el doble.                                                                                                 \\
+4.  $\frac{a}{p}$                             & No hay parejas 0-0 en el numerador.                                                                                                             \\
+5.  $\frac{a}{a+b+c}$                             & \begin{tabular}[c]{@{}l@{}}No hay parejas 0-0 en el numerador ni el denominador.\\ (Las parejas 0-0 son irrelevantes)\end{tabular}              \\
+6.  $\frac{2a}{2a+b+c}$                             & \begin{tabular}[c]{@{}l@{}}No hay parejas 0-0 en el numerador ni el denominador.\\ Las parejas 1-1 ponderan el doble.\end{tabular}              \\
+7.  $\frac{a}{a+2(b+c)}$                             & \begin{tabular}[c]{@{}l@{}}No hay parejas 0-0 en el numerador ni el denominador.\\ Las parejas que no coinciden ponderan el doble.\end{tabular} \\
+8.  $\frac{a}{b+c}$                             & \begin{tabular}[c]{@{}l@{}}Proporción de parejas que coinciden (excluyendo las 0-0) en\\  relación a las parejas que no coinciden.\end{tabular} \\ \hline
+\end{tabular}
+\end{table}
+
+Los coeficientes 1, 2 y 3 de la tabla están monotónicamente relacionados. Supongamos que el coeficiente 1 se calcula para dos tablas de contingencia, Tabla I y Tabla II. Entonces si $(a_I+d_I)/p \geq (a_{II}+d_{II})/p$, tenemos que $2(a_I+d_I)/[2(a_I+d_I)+b_I+c_I] \geq 2(a_{II}+d_{II})/[2(a_{II}+d_{II})+b_{II}+c_{II}]$ y el coeficiente 3 será al menos tan grande para la Tabla I como lo es para la Tabla II. Los coeficientes 5, 6 y 7 también mantienen sus órdenes relativos.\\
+
+La monotonicidad es importante, ya que algunos procedimientos de clustering no se ven afectados si la definición de similitud se modifica de manera que los órdenes relativos de similitud no cambian. Los procedimientos jerárquicos de asociación simple y asociación completa que se verán en la sección siguiente no se ven afectados Para estos métodos, cualquier elección entre los coeficientes 1, 2 y 3 de la tabla anterior producirá las mismas agrupaciones. Análogamente, cualquier elección entre los coefcientes 5, 6 y 7 también resultará en agrupaciones idénticas.\\
+
+Ejemplo (Calculando los valores de un coeficiente de similitud) Supongamos cinco individuos con las siguientes características:
+
+\begin{table}[]
+\begin{tabular}{l|cccccc}
+            & \multicolumn{1}{l}{Altura} & \multicolumn{1}{l}{Peso} & \multicolumn{1}{l}{Color de ojos} & \multicolumn{1}{l}{Color de pelo} & \multicolumn{1}{l}{Mano predominante} & \multicolumn{1}{l}{Género} \\ \hline
+Individuo 1 & 68 in                      & 140 lb                   & verde                             & rubio                             & derecha                               & femenino                   \\
+Individuo 2 & 73 in                      & 185 lb                   & marrón                            & moreno                            & derecha                               & masculino                  \\
+Individuo 3 & 67 in                      & 165 lb                   & azul                              & rubio                             & derecha                               & masculino                  \\
+Individuo 4 & 64 in                      & 120 lb                   & marrón                            & moreno                            & derecha                               & femenino                   \\
+Individuo 5 & 76 in                      & 210 lb                   & marrón                            & moreno                            & izquiera                              & masculino                 
+\end{tabular}
+\end{table}
+
+Definimos seis variables binarias $X_1,X_2,X_3,X_4,X_5,X_6$ como:
+
+$$X_1 = \left \{ \begin{matrix} 1 & \mbox{si } altura \geq 72 
+\\ 0 & \mbox{si } altura < 72 \end{matrix}\right.   $$
+
+$$X_2 = \left \{ \begin{matrix} 1 & \mbox{si } peso \geq 150 
+\\ 0 & \mbox{si } peso < 150 \end{matrix}\right.   $$
+
+$$X_3 = \left \{ \begin{matrix} 1 & \mbox{si } ojos \ marrones 
+\\ 0 & \mbox{si } otro\ color\ de \ ojos\end{matrix}\right.   $$
+
+$$X_4 = \left \{ \begin{matrix} 1 & \mbox{si } pelo rubio
+\\ 0 & \mbox{si } otro\ color\ de\ pelo \end{matrix}\right.   $$
+
+$$X_5 = \left \{ \begin{matrix} 1 & \mbox{si } diestro
+\\ 0 & \mbox{si } zurdo \end{matrix}\right.   $$
+
+$$X_6 = \left \{ \begin{matrix} 1 & \mbox{si } masculino
+\\ 0 & \mbox{si } femenino \end{matrix}\right.   $$
+
+Las puntuaciones de los individuos 1 y 2 en las p=6 variables binarias son:
+
+\begin{table}[]
+\begin{tabular}{l|cccccc}
+            & \multicolumn{1}{l}{X\_1} & \multicolumn{1}{l}{X\_2} & \multicolumn{1}{l}{X\_3} & \multicolumn{1}{l}{X\_4} & \multicolumn{1}{l}{X\_5} & \multicolumn{1}{l}{X\_6} \\ \hline
+Individuo 1 & 0                        & 0                        & 0                        & 1                        & 1                        & 1                        \\
+Individuo 2 & 1                        & 1                        & 1                        & 0                        & 1                        & 0                       
+\end{tabular}
+\end{table}
+
+y el número de parejas que coinciden y las que no se indican en la siguiente tabla
+
+\begin{table}[]
+\begin{tabular}{ll|clc|c|l}
+\multicolumn{2}{l|}{\multirow{2}{*}{}} & \multicolumn{3}{c}{Individuo 2} & \multicolumn{2}{c|}{\multirow{2}{*}{Total}} \\
+\multicolumn{2}{l|}{}                  & 1        &       & 0       & \multicolumn{2}{c|}{}                        \\ \hline
+\multirow{2}{*}{Individuo 1}       & 1      & 1        &       & 2       & \multicolumn{2}{c|}{3}                     \\
+                              & 0      & 3        &       & 0       & \multicolumn{2}{c|}{3}                     \\ \hline
+\multicolumn{2}{l|}{Total}            & 4      &       & 2     & \multicolumn{2}{c|}{6}              
+\end{tabular}
+\end{table}
+
+Empleando el coeficiente de similitud 1, que pondera por igual las parejas que coinciden, calculamos
+
+$$\frac{a+d}{p}=\frac{1+0}{6}=\frac{1}{6} $$
+
+Continuando con el coeficiente de similitud 1, calculamos los demás números de similitud para las parejas de individuos. Mostramos los resultados en una matriz simétrica 5 x 5
+
+%tampoco quiere quedarse en su sitio
+
+\begin{table}[]
+\begin{tabular}{lllllll}
+\multicolumn{2}{l}{\multirow{2}{*}{}}               & \multicolumn{5}{c}{Individuo}                  \\
+\multicolumn{2}{l}{}                                & 1   & 2   & 3   & 4   & 5                      \\ \cline{3-3} \cline{7-7} 
+\multirow{5}{*}{Individuo} & \multicolumn{1}{l|}{1} & 1   &     &     &     & \multicolumn{1}{l|}{}  \\
+                           & \multicolumn{1}{l|}{2} & 1/6 & 1   &     &     & \multicolumn{1}{l|}{}  \\
+                           & \multicolumn{1}{l|}{3} & 4/6 & 3/6 & 1   &     & \multicolumn{1}{l|}{}  \\
+                           & \multicolumn{1}{l|}{4} & 4/6 & 3/6 & 2/6 & 1   & \multicolumn{1}{l|}{}  \\
+                           & \multicolumn{1}{l|}{5} & 0   & 5/6 & 2/6 & 2/6 & \multicolumn{1}{l|}{1} \\ \cline{3-3} \cline{7-7} 
+\end{tabular}
+\end{table}
+
+Basándonos en las magnitudes del coeficiente de similitud, debemos concluir que los individuos 2 y 5 son los más similares mientras que los individuos 1 y 5 son los menos similiares. Si fuéramos a dividir los individuos en dos subgrupos relativamente homogéneos basándonos en los números de similitud, formaríamos los subgrupos (1 3 4) y (2 5).\\
+Notar que $X_3=0$ implica una ausencia de ojos marrones, así dos personas, una con ojos azules y otra con ojos verdes, resultarán en una pareja 0-0. Por consiguiente, puede que sea inapropiado utilizar los coeficientes de similitud 1, 2 ó 3 porque estos coeficientes ponderan lo mismo las parejas 1-1 y 0-0.\\
+
+Hemos descrito la construcción de distancias y similitudes. Siempre se pueden construir similitudes a partir de distancias. Por ejemplo, podemos fijar
+
+$$ s_{ik} = \frac{1}{1+d_{ik}}$$ 
+
+donde $0<s_{ik}\leq 1$ es la similitud entre los items $i$ y $k$ y $d_{ik}$ es la distancia correspondiente.\\
+Sin embargo, no siempre podemos construir distancias "verdaderas", que cumplan las propiedades para clustering, a partir de similitudes. Sólo se pueden construir si la matriz de similitudes es definida no negativa.\\
+Con la condición de definida no negativa y la máxima similitud escada de manera que $s_{ii}=1$,
+
+$$ d_{ik}=\sqrt{2(1-s_{ik})}$$
+
+cumple las propiedades de una distancia.
+
+\subsection{Medidas de similitud y asociación para parejas de variables}
+
+Hasta el momento, hemos discutido medidas de similitud para los tiems. En algunas aplicaciones, son las variables, en lugar de los items, las que deben ser agrupadas. Las medidas de similitud para variables suelen tomar la forma de coeficientes de correlaciones muestrales. Además, en algunas aplicaciones de clustering, las correlaciones negativas son reemlazadas por sus valores absolutos.\\
+Cuando las variables son binarias, los datos se pueden organizar en una tabla de contingencia. Sin embargo, esta vez las variables, en lugar de los items, definen las categorías. Para cada par de variables hay $n$ items categorizados en la tabla. Con la codificación usual en 0 y 1, la tabla es como sigue: 
+
+\begin{table}[]
+\begin{tabular}{ll|clc|c|l}
+\multicolumn{2}{l|}{\multirow{2}{*}{}} & \multicolumn{3}{c}{Variable k} & \multicolumn{2}{c|}{\multirow{2}{*}{Total}} \\
+\multicolumn{2}{l|}{}                  & 1        &       & 0       & \multicolumn{2}{c|}{}                        \\ \hline
+\multirow{2}{*}{Variable i}       & 1      & a        &       & b       & \multicolumn{2}{c|}{a+b}                     \\
+                              & 0      & c        &       & d       & \multicolumn{2}{c|}{c+d}                     \\ \hline
+\multicolumn{2}{l|}{Total}            & a+c      &       & b+d     & \multicolumn{2}{c|}{n=a+b+c+d}              
+\end{tabular}
+\end{table}
+
+Por ejemplo, la variable $i$ vale $1$ y la variable $k$ vale $0$ para $b$ de los $n$ items.\\
+La fórmula usual del coeficiente de correlación producto-momento aplicada a las variables binarias de la tabla de contingencia nos da
+
+$$r = \frac{ad-bc}{[(a+b)(c+d)(a+c)(b+d)]^{1/2}}$$
+
+Este número se puede tomar como la medida de similitud entre las dos variables.\\
+El coeficiente de correlación anterior se relaciona con la estadística chi-cuadrado ($r^2=\chi^2/n$) para evaluar la independencia de dos variables categóricas. Para un $n$ fijo, una similitud (o correlación) grande es consistente con la presencia de dependencia.\\
+
+Dada la tabla anterior, se pueden desarrollar medidas de asociacion (o similitud) exactamente análogas a las listadas en la Tabla 12.1. El único cambio que se requiere es la sustitución de $n$ (el número de items) por $p$ (el número de variables).\\
+
+Para resumir esta sección, notamos que hay muchas medidas de similitud entre pares de objetos. Parece que la mayoría de profesionales usan distancias o los coeficientes de la Tabla 12.1 para el cluster de items y correlaciones para el cluster de variables. Sin embargo, en ocasiones, las entradas a los algoritmos clustering pueden ser frecuencias simples.\\
+
+Ejemplo (Midiendo las similitudes de 11 lenguajes) Los significados de las palabras cambian a lo largo de la historia. Sin embargo, el significado de los números 1,2,3,... representa una excepción llamatica. Así, una primera comparación de lenguajes puede estar basado por exclusiva en los números naturales. La Tabla 12.2 (siguiente tabla) nos da los 10 primeros números en inglés, polaco, húngaro y otros ocho lenguajes europeos modernos. (Solamente consideramos lenguajes que utilizan el alfabeto romano y omitimos acentos y signos de puntuación.) Una observación rápida de la escritura de los números sugiere que los cinco primeros lenguajes (inglés, noruego, danés, holandés y alemán) son muy parecidos. El español, francés e italiano se parecen todavía más. El húngaro y finés parecen no estar relacionados con los demás lenguajes. El polaco tiene algunas características de los lenguajes de los subgrupos más grandes.
+
+\begin{table}[]
+\begin{tabular}{|lllllllllll|}
+\hline
+\multicolumn{11}{|l|}{Tabla 12.2 Números en 11 lenguajes}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             \\ \hline
+\begin{tabular}[c]{@{}l@{}}Inglés\\ (E)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Noruego\\ (N)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Danés\\ (Da)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Holandés\\ (Du)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Alemán\\ (G)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Francés\\ (Fr)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Español\\ (Sp)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Italiano\\ (I)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Polaco\\ (P)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Húngaro\\ (H)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Finés\\ (Fi)\end{tabular} \\ \hline
+one                                                  & en                                                    & en                                                   & een                                                     & eins                                                 & un                                                     & uno                                                    & uno                                                    & jeden                                                & egy                                                   & yksi                                                 \\
+two                                                  & to                                                    & to                                                   & twee                                                    & zwei                                                 & deux                                                   & dos                                                    & due                                                    & dwa                                                  & ketto                                                 & kaksi                                                \\
+three                                                & tre                                                   & tre                                                  & drie                                                    & drei                                                 & trois                                                  & tres                                                   & tre                                                    & trzy                                                 & harom                                                 & kolme                                                \\
+four                                                 & fire                                                  & fire                                                 & vier                                                    & vier                                                 & quatre                                                 & cuatro                                                 & quattro                                                & cztery                                               & negy                                                  & nelja                                                \\
+five                                                 & fem                                                   & fem                                                  & vijf                                                    & funf                                                 & cinq                                                   & cinco                                                  & cinque                                                 & piec                                                 & ot                                                    & viisi                                                \\
+six                                                  & seks                                                  & seks                                                 & zes                                                     & sechs                                                & six                                                    & seis                                                   & sei                                                    & szesc                                                & hat                                                   & kuusi                                                \\
+seven                                                & sju                                                   & syv                                                  & zeven                                                   & sieben                                               & sept                                                   & siete                                                  & sette                                                  & siedem                                               & het                                                   & seitseman                                            \\
+eight                                                & atte                                                  & otte                                                 & acht                                                    & acht                                                 & huit                                                   & ocho                                                   & otto                                                   & osiem                                                & nyolc                                                 & kahdeksan                                            \\
+nine                                                 & ni                                                    & ni                                                   & negen                                                   & neun                                                 & neuf                                                   & nueve                                                  & nove                                                   & dziewiec                                             & kilenc                                                & yhdeksan                                             \\
+ten                                                  & ti                                                    & ti                                                   & tien                                                    & zehn                                                 & dix                                                    & diez                                                   & dieci                                                  & dziesiec                                             & tiz                                                   & kymmenen                                             \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[]
+\begin{tabular}{|cccccccccccc|}
+\hline
+\multicolumn{12}{|l|}{Tabla 12.3 Concordancia de la primera letra para 10 números en 11 lenguajes} \\ \hline
+       & E      & N      & Da     & Du     & G     & Fr    & Sp    & I     & P     & H     & Fi    \\ \hline
+E      & 10     &        &        &        &       &       &       &       &       &       &       \\
+N      & 8      & 10     &        &        &       &       &       &       &       &       &       \\
+Da     & 8      & 9      & 10     &        &       &       &       &       &       &       &       \\
+Du     & 3      & 5      & 4      & 10     &       &       &       &       &       &       &       \\
+G      & 4      & 6      & 5      & 5      & 10    &       &       &       &       &       &       \\
+Fr     & 4      & 4      & 4      & 1      & 3     & 10    &       &       &       &       &       \\
+Sp     & 4      & 4      & 5      & 1      & 3     & 8     & 10    &       &       &       &       \\
+I      & 4      & 4      & 5      & 1      & 3     & 9     & 9     & 10    &       &       &       \\
+P      & 3      & 3      & 4      & 0      & 2     & 5     & 7     & 6     & 10    &       &       \\
+H      & 1      & 2      & 2      & 2      & 1     & 0     & 0     & 0     & 0     & 10    &       \\
+Fi     & 1      & 1      & 1      & 1      & 1     & 1     & 1     & 1     & 1     & 2     & 10    \\ \hline
+\end{tabular}
+\end{table}
+
+Por porpósitos ilustrativos, comparamos los lenguajes mirando la primera letra de cada número. Las palabras para el mismo número son concordantes si tienen la misma primera letra y discordantes en caso contrario. De esta forma de la tabla 12.2 obtenemos la tabla 12.3. Podemos observar que el inglés y el noruego comparten la misma primera letra para 8 de las 10 parejas de números. El resto de frecuencias se ha calculado de la misma forma.\\
+Los resultados en la Tabla 12.3 confirman la impresión visual inicial de la Tabla 12.2. Ésto es, que el inglés, noruego, danés, holandés y alemán parecen formar un grupo. El francés, español, italiano y polaco forman otro, mientras que el húngaro y el finés no forman parte de ninguno.\\
+
+En los ejemplo hasta el momento, hemos utilizado nuestra impresión visual de las medidas de similitud o distancia para formar grupos. Más adelante discutiremos formas menos subjetivas para crear los clusters. 
+
 \section{Métodos de agrupamiento}
 \subsection{Jerárquicos}
 \subsection{No jerárquicos}
@@ -258,7 +522,7 @@ En el \textit{silhouette method}, se observa la similitud de cada observación c
 \[
 s(i) = \frac{b(i)-a(i)}{\max\{b(i), a(i)\}}, \hspace{2mm} \forall i = 1, \dots, n
 \] 
-donde $ a(i) $ es la media de la disimilaridad entre $ i $ y el resto de puntos que pertenecen al mismo clúster, es decir,
+donde $ a(i) $ es la media de la disimilitud entre $ i $ y el resto de puntos que pertenecen al mismo clúster, es decir,
 \[
 a(i) = \frac{1}{|C_i|-1}\sum_{j\in C_i, j \neq i} d(i,j),
 \]
