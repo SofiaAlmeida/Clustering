@@ -239,8 +239,8 @@ if __name__ == '__main__':
   # Algoritmos de clustering utilizados 
   k_means = KMeans(init='k-means++', n_clusters=3, n_init=5, random_state=seed)
   ms = MeanShift(bandwidth=estimate_bandwidth(X_normal, quantile=0.67, n_samples=400), bin_seeding=True)
-  ward = AgglomerativeClustering(n_clusters=3, linkage="ward")
-  db = DBSCAN(eps=0.12)
+  ward = AgglomerativeClustering(n_clusters=3, linkage="ward", affinity='euclidean')
+  db = DBSCAN(eps=0.12, min_samples=5)
   
   algoritmos1 = {('K-Means', k_means), ('MeanShift', ms), 
                ('AggCluster', ward), ('DBSCAN', db)}
