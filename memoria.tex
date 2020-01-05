@@ -541,11 +541,300 @@ En la fórmula anterior $ E^*_n $ denota la media de una de muestra de tamaño $
 W_k = \sum_{R = 1}^{k}\frac{1}{2 n_R}\sum_{i j \in C_R} d(i,j).
 \]
 Notamos que se puede usar para cualquier método y distancia. Según \cite{tibshirani2001estimating} el número 2 en la fórmula de $ W_k $ es para que funcione correctamente.
+
+\newpage
+
 \section{Parte práctica}
+
+El objetivo de este apartado consiste en el estudio de técnicas de aprendizaje no supervisado para análisis relacional mediante segmentación. Usaremos distintos algoritmos de \textit{clustering} sobre el conjunto de datos de prueba y extraeremos conclusiones sobre los resultados obtenidos.\\
+
+El conjunto de datos de prueba sobre el que realizaremos el estudio es el denominado conjunto de datos iris de \textbf{Fisher} que consta de un conjunto de datos multivariante introducido por \textbf{Ronald Fisher} en su artículo de 1936 (\textit{The use of multiple measurements in taxonomic problems}) como un ejemplo de análisis discriminante lineal.\\
+
+El conjunto de datos contiene 50 muestras de cada una de tres especies de flor \textbf{Iris} (setosa, virginica y versicolor). En él, se recogen las medidas de cuatro rasgos para cada muestra: el largo y ancho del sépalo y y el largo y ancho del pétalo, en centímetros. Basado en la combinación de estos cuatro rasgos, \textbf{Fisher} desarrolló un modelo discriminante lineal para distinguir entre una especie y otra.\\
+
+\begin{figure}[h]
+  \centering
+  \begin{minipage}[h]{0.29\textwidth}
+    \includegraphics[width=\textwidth]{setosa.jpg}
+    \caption{Iris Setosa.}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[h]{0.3\textwidth}
+    \includegraphics[width=\textwidth]{virginica.jpg}
+    \caption{Iris virginica.}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[h]{0.31\textwidth}
+    \includegraphics[width=\textwidth]{versicolor.jpg}
+    \caption{Iris versicolor.}
+  \end{minipage}
+\end{figure}
+
+A continuación, se mostrarán los resultados obtenidos por los algoritmos en este caso de estudio. Utilizaremos una tabla comparativa donde incluiremos el nombre de los algoritmos, los resultados obtenidos por las métricas utilizadas (Calinski-Harabaz y Silhouette) y los tiempos de ejecución de los mismos. Las métricas utilizadas se interpretarán de la siguiente forma:
+
+\begin{itemize}
+\item \textbf{Calinski-Harabaz}: se basa en el concepto de densidad y de como de bien están separados los clusters. Especifica la relación entre la dispersión entre los clusters y la dispersión dentro de los clusters. Nos indicará si estamos usando un buen número de clusters para un algoritmo en concreto. El número óptimo de clusters es la solución con el valor de índice Calinski-Harabasz más alto.
+\item \textbf{Silhouette}: es una medida que indica como de similar es un objeto respecto a su propio grupo (cohesión) en comparación con otros grupos (separación). Toma valores entre -1 y +1, donde un alto valor indica que el objeto es bastante similar a su grupo y muy diferente a los de otros cluster. Si el valor es cercano a 1, la configuración de los cluster es apropiada, si no, habrá más o menos clusters de los necesarios.
+\end{itemize}
+
+Los algoritmos elegidos han sido los siguientes: \textbf{K-Means, MeanShift, DBSCAN y Agglomerative Clustering} (clustering jerárquico). A la hora de elegir las mejores versiones de cada algoritmo, nos basaremos en el coeficiente de Calinski-Harabaz (\textbf{CH}) que como hemos explicado antes, tendrá mayor valor si estamos usando el número adecuado de clusters.
+
+\newpage
+
+Mostraremos la tabla comparativa que contiene las mejores versiones de cada algoritmo ejecutado. Se hará un estudio más profundo sobre aquellos dos algoritmos que obtengan un mayor valor del coeficiente de Silhouette. En este caso, \textbf{K-Means} y \textbf{Agglomerative Clustering}.\\
+
+\begin{table}[h]
+\centering
+\resizebox{15cm}{!} {
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+\textbf{Name} & \textbf{Nº Clusters} & \textbf{CH} & \textbf{SH} & \textbf{Time} & \textbf{Clusters}                                                                                                          \\ \hline
+K-Means       & 3                    & 359.845074 & 0.504769    & 0.016456      & \begin{tabular}[c]{@{}c@{}}0:    61 (40.67\%)\\
+1:    50 (33.33\%) \\2:    39 (26.00\%)\end{tabular}\\ \hline
+DBSCAN        & 4                   &  94.991819   & 0.306404   &  0.002353      & \begin{tabular}[c]{@{}c@{}}0:    45 (30.00\%)
+\\1:    39 (26.00\%)
+\\-1:    36 (24.00\%)
+\\2:    30 (20.00\%)\end{tabular} \\ \hline
+AggCluster    & 3                    & 349.254185 & 0.504800    & 0.019058      & \begin{tabular}[c]{@{}c@{}}0:    67 (44.67\%)
+\\1:    50 (33.33\%)
+\\2:    33 (22.00\%)\end{tabular}                       \\ \hline
+MeanShift     & 3                    & 290.470683  & 0.476961    & 0.289073      & \begin{tabular}[c]{@{}c@{}}0:    81 (54.00\%)
+\\1:    50 (33.33\%)
+\\2:    19 (12.67\%)\end{tabular}                                             \\ \hline
+\end{tabular}
+}
+\caption{Tabla comparativa algoritmos.}
+\end{table}
+
+\subsection{K-Means.}
+
+K-Means es un algoritmo de clasificación no supervisada (clusterización) que agrupa objetos en K grupos basándose en sus características. El agrupamiento se realiza minimizando la suma de distancias entre cada objeto y el centroide de su grupo o cluster.\\ 
+
+El algoritmo K-Means resuelve un problema de optimización, siendo la función a optimizar (minimizar) la suma de las distancias cuadráticas de cada objeto al centroide de su cluster. Es necesario especificar el valor de K previamente antes de ejecutar el algoritmo.\\
+
+Para el algoritmo K-Means se ha utilizado el siguiente código en python y se ha obtenido la siguiente agrupación de las muestras, donde el cluster 0 representa las \textbf{Iris} versicolor, el cluster 1 setosa y el cluster 2 virginica:\\
+
+\begin{lstlisting}
+KMeans(init='k-means++', n_clusters=3, n_init=5, random_state=12345)
+
+0:    61 (40.67%)
+1:    50 (33.33%)
+2:    39 (26.00%)
+\end{lstlisting}\
+
+Se mostrarán 4 gráficas realizadas y se hará un estudio sobre los resultados obtenidos. Las gráficas obtenidas para este caso, serán \textbf{Scatter Matrix, Heatmap, KPlot y BoxPlot} que mostrarán la matriz de dispersión de las muestras, mapa de calor de los centroides para cada variable y distribución de las muestras según cada variable.
+
+\newpage
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.62]{scatmatrixK-MeansIRIS.png}
+\caption{Scatter Matrix para K-Means con 3 clusters.}
+\label{smkm}
+\end{figure}\
+
+Extraer conclusiones...
+
+\newpage
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.62]{heatmapK-MeansIRIS.png}
+\caption{HeatMap para K-Means con 3 clusters.}
+\label{hmkm}
+\end{figure}
+
+\newpage
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.4]{kdeplotK-MeansIRIS.png}
+\includegraphics[scale=0.32]{boxplotK-MeansIRIS.png}
+\caption{KPlot y BoxPlot para K-Means con 3 clusters.}
+\label{kpkm}
+\end{figure}
+
+\clearpage
+
+\subsection{Agrupamiento Jerárquico.}
+
+El agrupamiento jerárquico es un método de análisis de grupos puntuales, el cual busca construir una jerarquía de grupos. Estrategias para agrupamiento jerárquico generalmente caen en dos tipos: 
+
+\begin{itemize}
+\item \textbf{Aglomerativas}: Este es un acercamiento ascendente: cada observación comienza en su propio grupo, y los pares de grupos son mezclados mientras uno sube en la jerarquía.
+\item \textbf{Divisivas}: Este es un acercamiento descendente: todas las observaciones comienzan en un grupo, y se realizan divisiones mientras uno baja en la jerarquía.
+\end{itemize}
+
+En general, las mezclas y divisiones son determinadas con un Algoritmo Greedy. Los resultados del agrupamiento jerárquico son usualmente presentados en un dendrograma.\\
+
+En orden de decidir qué grupos deberían ser combinados se requiere una medida de disimilitud entre conjuntos de observaciones. En la mayoría de los métodos de agrupamiento jerárquico, esto se consigue mediante el uso de una métrica apropiada (una medida de distancia entre pares de observaciones), y un criterio de enlace el cual determina la distancia entre conjuntos de observaciones como una función de las distancias entre observaciones dos a dos.\\
+
+En nuestro caso, usaremos la estrategia de agrupamiento aglomerativo y usaremos la métrica euclídea junto con el criterio de enlace ward (el decrecimiento en la varianza para los grupos que están siendo mezclados).\\
+
+Para el algoritmo jerárquico aglomerativo, se ha utilizado el siguiente código en python y se ha obtenido la siguiente agrupación de las muestras:\\
+
+\begin{lstlisting}
+AgglomerativeClustering(n_clusters=3, linkage="ward", affinity='euclidean')
+
+0:    67 (44.67%)
+1:    50 (33.33%)
+2:    33 (22.00%)
+\end{lstlisting}\
+
+Se mostrarán 4 gráficas realizadas y se hará un estudio sobre los resultados obtenidos. Las gráficas obtenidas para este caso, serán la matriz de dispersión y mapa de calor también usados para el método de K-Means y ademaś se mostrarán dos dendogramas para representar el proceso de agrupamiento seguido.
+
+\newpage
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.62]{scatmatrixAggClusterIRIS.png}
+\caption{Scatter Matrix para Agglomerative Clustering con 3 clusters.}
+\label{smac}
+\end{figure}\
+
+Extraer conclusiones...
+
+\newpage
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.62]{heatmapAggClusterIRIS.png}
+\caption{HeatMap para Agglomerative Clustering con 3 clusters.}
+\label{hmac}
+\end{figure}
+
+\newpage
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.35]{dendrogramAggClusterIRIS.png}
+\includegraphics[scale=0.37]{dendscatAggClusterIRIS.png}
+\caption{Dendogramas para Agglomerative Clustering con 3 clusters.}
+\label{dac}
+\end{figure}
+
+\clearpage
+
+\subsection{DBSCAN.}
+
+Al contrario de la estrategia seguida por K-Means, DBSCAN (\textit{Density-Based Spatial Clustering of Applications with Noise}) no presupone clusters convexos, sino que se basa en la densidad de las muestras para identificar los clusters. Por este motivo, los clusters identificados por DBSCAN pueden ser de cualquier forma.\\
+
+Dos parámetros importantes para definir este algoritmo son: \textbf{eps}, máxima distancia entre dos muestras para poder ser consideradas pertenecientes al mismo "vecindario", y \textbf{min\_samples}, número de muestras en un vecindario para que una región pueda ser considerada densa.\\
+
+Consideremos un conjunto de puntos a ser agrupados en un espacio determinado. La técnica de agrupación DBSCAN clasifica los puntos como puntos núcleo, puntos (densamente-)alcanzables, o ruido de la siguiente forma:
+
+\begin{itemize}
+\item Un punto $p$ pertenece al núcleo si al menos \textit{min\_samples} puntos están a una distancia $\epsilon$ de él y esos puntos son directamente alcanzables desde $p$. No es posible tener puntos directamente alcanzables desde un punto distinto al núcleo.
+\item Un punto $q$ es alcanzable desde $p$ si existe una secuencia de puntos $p_1\dots p_n$ donde $p_1=p$ y $p_n=q$ y cada punto $p_{i+1}$ es directamente alcanzable desde $p_i$.
+\item Un punto que no sea alcanzable desde cualquier otro se considera ruido.
+\end{itemize}
+
+Si $p$ es un punto núcleo, este forma un cluster junto a otros puntos que sean alcanzables desde él. Cada cluster contiene al menos un punto núcleo. Los puntos no núcleos alcanzables pueden pertenecer a un cluster pero actúan como una barrera puesto que no es posible alcanzar más puntos desde estos.\\
+
+Se puede observar que la relación de ser alcanzable no es simétrica. Por definición, ningún punto puede ser alcanzable desde un punto que no sea núcleo, sin importar la distancia a la que se encuentre. Por lo tanto la noción de connectividad es necesaria para definir formalmente la extensión de un cluster dada por DBSCAN. Dos puntos $p$ y $q$ están conectados densamente si existe un punto $o$ tal que ambos $p$ y $q$ sean directamente alcanzables desde $o$. La relación estar densamente conectado es simétrica.\\
+
+Por tanto un clúster generado por el método DBSCAN satisface dos propiedades:
+
+\begin{itemize}
+\item Todos los puntos de un mismo clúster están densamente conectados entre sí.
+\item Si un punto $A$ es densamente alcanzable desde cualquier otro punto $B$ del clúster, entonces $A$ también forma parte del clúster.
+\end{itemize}
+
+Para DBSCAN, se ha utilizado el siguiente código en python y se ha obtenido la siguiente agrupación de las muestras, donde el clúster -1 representa las muestras formadas por ruido:\\
+
+\begin{lstlisting}
+DBSCAN(eps=0.12, min_samples=5)
+
+0:    45 (30.00%)
+1:    39 (26.00%)
+-1:    36 (24.00%)
+2:    30 (20.00%)
+\end{lstlisting}\
+
+Las gráficas obtenidas para este caso, serán la matriz de dispersión (Scatter Matrix) y mapa de calor (HeatMap).\\
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.64]{scatmatrixDBSCANIRIS.png}
+\caption{Scatter Matrix para DBSCAN con 4 clusters.}
+\label{smdb}
+\end{figure}
+
+\newpage
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.62]{heatmapDBSCANIRIS.png}
+\caption{HeatMap para DBSCAN con 4 clusters.}
+\label{hmdb}
+\end{figure}
+
+\clearpage
+
+\subsection{Mean Shift.}
+
+Mean Shift es una técnica de análisis de espacio de características no paramétrica para localizar los máximos de una función de densidad. Es un método iterativo que parte de una estimación inicial $x$. Dada una función núcleo $K(x_i-x)$. Esta función determina el peso de los puntos cercanos para la reestimación de la media. Normalmente se usa un núcleo gaussiano en la distancia de la estimación actual, $K(x_i-x)=e^{-c||x_i-x||^2}$. La media ponderada de la densidad en la ventana determinada por K es:
+
+$$m(x)=\dfrac{\sum_{x_i\in N(x)}K(x_i-x)x_i}{\sum_{x_i\in N(x)}K(x_i-x)}$$
+
+donde $N(x)$ es el vecindario de x, un conjunto de puntos donde $K(x_i)\neq0$.\\
+
+La diferencia $m(x)-x$ se denomina Mean Shift. El algoritmo establece $m(x)\rightarrow x$ y repite la estimación hasta que $m(x)$ converja.\\
+
+Todavía no se conoce una prueba rígida de la convergencia del algoritmo utilizando un núcleo general en un espacio de alta dimensión. Aliyari Ghassabeh mostró la convergencia del algoritmo de cambio medio en una dimensión con una función de perfil diferenciable, convexa y estrictamente decreciente. Sin embargo, el caso unidimensional tiene aplicaciones limitadas en el mundo real.\\
+
+Además, se ha demostrado la convergencia del algoritmo en dimensiones superiores con un número finito de los puntos estacionarios (o aislados). Sin embargo, no se han proporcionado condiciones suficientes para que una función general del núcleo tenga puntos estacionarios finitos (o aislados).\\
+
+Sea un conjunto de datos finito $S$ embebido en el espacio euclídeo n-dimensional $X$. Sea $K$ un núcleo plano que tiene como función característica en X:
+
+$$K(x)=\left\{
+1 \ si \ ||x||\leq \lambda \atop
+0 \ si \ ||x||> \lambda
+\right.$$
+
+En cada iteración del algoritmo, se establece $m(x)\rightarrow x$ para todo $s\in S$ simultáneamente. Una de las preguntas que nos podemos hacer es, cómo estimar la función de densidad dado un conjunto escaso de muestras. Uno de los enfoques más simples es simplemente suavizar los datos, por ejemplo, convolucionándolos con un núcleo fijo de ancho $h$:
+
+$$f(x)=\sum_i K(x-x_i)=\sum_i k\dfrac{||x-x_i||^2}{h^2}$$
+
+donde $x_i$ son las muestras de entrada y $k$ la función núcleo y h es el único parámetro que toma el algoritmo que se denomina \textit{bandwidth}. Una vez que hemos calculado $f(x)$ a partir de la ecuación anterior, podemos encontrar sus máximos locales utilizando el ascenso de gradiente o alguna otra técnica de optimización.\\
+
+Usando esta aproximación por fuerza bruta hace que el problema sea computacionalmente inviable conforme aumentamos las dimensiones del problema sobre el espacio de búsqueda total. Por tanto, Mean Shift utiliza la técnica del reinicio de gradiente descendiente múltiple, la cual empieza desde un máximo local $y_k$ y calcula su aproximación $f(x)$ y avanza en esa dirección.
+
+\clearpage
+
+Para Mean Shift, se ha utilizado el siguiente código en python y se ha obtenido la siguiente agrupación de las muestras:\\
+
+\begin{lstlisting}
+MeanShift(bandwidth=estimate_bandwidth(X_normal, quantile=0.67, 
+	  n_samples=400), bin_seeding=True)
+
+0:    81 (54.00%)
+1:    50 (33.33%)
+2:    19 (12.67%)
+\end{lstlisting}\
+
+Las gráficas obtenidas para este caso, serán la matriz de dispersión (Scatter Matrix) y mapa de calor (HeatMap).\\
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.64]{scatmatrixMeanShiftIRIS.png}
+\caption{Scatter Matrix para Mean Shift con 3 clusters.}
+\label{smms}
+\end{figure}
+
+\newpage
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.62]{heatmapMeanShiftIRIS.png}
+\caption{HeatMap para Mean Shift con 3 clusters.}
+\label{hmms}
+\end{figure}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %       REFERENCIAS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newpage
+\clearpage
 \section{Bibliografía}
 \nocite{*}
 \bibliographystyle{plain}
