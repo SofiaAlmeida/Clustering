@@ -542,7 +542,7 @@ W_k = \sum_{R = 1}^{k}\frac{1}{2 n_R}\sum_{i j \in C_R} d(i,j).
 \]
 Notamos que se puede usar para cualquier método y distancia. Según \cite{tibshirani2001estimating} el número 2 en la fórmula de $ W_k $ es para que funcione correctamente.
 
-\newpage
+\clearpage
 
 \section{Parte práctica}
 
@@ -579,7 +579,7 @@ A continuación, se mostrarán los resultados obtenidos por los algoritmos en es
 
 Los algoritmos elegidos han sido los siguientes: \textbf{K-Means, MeanShift, DBSCAN y Agglomerative Clustering} (clustering jerárquico). A la hora de elegir las mejores versiones de cada algoritmo, nos basaremos en el coeficiente de Calinski-Harabaz (\textbf{CH}) que como hemos explicado antes, tendrá mayor valor si estamos usando el número adecuado de clusters.
 
-\newpage
+\clearpage
 
 Mostraremos la tabla comparativa que contiene las mejores versiones de cada algoritmo ejecutado. Se hará un estudio más profundo sobre aquellos dos algoritmos que obtengan un mayor valor del coeficiente de Silhouette. En este caso, \textbf{K-Means} y \textbf{Agglomerative Clustering}.\\
 
@@ -624,7 +624,7 @@ KMeans(init='k-means++', n_clusters=3, n_init=5, random_state=12345)
 
 Se mostrarán 4 gráficas realizadas y se hará un estudio sobre los resultados obtenidos. Las gráficas obtenidas para este caso, serán \textbf{Scatter Matrix, Heatmap, KPlot y BoxPlot} que mostrarán la matriz de dispersión de las muestras, mapa de calor de los centroides para cada variable y distribución de las muestras según cada variable.
 
-\newpage
+\clearpage
 
 \begin{figure}[h]
 \centering
@@ -646,7 +646,7 @@ Las muestras del clúster 1 (tipo setosa) se caracteriza por tener un pétalo co
 \label{hmkm}
 \end{figure}
 
-\newpage
+\clearpage
 
 \begin{figure}[h]
 \centering
@@ -683,34 +683,53 @@ AgglomerativeClustering(n_clusters=3, linkage="ward", affinity='euclidean')
 2:    33 (22.00%)
 \end{lstlisting}\
 
-Se mostrarán 4 gráficas realizadas y se hará un estudio sobre los resultados obtenidos. Las gráficas obtenidas para este caso, serán la matriz de dispersión y mapa de calor también usados para el método de K-Means y ademaś se mostrarán dos dendogramas para representar el proceso de agrupamiento seguido.
+Se mostrarán 4 gráficas realizadas y se hará un estudio sobre los resultados obtenidos. Las gráficas obtenidas para este caso, serán la matriz de dispersión y mapa de calor también usados para el método de K-Means y ademaś se mostrarán dos dendogramas para representar el proceso de agrupamiento seguido.\\
 
-\newpage
+Podemos observar que la matriz de dispersión generada por este algoritmo se asemeja mucho a la obtenida por el algoritmo K-Means. Las conclusiones que podemos extraer de las Figuras \ref{smac} y \ref{hmac} son similares a las que ya hemos comentado en el apartado anterior, por lo que nos limitaremos a extraer conclusiones sobre el dendograma.
+
+\clearpage
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.63]{dani/scatmatrixAggClusterIRIS.png}
+\includegraphics[scale=0.64]{dani/scatmatrixAggClusterIRIS.png}
 \caption{Scatter Matrix para Agglomerative Clustering con 3 clusters.}
 \label{smac}
-\end{figure}\
+\end{figure}
 
-Podemos observar que la matriz de dispersión generada por este algoritmo se asemeja mucho a la obtenida por el algoritmo K-Means. Las conclusiones que podemos extraer de las Figuras \ref{smac} y \ref{hmac} son similares a las que ya hemos comentado en el apartado anterior, por lo que nos limitaremos a extraer conclusiones sobre el dendograma.\\
-
-\newpage
+\clearpage
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.62]{dani/heatmapAggClusterIRIS.png}
+\includegraphics[scale=0.63]{dani/heatmapAggClusterIRIS.png}
 \caption{HeatMap para Agglomerative Clustering con 3 clusters.}
 \label{hmac}
 \end{figure}
 
-\newpage
+\clearpage
+
+\subsubsection{Dendogramas.}
+
+Un dendrograma es un diagrama de árbol que muestra los grupos que se forman al crear clústers de observaciones en cada paso y sus niveles de similitud. En nuestro caso medimos el nivel de similitud en el eje horizontal y las diferentes muestras en el eje vertical.\\
+
+Para ver los niveles de similitud, seleccionaremos una línea vertical del dendrograma. El patrón de cómo los valores de similitud/desimilitud cambian de un paso a otro será clave en la agrupación final para los datos.\\
+
+La decisión acerca de la agrupación final también se conoce como cortar el dendrograma. Cortar el dendrograma es similar a trazar una línea a lo largo del dendrograma para especificar la agrupación final. También se pueden comparar diferentes agrupaciones finales en los dendrogramas para determinar cuál de ellas tiene más sentido para los datos.\\
+
+En nuestro caso hemos impuesto que existan 3 clústers por lo que podríamos cortar el dendograma a distancia 1, obteniendo el número elegido. Las muestras de color verde representarían a las \textbf{Iris} setosa y las de color rojo a las versicolor y virginica.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.35]{dani/dendrogramAggClusterIRIS.png}
-\includegraphics[scale=0.37]{dani/dendscatAggClusterIRIS.png}
+\caption{Dendograma para Agglomerative Clustering con 3 clusters.}
+\label{dac}
+\end{figure}
+
+\clearpage
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.35]{dani/dendrogramcolor.png}
+\includegraphics[scale=0.35]{dani/dendscatAggClusterIRIS.png}
 \caption{Dendogramas para Agglomerative Clustering con 3 clusters.}
 \label{dac}
 \end{figure}
@@ -755,6 +774,8 @@ DBSCAN(eps=0.12, min_samples=5)
 
 Las gráficas obtenidas para este caso, serán la matriz de dispersión (Scatter Matrix) y mapa de calor (HeatMap).\\
 
+En este caso podemos ver como tenemos un cuarto clúster formado por las muestras que han sido consideradas "ruido" por el algoritmo DBSCAN. Este clúster se identifica con el número -1 y contiene las muestras no alcanzables para el algoritmo con los parámetros que hemos especificado.
+
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.64]{dani/scatmatrixDBSCANIRIS.png}
@@ -762,7 +783,7 @@ Las gráficas obtenidas para este caso, serán la matriz de dispersión (Scatter
 \label{smdb}
 \end{figure}
 
-\newpage
+\clearpage
 
 \begin{figure}[h]
 \centering
@@ -824,7 +845,7 @@ Las gráficas obtenidas para este caso, serán la matriz de dispersión (Scatter
 \label{smms}
 \end{figure}
 
-\newpage
+\clearpage
 
 \begin{figure}[h]
 \centering
