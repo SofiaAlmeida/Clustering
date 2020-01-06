@@ -612,7 +612,7 @@ K-Means es un algoritmo de clasificación no supervisada (clusterización) que a
 
 El algoritmo K-Means resuelve un problema de optimización, siendo la función a optimizar (minimizar) la suma de las distancias cuadráticas de cada objeto al centroide de su cluster. Es necesario especificar el valor de K previamente antes de ejecutar el algoritmo.\\
 
-Para el algoritmo K-Means se ha utilizado el siguiente código en python y se ha obtenido la siguiente agrupación de las muestras, donde el cluster 0 representa las \textbf{Iris} versicolor, el cluster 1 setosa y el cluster 2 virginica:\\
+Para el algoritmo K-Means se ha utilizado el siguiente código en python y se ha obtenido la siguiente agrupación de las muestras:\\
 
 \begin{lstlisting}
 KMeans(init='k-means++', n_clusters=3, n_init=5, random_state=12345)
@@ -633,13 +633,15 @@ Se mostrarán 4 gráficas realizadas y se hará un estudio sobre los resultados 
 \label{smkm}
 \end{figure}\
 
-Extraer conclusiones...
+En la Figura \ref{smkm} se representa la matriz de dispersión de las 150 muestras agrupadas en 3 clústers: donde el cluster 0 representa las \textbf{Iris} versicolor, el cluster 1 setosa y el cluster 2 virginica. Un gráfico de matriz de dispersión es una herramienta de exploración de datos que permite buscar patrones y relaciones entre diferentes muestras en una distribución multivariante. En el gráfico se muestra el gráfico de dispersión para cada par de variables seleccionadas y una serie de histogramas en la diagonal mostrando la distribución de valores para cada una de las variables.\\
 
-\newpage
+En la Figura \ref{hmkm} y \ref{kpkm} podemos ver la media y forma de las distribuciones de cada variable para cada clúster generado con el algoritmo K-Means. En el HeatMap, podemos observar la media de los centroides y podemos hacernos una idea de las características claves para clasificar cada muestra en uno de los tres tipos de flor de \textbf{Iris}.\\
+
+Las muestras del clúster 1 (tipo setosa) se caracteriza por tener un pétalo corto y delgado, mientras que el ancho del sépalo es más ancho que la media. Las del clúster 2 (tipo virginica), se caracterizan por tener un pétalo y sépalo más grandes respecto a los otros tipos y las del clúster 3 (tipo versicolor) tienen un pétalo similar al de la virginica pero se caracteriza por tener el sépalo un poco más delgado. Podemos observar que las flores más dificiles de diferenciar serán las de los tipos virginica y versicolor puesto que tienen más características en común. Esto se puede visualizar en la matriz de dispersión y en la Figura \ref{kpkm}.
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.62]{dani/heatmapK-MeansIRIS.png}
+\includegraphics[scale=0.55]{dani/heatmapK-MeansIRIS.png}
 \caption{HeatMap para K-Means con 3 clusters.}
 \label{hmkm}
 \end{figure}
@@ -687,12 +689,12 @@ Se mostrarán 4 gráficas realizadas y se hará un estudio sobre los resultados 
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.62]{dani/scatmatrixAggClusterIRIS.png}
+\includegraphics[scale=0.63]{dani/scatmatrixAggClusterIRIS.png}
 \caption{Scatter Matrix para Agglomerative Clustering con 3 clusters.}
 \label{smac}
 \end{figure}\
 
-Extraer conclusiones...
+Podemos observar que la matriz de dispersión generada por este algoritmo se asemeja mucho a la obtenida por el algoritmo K-Means. Las conclusiones que podemos extraer de las Figuras \ref{smac} y \ref{hmac} son similares a las que ya hemos comentado en el apartado anterior, por lo que nos limitaremos a extraer conclusiones sobre el dendograma.\\
 
 \newpage
 
