@@ -683,9 +683,9 @@ AgglomerativeClustering(n_clusters=3, linkage="ward", affinity='euclidean')
 2:    33 (22.00%)
 \end{lstlisting}\
 
-Se mostrarán 4 gráficas realizadas y se hará un estudio sobre los resultados obtenidos. Las gráficas obtenidas para este caso, serán la matriz de dispersión y mapa de calor también usados para el método de K-Means y ademaś se mostrarán dos dendogramas para representar el proceso de agrupamiento seguido.\\
+Se mostrarán 4 gráficas realizadas y se hará un estudio sobre los resultados obtenidos. Las gráficas obtenidas para este caso, serán la matriz de dispersión y mapa de calor también usados para el método de K-Means y ademaś se mostrarán dos dendrogramas para representar el proceso de agrupamiento seguido.\\
 
-Podemos observar que la matriz de dispersión generada por este algoritmo se asemeja mucho a la obtenida por el algoritmo K-Means. Las conclusiones que podemos extraer de las Figuras \ref{smac} y \ref{hmac} son similares a las que ya hemos comentado en el apartado anterior, por lo que nos limitaremos a extraer conclusiones sobre el dendograma.
+Podemos observar que la matriz de dispersión generada por este algoritmo se asemeja mucho a la obtenida por el algoritmo K-Means. Las conclusiones que podemos extraer de las Figuras \ref{smac} y \ref{hmac} son similares a las que ya hemos comentado en el apartado anterior, por lo que nos limitaremos a extraer conclusiones sobre el dendrograma.
 
 \clearpage
 
@@ -707,7 +707,7 @@ Podemos observar que la matriz de dispersión generada por este algoritmo se ase
 
 \clearpage
 
-\subsubsection{Dendogramas.}
+\subsubsection{Dendrogramas.}
 
 Un dendrograma es un diagrama de árbol que muestra los grupos que se forman al crear clústers de observaciones en cada paso y sus niveles de similitud. En nuestro caso medimos el nivel de similitud en el eje horizontal y las diferentes muestras en el eje vertical.\\
 
@@ -715,12 +715,12 @@ Para ver los niveles de similitud, seleccionaremos una línea vertical del dendr
 
 La decisión acerca de la agrupación final también se conoce como cortar el dendrograma. Cortar el dendrograma es similar a trazar una línea a lo largo del dendrograma para especificar la agrupación final. También se pueden comparar diferentes agrupaciones finales en los dendrogramas para determinar cuál de ellas tiene más sentido para los datos.\\
 
-En nuestro caso hemos impuesto que existan 3 clústers por lo que podríamos cortar el dendograma a distancia 1, obteniendo el número elegido. Las muestras de color verde representarían a las \textbf{Iris} setosa y las de color rojo a las versicolor y virginica.
+En nuestro caso hemos impuesto que existan 3 clústers por lo que podríamos cortar el dendrograma a distancia 1, obteniendo el número elegido. Las muestras de color verde representarían a las \textbf{Iris} setosa y las de color rojo a las versicolor y virginica.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.35]{dani/dendrogramAggClusterIRIS.png}
-\caption{Dendograma para Agglomerative Clustering con 3 clusters.}
+\caption{Dendrograma para Agglomerative Clustering con 3 clusters.}
 \label{dac}
 \end{figure}
 
@@ -730,7 +730,7 @@ En nuestro caso hemos impuesto que existan 3 clústers por lo que podríamos cor
 \centering
 \includegraphics[scale=0.35]{dani/dendrogramcolor.png}
 \includegraphics[scale=0.35]{dani/dendscatAggClusterIRIS.png}
-\caption{Dendogramas para Agglomerative Clustering con 3 clusters.}
+\caption{Dendrogramas para Agglomerative Clustering con 3 clusters.}
 \label{dac}
 \end{figure}
 
