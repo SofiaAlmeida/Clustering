@@ -483,18 +483,31 @@ En los ejemplo hasta el momento, hemos utilizado nuestra impresión visual de la
 \subsection{Jerárquicos}
 \subsection{No jerárquicos}
 \section{Número de clústeres}
-En los algoritmos de \textit{clustering}, uno de los problemas es determinar el número de clústeres $ k $ y que es distinto al propio proceso de agrupamiento. Este procedimiento conlleva tener en cuenta varios índices. Evaluar la solución obtenida para $ k $ clústeres es similar a la práctica de determinar la dimensión del espacio en el análisis de componentes principales o el orden de los factores en análisis factorial.
+En los algoritmos de \textit{clustering}, uno de los problemas es determinar el número de clústeres $ k $, el cual, es distinto al propio proceso de agrupamiento. Este procedimiento conlleva tener en cuenta varios índices. Evaluar la solución obtenida para $ k $ clústeres es similar a la práctica de determinar la dimensión del espacio en el análisis de componentes principales o el orden de los factores en análisis factorial.
 La correcta elección de $ k $ suele ser ambigua ya que depende de las interpretaciones según la forma y la escala de de la distribución de los datos y la solución deseada. También hay que tener en cuenta que incluso con datos aleatorios se pueden detectar falsos clústeres. \\
 
 En cada paso de nuestro proceso se crea un nuevo clúster formado por dos observaciones, una observación y otro clúster o dos clústeres ya obtenidos. Así, el número de clústeres $ k $ decrece de $ n $ (número de observaciones) a 1. La distancia entre dos clústeres es la euclídea o la de disimilitud. Por ejemplo, para los enlaces únicos, completos o de medias las distancias son el mínimo, máximo y la euclídea media respectivamente. Para el método de Ward, es la suma de las distancias entre clústeres al cuadrado dada en la fórmula (REFERENCIAR). Como $ k $ decrece de $ n $ a 1, el valor de la distancia debería aumentar ya que tendría que ser mayor cuando dos clústeres distintos se agrupan en uno solo. \\
 
-Uno de los procedimientos para determinar el número de clústeres es el denominado ``método del codo'' o \textit{elbow method}. Suele ser ambiguo y no muy fiable por lo que se recomienda el uso de otras técnicas. Consiste en dibujar la gráfica de la varianza de la distancia a los centros de cada clúster en función del número de clústeres. En un punto, se observará que no hay demasiada mejora en añadir un clúster más por lo que se escoge dicho punto. \\
+Uno de los procedimientos para determinar el número de clústeres, por ejemplo en el algoritmo $ k$-medias, es el denominado ``método del codo'' o \textit{elbow method}. Suele ser ambiguo y no muy fiable por lo que se recomienda el uso de otras técnicas. Consiste en dibujar la gráfica de las distancia a los centros de cada clúster en función del número de clústeres. En un punto, se observará que no hay demasiada mejora en añadir un clúster más por lo que se escoge dicho punto. Utilizando fórmulas, llamamos:\\
+\[
+SSE_k = \sum_{i = 1}^{} = \norm{\yy_i - \bar{\yy}_k}^2,
+\]
+donde $ \bar{\yy}_k $ representa el centroide del clúster $ C_k $. Así, para cada número de clústeres $ k $ calculamos 
+\[
+D_k = \sum_{i = 1} ^ {k} SSE_k,
+\]
+y lo dibujamos en una gráfica. Si usamos el ejemplo A aportado en \cite{elbowGraph}, la gráfica sería la siguiente.
 
-PONER EJEMPLO \\
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.6]{pedro/elbowGraph}
+	\caption{Ejemplo del método del codo.}
+	\label{smkm}
+\end{figure}
 
-Hemos construido una especie de índice de separación o test de modo que si lo dibujamos en función del número de clústeres nos ayuda a identificar visualmente el $ k $ adecuado. \\
+Vemos que el cambio de de inclinación se produce cuando $ k=3 $ por lo que ese sería el número idóneo de clústeres, Hemos construido por tanto una especie de índice de separación o test de modo que si lo dibujamos en función del número de clústeres nos ayuda a identificar visualmente el $ k $ adecuado. \\
 
-En análisis de regresión, el coeficiente de determinación, $ R^2 $, es una medida de la varianza total de la variables dependientes según las independientes. En \textit{clustering} debemos construir un índice de $ R^2 $ que varíe en base al número de clústeres. Para $ n $ clústeres la suma total de las distancias al cuadrado es $ T = \sum_{i = 1}^{n} \norm{\yy_i - \bar{\yy}}^2 $ y dentro de de un clúster $ C_k $ es $ SSE_k = \sum_{i = 1}^{} = \norm{\yy_i - \bar{\yy}_k}^2$. Así, para $ k $ clústeres definimos $ R^2 $ como
+Podemos construir otra serie de índices más complejos. pr ejemplo, en análisis de regresión, el coeficiente de determinación, $ R^2 $, es una medida de la varianza total de la variables dependientes según las independientes. En \textit{clustering} debemos construir un índice de $ R^2 $ que varíe en base al número de clústeres. Para $ n $ clústeres la suma total de las distancias al cuadrado es $ T = \sum_{i = 1}^{n} \norm{\yy_i - \bar{\yy}}^2 $. Así, para $ k $ clústeres definimos $ R^2 $ como
 \[
 R^{2}_{k} = \frac{T - \sum_k SSE_k}{T}.
 \]
