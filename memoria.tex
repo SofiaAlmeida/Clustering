@@ -483,16 +483,16 @@ En los ejemplo hasta el momento, hemos utilizado nuestra impresión visual de la
 \subsection{Jerárquicos}
 \subsection{No jerárquicos}
 \section{Número de clústeres}
-En los algoritmos de \textit{clustering}, uno de los problemas es determinar el número de clústeres $ k $, el cual, es distinto al propio proceso de agrupamiento. Este procedimiento conlleva tener en cuenta varios índices. Evaluar la solución obtenida para $ k $ clústeres es similar a la práctica de determinar la dimensión del espacio en el análisis de componentes principales o el orden de los factores en análisis factorial.
+En los algoritmos de \textit{clustering}, uno de los problemas es determinar el número idóneo de clústeres $ k $, el cual, es distinto al propio proceso de agrupamiento. Este procedimiento conlleva tener en cuenta varios índices. Evaluar la solución obtenida para $ k $ clústeres es similar a la práctica de determinar la dimensión del espacio en el análisis de componentes principales o el orden de los factores en análisis factorial.
 La correcta elección de $ k $ suele ser ambigua ya que depende de las interpretaciones según la forma y la escala de de la distribución de los datos y la solución deseada. También hay que tener en cuenta que incluso con datos aleatorios se pueden detectar falsos clústeres. \\
 
 En cada paso de nuestro proceso se crea un nuevo clúster formado por dos observaciones, una observación y otro clúster o dos clústeres ya obtenidos. Así, el número de clústeres $ k $ decrece de $ n $ (número de observaciones) a 1. La distancia entre dos clústeres es la euclídea o la de disimilitud. Por ejemplo, para los enlaces únicos, completos o de medias las distancias son el mínimo, máximo y la euclídea media respectivamente. Para el método de Ward, es la suma de las distancias entre clústeres al cuadrado dada en la fórmula (REFERENCIAR). Como $ k $ decrece de $ n $ a 1, el valor de la distancia debería aumentar ya que tendría que ser mayor cuando dos clústeres distintos se agrupan en uno solo. \\
 
-Uno de los procedimientos para determinar el número de clústeres, por ejemplo en el algoritmo $ k$-medias, es el denominado ``método del codo'' o \textit{elbow method}. Suele ser ambiguo y no muy fiable por lo que se recomienda el uso de otras técnicas. Consiste en dibujar la gráfica de las distancia a los centros de cada clúster en función del número de clústeres. En un punto, se observará que no hay demasiada mejora en añadir un clúster más por lo que se escoge dicho punto. Utilizando fórmulas, llamamos:\\
+Uno de los procedimientos para determinar el número de clústeres, por ejemplo en el algoritmo $ k$-medias, es el denominado ``método del codo'' o \textit{elbow method}. Suele ser ambiguo y no muy fiable por lo que se recomienda el uso de otras técnicas. Consiste en dibujar la gráfica de las distancia a los centros de cada clúster en función del número de clústeres. En un punto, se observará que la gráfica forma una especie de codo, de ahí nombre del método, por lo que se escoge dicho punto. Así, llamamos:\\
 \[
 SSE_k = \sum_{i = 1}^{} = \norm{\yy_i - \bar{\yy}_k}^2,
 \]
-donde $ \bar{\yy}_k $ representa el centroide del clúster $ C_k $. Así, para cada número de clústeres $ k $ calculamos 
+donde $ \bar{\yy}_k $ representa el centroide del clúster $ C_k $. Para cada número de clústeres $ k $ calculamos 
 \[
 D_k = \sum_{i = 1} ^ {k} SSE_k,
 \]
@@ -507,11 +507,11 @@ y lo dibujamos en una gráfica. Si usamos el ejemplo A aportado en \cite{elbowGr
 
 Vemos que el cambio de de inclinación se produce cuando $ k=3 $ por lo que ese sería el número idóneo de clústeres, Hemos construido por tanto una especie de índice de separación o test de modo que si lo dibujamos en función del número de clústeres nos ayuda a identificar visualmente el $ k $ adecuado. \\
 
-Podemos construir otra serie de índices más complejos. pr ejemplo, en análisis de regresión, el coeficiente de determinación, $ R^2 $, es una medida de la varianza total de la variables dependientes según las independientes. En \textit{clustering} debemos construir un índice de $ R^2 $ que varíe en base al número de clústeres. Para $ n $ clústeres la suma total de las distancias al cuadrado es $ T = \sum_{i = 1}^{n} \norm{\yy_i - \bar{\yy}}^2 $. Así, para $ k $ clústeres definimos $ R^2 $ como
+Podemos construir otra serie de índices más complejos siguiendo la misma filosofía que la anterior: construir el índice de separación o una estadística de prueba y dibujarlo en una gráfica según $ k $ de tal modo que un cambio significativo en el índice nos dé una aproximación del número de clústeres adecuado. Por ejemplo, en análisis de regresión, el coeficiente de determinación, $ R^2 $, es una medida de la varianza total de la variables dependientes según las independientes. En \textit{clustering} debemos construir un índice de $ R^2 $ que varíe en base al número de clústeres. Para $ n $ clústeres la suma total de las distancias al cuadrado es $ T = \sum_{i = 1}^{n} \norm{\yy_i - \bar{\yy}}^2 $. Así, para $ k $ clústeres definimos $ R^2 $ como
 \[
 R^{2}_{k} = \frac{T - \sum_k SSE_k}{T}.
 \]
-Para $ n $ clústeres $ SSE_k = 0 $ por lo que $ R^2 = 1 $. A medida que vamos realizando los agrupamientos, estos estarán más separados. Una gran disminución en $ R^2_k $ representaría un agrupamiento diferente. También podríamos tener en cuenta el cambio en $ R^2 $ al unir los clústeres $ R $ y $ S $ como $ SR^2 = R_k^2 - R^2_{k-1} $. El estadístico $ SR^2 $ representa la proporción de $ SSE_t - (SSE_r + SSE_s) $ donde los clústeres $ C_R $ y $ C_S $ se han unido para formar el clúster $ C_T $.  \\
+Para $ n $ clústeres $ SSE_k = 0 $ por lo que $ R^2 = 1 $. A medida que vamos realizando los agrupamientos, estos estarán más separados. Una gran disminución en $ R^2_k $ representaría un agrupamiento diferente. También podríamos tener en cuenta el cambio en $ R^2 $ al unir los clústeres $ R $ y $ S $ como $ SR^2 = R_k^2 - R^2_{k-1} $. El estadístico $ SR^2 $ representa,en función de $ T $, la proporción de $ SSE_t - (SSE_r + SSE_s) $ donde los clústeres $ C_R $ y $ C_S $ se han unido para formar el clúster $ C_T $.  Cuanto mayor sea el índice mayor será la pérdida de homogeneidad.\\
 
 El objetivo del análisis clúster es encontrar en menor número de clústeres homogéneos. Para un solo clúster, la varianza agrupada para todas las variables es la media de las varianzas de cada una de las variables, es decir, $ s^2 = \sum_{i=1}^{n} \norm{\yy_i - \bar{\yy}}^2/ p(n-1)$. También podemos calcularla para un clúster $ C_k $ con $ n_k $ observaciones de la siguiente manera:
 \[
@@ -519,19 +519,19 @@ s^2 = \sum_{i=1}^{n_k} \norm{\yy_i - \bar{\yy}_k}^2/ p(n_k-1).
 \]
 Grande valores de la varianza agrupada indica que los clústeres no son homogéneos. Por lo tanto, si tiene hacia cero para algún $  k < n $ indica la formación de un clúster homogéneo. \\
 
-Bajo una normal multivariante e independencia de los $ n $ vectores de dimensión $ p $ para $ \Sigma = \sigma^2 \textbf{I} $, podríamos hacer una prueba para verificar que los $ k $ clústeres muestran una separación significativa usando, por ejemplo, un estadístico $ ANOVA\hspace{1mm} F $ (?????). También podemos comprobar si dos medias están lo suficientemente separadas en cualquier nivel usando un estadístico $ t $ (??????). Como la independencia y la distribución normal multivariante no se suelen dar juntos, los estadísticos se denominan pseudo estadísticos $ F $ y  $ t^2 $. El pseudo estadístico $ F $ se define como
+Bajo una normal multivariante e independencia de los $ n $ vectores de dimensión $ p $ para $ \Sigma = \sigma^2 \textbf{I} $, podríamos hacer una prueba para verificar que los $ k $ clústeres muestran una separación significativa usando, por ejemplo, un análisis de la varianza (ANOVA) mediante una prueba $ F $ de Fisher. También podemos comprobar si dos medias están lo suficientemente separadas en cualquier nivel usando un estadístico $ t $, que son los más comunes en las pruebas $ t $ de Student. Como no es común que la independencia y la distribución normal multivariante se den a la voz, los estadísticos se denominan pseudo estadísticos $ F $ y  $ t^2 $. El pseudo estadístico $ F $ se define como
 \[
 F^*_k = \frac{(T-\sum_k SSE_k) / (k-1)}{\sum_k SSE_k / (n-k)}.
 \]
-Si $ F^*_k $ disminuye con $ k $, no deberíamos usarlo para estimar $ k $. Sin embargo, si $ F^*_k $ disminuye con $ k $ y alcanza máximo, el valor de $ k $ en el máximo o el inmediatamente anterior al punto será el candidato del número de clústeres. Por otro lado, el pseudo estadístico $ t^2 $ se define como
+Si $ F^*_k $ disminuye con $ k $, no deberíamos usarlo para estimar $ k $. Sin embargo, si $ F^*_k $ disminuye con $ k $ y alcanza máximo, el valor de $ k $ en el que alcanza dicho máximo o el inmediatamente anterior el candidato del número de clústeres. Por otro lado, el pseudo estadístico $ t^2 $ se define como
 \[
-p-t^2 = \frac{\lbrack SSE_t - (SSE_r + SSE_s)\rbrack(n_R + n_S - 2)}{SSE_r + SSE_s},
+\text{pseudo }t^2 = \frac{\lbrack SSE_t - (SSE_r + SSE_s)\rbrack(n_R + n_S - 2)}{SSE_r + SSE_s},
 \]
-para agrupar los clústeres $ C_R $ y $ C_S $ con $ n_R $ y $ n_S $ elementos respectivamente. De nuevo, uno puede construir la gráfica con los valores obtenidos y el número de clústeres. Si los valores son irregulares en cada punto de agrupamiento, no es un buen índice. Pero si la gráfica parece un palo de hockey el valor $ k +1 $ que causa que la pendiente cambie es nuestro candidato a número de clústeres. \\
+para agrupar los clústeres $ C_R $ y $ C_S $ con $ n_R $ y $ n_S $ elementos respectivamente. De nuevo, uno puede construir la gráfica con los valores obtenidos y el número de clústeres. Si los valores son irregulares en cada punto de agrupamiento, no es un buen índice. Pero si la gráfica parece un palo de hockey, similar al método del codo, el valor $ k +1 $ que causa que la pendiente cambie es nuestro candidato a número de clústeres. \\
 
 Varios estadísticos se generan por los programas que realizan el proceso de agrupamiento y son dibujados para evaluar heurísticamente el número de clústeres generados. Otras técnicas utilizadas para determinar el $ k $ óptimo son por ejemplo el el método de la silueta (\textit{silhouette method}) o el de la brecha (\textit{gap}).
 
-En el \textit{silhouette method}, se observa la similitud de cada observación con su clúster en comparación con el resto de clústeres. Si el índice se encuentra entre los valores -1 y 1 donde un valor próximo a 1 significa un buen agrupamiento. Definimos el índice en este método para cada observación $ i $ como
+En el \textit{silhouette method}, se observa la similitud de cada observación con su clúster en comparación con el resto de clústeres. El índice se encuentra entre los valores -1 y 1 donde un valor próximo a 1 significa un buen agrupamiento. Definimos el índice en este método para cada observación $ i $ como
 \[
 s(i) = \frac{b(i)-a(i)}{\max\{b(i), a(i)\}}, \hspace{2mm} \forall i = 1, \dots, n
 \] 
