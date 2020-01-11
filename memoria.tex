@@ -196,7 +196,7 @@ El clustering consiste en agrupar objetos similares. Dos objetos se consideran s
 
 %Las técnicas de clustering se desarrollaron por primera vez en el ámbito aplicado de la taxonomía o clasificación biológica
 
-Si tenemos una serie de observaciones sin clasificar, el objetivo del clustering es agrupar los datos en clases o clusters. Por ejemplo, cuando en ámbitos biológicos se quiere determinar las especies de una planta concreta. Este tipo de problema aparece cuando queremos no solo identificar especies nuevas, sino también cuando queremos establecer las relaciones entre ellas. El término clustering se considera sinónimo a taxonomía numérica o clasificación. En el ámbito de la ciencia de datos se considera problemas diferentes clasificación y agrupamiento. En el primero conocemos de antemano las clases de los objetos, mientras que en el segundo, a partir de los grupos creados se inferirán las características principales de los grupos.
+Si tenemos una serie de observaciones sin clasificar, el objetivo del clustering es agrupar los datos en clases o clusters. Por ejemplo, cuando en ámbitos biológicos se quiere determinar las especies de una planta concreta. Este tipo de problema aparece cuando queremos no solo identificar especies nuevas, sino también cuando queremos establecer las relaciones entre ellas. El término clustering se considera sinónimo a taxonomía numérica o clasificación. En el ámbito de la ciencia de datos se considera problemas diferentes clasificación donde se conocen a priori las clases posibles (aprendizaje supervisado) y agrupamiento (aprendizaje no supervisado) donde el número de grupos es desconocido. En el primero conocemos de antemano las clases de los objetos, mientras que en el segundo, a partir de los grupos creados se inferirán las características principales de los grupos.
 
 Utilizando el lenguaje matemático, podemos definir el problema como sigue:
 
@@ -204,14 +204,14 @@ Utilizando el lenguaje matemático, podemos definir el problema como sigue:
   Dadas \textbf{$x_1$}$,\dots, $\textbf{$x_n$} medidas de $p$ variables en $n$ objetos considerados \textit{heterogéneos}. El objetivo del análisis cluster es agrupar estos objetos en $k$ clases \textit{homogéneas}, donde $k$ es también desconocido (aunque habitualmente se asume que es mucho menor que $n$).
 \end{quote}
 
-Decimos que un grupo es \textit{homogéneo} si sus miembros están cerca unos de otros pero los miembros de otros grupos son muy diferentes a estos. Esto lleva a definir dos métricas entre los puntos para indicar el grado de alejamiento y el de asociación o similaridad. Se pueden tomar distintas distancias, creando aproximaciones diferentes al problema (trataremos este tema en más profundidad en la Sección \ref{sec:medidas}).
+Decimos que un grupo es \textit{homogéneo} si sus miembros están cerca unos de otros pero los miembros de otros grupos son muy diferentes a estos. Esto lleva a definir dos métricas entre los puntos para indicar el grado de alejamiento y el de asociación o similitud. Se pueden tomar distintas distancias, creando aproximaciones diferentes al problema (trataremos este tema en más profundidad en la Sección \ref{sec:medidas}).
 
 El análisis cluster se aplica en numerosos campos como las ciencias naturales, médicas, económicas, \textit{marketing}, \dots En \textit{marketing}, por ejemplo, es útil dividir a los clientes y conocer las necesidades de cada segmento de mercado para lograr alcanzar a los clientes potenciales. En psicología puede ser útil encontrar tipos de personalidad a partir de los cuestionarios realizados. En arqueología se puede aplicar esta técnica para clasificar objetos en diferentes periodos.
 
 Para llevar a cabo un análisis cluster hay que realizar principalmente dos pasos:
 
 \begin{enumerate}
-\item Elegir una medida de similitud.
+\item Elegir una medida de similitud. Dependerá del objeto de estudio, tipo de medidas (nominales, ordinales, intervalos) y tipo de variables (continuas o discretas).
 \item Elegir un algoritmo para construir los grupos. Hay dos grupos principales: de particionamiento y jerárquicos (que a su vez se dividen entre divisivos y aglomerativos)
 \end{enumerate}
 
@@ -695,7 +695,7 @@ Las muestras del clúster 1 (tipo setosa) se caracteriza por tener un pétalo co
 
 \clearpage
 
-\subsection{Agrupamiento Jerárquico.}
+\subsection{Agrupamiento Jerárquico}
 
 El agrupamiento jerárquico es un método de análisis de grupos puntuales, el cual busca construir una jerarquía de grupos. Estrategias para agrupamiento jerárquico generalmente caen en dos tipos: 
 
@@ -744,7 +744,7 @@ Podemos observar que la matriz de dispersión generada por este algoritmo se ase
 
 \clearpage
 
-\subsubsection{Dendrogramas.}
+\subsubsection{Dendrogramas}
 
 Un dendrograma es un diagrama de árbol que muestra los grupos que se forman al crear clústers de observaciones en cada paso y sus niveles de similitud. En nuestro caso medimos el nivel de similitud en el eje horizontal y las diferentes muestras en el eje vertical.\\
 
@@ -773,7 +773,7 @@ En nuestro caso hemos impuesto que existan 3 clústers por lo que podríamos cor
 
 \clearpage
 
-\subsection{DBSCAN.}
+\subsection{DBSCAN}
 
 Al contrario de la estrategia seguida por K-Means, DBSCAN (\textit{Density-Based Spatial Clustering of Applications with Noise}) no presupone clusters convexos, sino que se basa en la densidad de las muestras para identificar los clusters. Por este motivo, los clusters identificados por DBSCAN pueden ser de cualquier forma.\\
 
@@ -831,7 +831,7 @@ En este caso podemos ver como tenemos un cuarto clúster formado por las muestra
 
 \clearpage
 
-\subsection{Mean Shift.}
+\subsection{Mean Shift}
 
 Mean Shift es una técnica de análisis de espacio de características no paramétrica para localizar los máximos de una función de densidad. Es un método iterativo que parte de una estimación inicial $x$. Dada una función núcleo $K(x_i-x)$. Esta función determina el peso de los puntos cercanos para la reestimación de la media. Normalmente se usa un núcleo gaussiano en la distancia de la estimación actual, $K(x_i-x)=e^{-c||x_i-x||^2}$. La media ponderada de la densidad en la ventana determinada por K es:
 
@@ -890,6 +890,13 @@ Las gráficas obtenidas para este caso, serán la matriz de dispersión (Scatter
 \caption{HeatMap para Mean Shift con 3 clusters.}
 \label{hmms}
 \end{figure}
+
+\subsection{Conclusiones}
+El análisis cluster es una metodología de análisis exploratorio de datos. Trata de descubrir cómo algunos objetos se relacionan. Este tipo de análisis depende de la cantidad de ruido en los datos, la existencia de datos anómalos, las variables seleccionadas para el análisis, la medida de proximidad utilizada, las propiedades espaciales de los datos y el método de agrupamiento empleado.
+
+Una ventaja de los métodos jerárquicos sobre los no jerárquicos es que uno no tiene que saber de antemano el número de clusters (que hemos visto que no es fácil). Además los métodos jerárquicos muchas veces son llamados ``exploratorios'' mientras que los no jerárquicos se denominan ``confirmatorios''. Podemos ver ambos métodos como complementarios. Los métodos jerárquicos no solo dependen de la medida de proximidad utilizada, se ven afectados por el encadenamiento: los objetos tienen a unirse a un cluster existente más que a iniciar uno nuevo.
+
+Un problema importante del clustering es la validación de la solución. Para ello deberemos usar criterios internos, externos y métodos de replicación o validación cruzada.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %       REFERENCIAS
