@@ -490,7 +490,7 @@ En cada paso de nuestro proceso se crea un nuevo clúster formado por dos observ
 
 Uno de los procedimientos para determinar el número de clústeres, por ejemplo en el algoritmo $ k$-medias, es el denominado ``método del codo'' o \textit{elbow method}. Suele ser ambiguo y no muy fiable por lo que se recomienda el uso de otras técnicas. Consiste en dibujar la gráfica de las distancia a los centros de cada clúster en función del número de clústeres. En un punto, se observará que la gráfica forma una especie de codo, de ahí nombre del método, por lo que se escoge dicho punto. Así, llamamos:\\
 \[
-SSE_k = \sum_{i = 1}^{} = \norm{\yy_i - \bar{\yy}_k}^2,
+SSE_k = \sum_{i = 1}^{n_k} = \norm{\yy_i - \bar{\yy}_k}^2,
 \]
 donde $ \bar{\yy}_k $ representa el centroide del clúster $ C_k $. Para cada número de clústeres $ k $ calculamos 
 \[
@@ -543,7 +543,24 @@ y $ b(i) $ como la menor distancia media de $ i $ a todos los puntos de los clú
 \[
 b(i) = \min_{k \neq i} \frac{1}{|C_k|} \sum_{j \in C_k} d(i,j).
 \] 
-Destacamos que si $ |C_i| = 1 $ entonces $ s(i) = 0 $. Así, si muchos objetos tienen un valor alto indica que el resultado obtenido es satisfactorio por lo que se escoge el $ k $ que maximice el valor medio de $ s(i) $. \\
+Destacamos que si $ |C_i| = 1 $ entonces $ s(i) = 0 $. Así, si muchos objetos tienen un valor alto indica que el resultado obtenido es satisfactorio por lo que se escoge el $ k $ que maximice el valor medio de $ s(i) $. Para ejemplificarlo, tomamos los resultados obtenidos en la referencia \cite{silouetteGraph} y se obtiene:
+
+\begin{table}[h!]
+	\centering
+	\begin{tabular}{| c | c |} 
+		\hline
+		k & Silhouette coeff. \\
+		\hline
+		2 &  0.7049787496083262 \\			 
+		3 & 0.5882004012129721 \\	
+		4 &  0.6505186632729437 \\
+		5 &  0.5745566973301872 \\
+		6 & 0.43902711183132426 \\
+		\hline
+	\end{tabular}
+	\caption{Ejemplo \textit{silhouette method}.}
+\end{table}
+Vemos que se obtienen los mejores resultados con 2 o 4 clústeres por lo que deberíamos decidir entre ambos según el resultado que queramos obtener. \\
 
 Finalmente, el método de la brecha es parecido al método del codo y consiste en comparar la variación total dentro de un clúster para diferentes valores de $ k $ con sus valores esperados. El $ k $ elegido será aquel que maximice el valor de la brecha. Definimos el estadístico como:
 \[
@@ -553,7 +570,14 @@ En la fórmula anterior $ E^*_n $ denota la media de una de muestra de tamaño $
 \[
 W_k = \sum_{R = 1}^{k}\frac{1}{2 n_R}\sum_{i j \in C_R} d(i,j).
 \]
-Notamos que se puede usar para cualquier método y distancia. Según \cite{tibshirani2001estimating} el número 2 en la fórmula de $ W_k $ es para que funcione correctamente.
+Notamos que se puede usar para cualquier método y distancia. Según \cite{tibshirani2001estimating} el número 2 en la fórmula de $ W_k $ es para que funcione correctamente. Gráficamente se obtendría una gráfica como la siguiente:
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[scale=0.3]{pedro/gapGraph}
+	\caption{Ejemplo del método de la brecha \cite{gapGraph}.}
+\end{figure}
+Así, lo ideal sería tomar $ k = 4 $.
 
 \clearpage
 
