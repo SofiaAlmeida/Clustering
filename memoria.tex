@@ -229,7 +229,7 @@ La distancia estadística entre las mismas dos observaciones es de la forma:
 
 $$d(x,y)=\sqrt{(x-y)'A(x-y)} $$
 
-Normalmente, $A=S^{-1}$, donde $S$ contiene las varianzas y covarianzas de la muestra. Sin embargo, sin conocimiento previo de los distintos grupos, estas cantidades de las muestras no puede ser calculadas. Por esta razón, usualmente se prefiere la distancia euclídea para \textit{clustering}.\\
+Normalmente, $A=S^{-1}$, donde $S$ contiene las varianzas y covarianzas de la muestra. Sin embargo, sin conocimiento previo de los distintos grupos, estas cantidades de las muestras no puede ser calculadas. Por esta razón, usualmente se prefiere la distancia euclídea para clustering.\\
 
 Otra medida de la distancia es a métrica de Minkowski
 
@@ -243,7 +243,7 @@ Metrica de Canberra:       $ d(x,y)=\sum_{i=1}^{p}{\frac{|x_i-y_i|}{(x_i+y_i)}}$
 
 Coeficiente de Czekanowski:   $d(x,y)=1-\frac{2\sum_{i=1}^{p}{min(x_i,y_i)}}{\sum_{i=1}^{p}{(x_i+y_i}}$ \\
 
-Es aconsejable que cuando sea posible se utilicen distancias "verdaderas" para \textit{clustering}, ésto es, distancias que verifiquen las siguientes propiedades: 
+Es aconsejable que cuando sea posible se utilicen distancias "verdaderas" para clustering, ésto es, distancias que verifiquen las siguientes propiedades: 
 $$d(P,Q)=d(Q,P)$$
 $$d(P,Q)>0\ si\ P\neq Q$$
 $$d(P,Q)=0\ si\ P=Q$$
@@ -251,17 +251,20 @@ $$d(P,Q)\leq d(P,r)+d(R,Q)$$
 
 siendo P y Q dos puntos cualquiera y R un punto intermedio.\\ 
 
-Por otro lado, la mayoría de los algoritmos \textit{clustering} aceptarán números de distancia que no satisfagan la desigualdad triangular.\\
+Por otro lado, la mayoría de los algoritmos clustering aceptarán números de distancia que no satisfagan la desigualdad triangular.\\
 
-Cuando los items no puedan ser representados por medidas p-dimensionales significativas, las parejas de items se suelen comparar según la presencia o ausencia de ciertas características. Items similares tienen más características en común que items desemejantes. La presencia o ausencia de una característica se puede describir matemáticamente introduciendo una variable binaria, que toma el valor 1 si la característica está presente y el valor 0 cuando la característica está ausente. 
+Cuando los items no puedan ser representados por medidas p-dimensionales significativas, las parejas de items se suelen comparar segú la presencia o ausencia de ciertas características. Items similares tienen más características en común que items desemejantes. La presencia o ausencia de una característica se puede describir matemáticamente introduciendo una variable binaria, que toma el valor 1 si la característica está presente y el valor 0 cuando la característica está ausente. 
 
-\begin{table}[]
+\begin{table}[h]
+\centering
+\resizebox{5cm}{!} {
 \begin{tabular}{llllll}
        & \multicolumn{5}{c}{Variables} \\
        & 1    & 2    & 3   & 4   & 5   \\
 Item i & 1    & 0    & 0   & 1   & 1   \\
 Item k & 1    & 1    & 0   & 1   & 0  
 \end{tabular}
+}
 \end{table}
 
 En este caso, hay dos parejas 1-1, una pareja 0-0 y dos parejas que no coinciden.\\
@@ -281,7 +284,9 @@ Para introducir dichos esquemas, vamos a organizar las frecuencias de las pareja
 % Please add the following required packages to your document preamble:
 % \usepackage{multirow}
 
-\begin{table}[]
+\begin{table}[h]
+\centering
+\resizebox{7cm}{!} {
 \begin{tabular}{ll|clc|c|l}
 \multicolumn{2}{l|}{\multirow{2}{*}{}} & \multicolumn{3}{c}{Item k} & \multicolumn{2}{c|}{\multirow{2}{*}{Total}} \\
 \multicolumn{2}{l|}{}                  & 1        &       & 0       & \multicolumn{2}{c|}{}                        \\ \hline
@@ -289,17 +294,21 @@ Para introducir dichos esquemas, vamos a organizar las frecuencias de las pareja
                               & 0      & c        &       & d       & \multicolumn{2}{c|}{c+d}                     \\ \hline
 \multicolumn{2}{l|}{Total}            & a+c      &       & b+d     & \multicolumn{2}{c|}{p=a+b+c+d}              
 \end{tabular}
+}
 \end{table}
-%La tabla no se quiere poner en su sitio
 
 En esta tabla, $a$ representa la frecuencia de parejas 1-1, $b$ es la frecuencia de parejas 1-0 y así sucesivamente. Dadas las anteriores cinco parejas, $a=2$ y $b=c=d=1$.\\
 
 La siguiente tabla lista coeficientes de similitud comunes definidos en términos de frecuencias de la anterior tabla.
 
-\begin{table}[]
+\clearpage
+
+\begin{table}[h]
+\centering
+\resizebox{13cm}{!} {
 \begin{tabular}{|ll|}
 \hline
-\multicolumn{2}{|l|}{Tabla 12.1 Coeficientes de similitud para items \textit{clustering}}                                                                                                              \\ \hline
+\multicolumn{2}{|l|}{Tabla 12.1 Coeficientes de similitud para items clustering}                                                                                                              \\ \hline
 \multicolumn{1}{|c}{Coeficiente} & \multicolumn{1}{c|}{Fundamento}                                                                                                                 \\ \hline
 1. $\frac{a+d}{p}$                              & Las parejas 1-1 y 0-0 ponderan lo mismo .                                                                                                       \\
 2.  $\frac{2(a+d)}{2(a+d)+b+c}$                            & Las parejas 1-1 y 0-0 ponderan el doble.                                                                                                        \\
@@ -310,15 +319,18 @@ La siguiente tabla lista coeficientes de similitud comunes definidos en término
 7.  $\frac{a}{a+2(b+c)}$                             & \begin{tabular}[c]{@{}l@{}}No hay parejas 0-0 en el numerador ni el denominador.\\ Las parejas que no coinciden ponderan el doble.\end{tabular} \\
 8.  $\frac{a}{b+c}$                             & \begin{tabular}[c]{@{}l@{}}Proporción de parejas que coinciden (excluyendo las 0-0) en\\  relación a las parejas que no coinciden.\end{tabular} \\ \hline
 \end{tabular}
+}
 \end{table}
 
 Los coeficientes 1, 2 y 3 de la tabla están monotónicamente relacionados. Supongamos que el coeficiente 1 se calcula para dos tablas de contingencia, Tabla I y Tabla II. Entonces si $(a_I+d_I)/p \geq (a_{II}+d_{II})/p$, tenemos que $2(a_I+d_I)/[2(a_I+d_I)+b_I+c_I] \geq 2(a_{II}+d_{II})/[2(a_{II}+d_{II})+b_{II}+c_{II}]$ y el coeficiente 3 será al menos tan grande para la Tabla I como lo es para la Tabla II. Los coeficientes 5, 6 y 7 también mantienen sus órdenes relativos.\\
 
-La monotonicidad es importante, ya que algunos procedimientos de \textit{clustering} no se ven afectados si la definición de similitud se modifica de manera que los órdenes relativos de similitud no cambian. Los procedimientos jerárquicos de asociación simple y asociación completa que se verán en la sección siguiente no se ven afectados Para estos métodos, cualquier elección entre los coeficientes 1, 2 y 3 de la tabla anterior producirá las mismas agrupaciones. Análogamente, cualquier elección entre los coefcientes 5, 6 y 7 también resultará en agrupaciones idénticas.\\
+La monotonicidad es importante, ya que algunos procedimientos de clustering no se ven afectados si la definición de similitud se modifica de manera que los órdenes relativos de similitud no cambian. Los procedimientos jerárquicos de asociación simple y asociación completa que se verán en la sección siguiente no se ven afectados Para estos métodos, cualquier elección entre los coeficientes 1, 2 y 3 de la tabla anterior producirá las mismas agrupaciones. Análogamente, cualquier elección entre los coefcientes 5, 6 y 7 también resultará en agrupaciones idénticas.\\
 
 Ejemplo (Calculando los valores de un coeficiente de similitud) Supongamos cinco individuos con las siguientes características:
 
-\begin{table}[]
+\begin{table}[h]
+\centering
+\resizebox{15cm}{!} {
 \begin{tabular}{l|cccccc}
             & \multicolumn{1}{l}{Altura} & \multicolumn{1}{l}{Peso} & \multicolumn{1}{l}{Color de ojos} & \multicolumn{1}{l}{Color de pelo} & \multicolumn{1}{l}{Mano predominante} & \multicolumn{1}{l}{Género} \\ \hline
 Individuo 1 & 68 in                      & 140 lb                   & verde                             & rubio                             & derecha                               & femenino                   \\
@@ -327,6 +339,7 @@ Individuo 3 & 67 in                      & 165 lb                   & azul      
 Individuo 4 & 64 in                      & 120 lb                   & marrón                            & moreno                            & derecha                               & femenino                   \\
 Individuo 5 & 76 in                      & 210 lb                   & marrón                            & moreno                            & izquiera                              & masculino                 
 \end{tabular}
+}
 \end{table}
 
 Definimos seis variables binarias $X_1,X_2,X_3,X_4,X_5,X_6$ como:
@@ -351,17 +364,22 @@ $$X_6 = \left \{ \begin{matrix} 1 & \mbox{si } masculino
 
 Las puntuaciones de los individuos 1 y 2 en las p=6 variables binarias son:
 
-\begin{table}[]
+\begin{table}[h]
+\centering
+\resizebox{8cm}{!} {
 \begin{tabular}{l|cccccc}
-            & \multicolumn{1}{l}{X\_1} & \multicolumn{1}{l}{X\_2} & \multicolumn{1}{l}{X\_3} & \multicolumn{1}{l}{X\_4} & \multicolumn{1}{l}{X\_5} & \multicolumn{1}{l}{X\_6} \\ \hline
+            & \multicolumn{1}{l}{$X_1$} & \multicolumn{1}{l}{$X_2$} & \multicolumn{1}{l}{$X_3$} & \multicolumn{1}{l}{$X_4$} & \multicolumn{1}{l}{$X_5$} & \multicolumn{1}{l}{$X_6$} \\ \hline
 Individuo 1 & 0                        & 0                        & 0                        & 1                        & 1                        & 1                        \\
 Individuo 2 & 1                        & 1                        & 1                        & 0                        & 1                        & 0                       
 \end{tabular}
+}
 \end{table}
 
-y el número de parejas que coinciden y las que no se indican en la siguiente tabla
+y el número de parejas que coinciden y las que no se indican en la siguiente tabla:
 
-\begin{table}[]
+\begin{table}[h]
+\centering
+\resizebox{6.5cm}{!} {
 \begin{tabular}{ll|clc|c|l}
 \multicolumn{2}{l|}{\multirow{2}{*}{}} & \multicolumn{3}{c}{Individuo 2} & \multicolumn{2}{c|}{\multirow{2}{*}{Total}} \\
 \multicolumn{2}{l|}{}                  & 1        &       & 0       & \multicolumn{2}{c|}{}                        \\ \hline
@@ -369,17 +387,18 @@ y el número de parejas que coinciden y las que no se indican en la siguiente ta
                               & 0      & 3        &       & 0       & \multicolumn{2}{c|}{3}                     \\ \hline
 \multicolumn{2}{l|}{Total}            & 4      &       & 2     & \multicolumn{2}{c|}{6}              
 \end{tabular}
+}
 \end{table}
 
 Empleando el coeficiente de similitud 1, que pondera por igual las parejas que coinciden, calculamos
 
 $$\frac{a+d}{p}=\frac{1+0}{6}=\frac{1}{6} $$
 
-Continuando con el coeficiente de similitud 1, calculamos los demás números de similitud para las parejas de individuos. Mostramos los resultados en una matriz simétrica 5 x 5
+Continuando con el coeficiente de similitud 1, calculamos los demás números de similitud para las parejas de individuos. Mostramos los resultados en una matriz simétrica 5 x 5.
 
-%tampoco quiere quedarse en su sitio
-
-\begin{table}[]
+\begin{table}[h]
+\centering
+\resizebox{7.5cm}{!} {
 \begin{tabular}{lllllll}
 \multicolumn{2}{l}{\multirow{2}{*}{}}               & \multicolumn{5}{c}{Individuo}                  \\
 \multicolumn{2}{l}{}                                & 1   & 2   & 3   & 4   & 5                      \\ \cline{3-3} \cline{7-7} 
@@ -389,6 +408,7 @@ Continuando con el coeficiente de similitud 1, calculamos los demás números de
                            & \multicolumn{1}{l|}{4} & 4/6 & 3/6 & 2/6 & 1   & \multicolumn{1}{l|}{}  \\
                            & \multicolumn{1}{l|}{5} & 0   & 5/6 & 2/6 & 2/6 & \multicolumn{1}{l|}{1} \\ \cline{3-3} \cline{7-7} 
 \end{tabular}
+}
 \end{table}
 
 Basándonos en las magnitudes del coeficiente de similitud, debemos concluir que los individuos 2 y 5 son los más similares mientras que los individuos 1 y 5 son los menos similiares. Si fuéramos a dividir los individuos en dos subgrupos relativamente homogéneos basándonos en los números de similitud, formaríamos los subgrupos (1 3 4) y (2 5).\\
@@ -399,7 +419,7 @@ Hemos descrito la construcción de distancias y similitudes. Siempre se pueden c
 $$ s_{ik} = \frac{1}{1+d_{ik}}$$ 
 
 donde $0<s_{ik}\leq 1$ es la similitud entre los items $i$ y $k$ y $d_{ik}$ es la distancia correspondiente.\\
-Sin embargo, no siempre podemos construir distancias "verdaderas", que cumplan las propiedades para \textit{clustering}, a partir de similitudes. Sólo se pueden construir si la matriz de similitudes es definida no negativa.\\
+Sin embargo, no siempre podemos construir distancias "verdaderas", que cumplan las propiedades para clustering, a partir de similitudes. Sólo se pueden construir si la matriz de similitudes es definida no negativa.\\
 Con la condición de definida no negativa y la máxima similitud escada de manera que $s_{ii}=1$,
 
 $$ d_{ik}=\sqrt{2(1-s_{ik})}$$
@@ -408,10 +428,12 @@ cumple las propiedades de una distancia.
 
 \subsection{Medidas de similitud y asociación para parejas de variables}
 
-Hasta el momento, hemos discutido medidas de similitud para los items. En algunas aplicaciones, son las variables, en lugar de los items, las que deben ser agrupadas. Las medidas de similitud para variables suelen tomar la forma de coeficientes de correlaciones muestrales. Además, en algunas aplicaciones de \textit{clustering}, las correlaciones negativas son reemlazadas por sus valores absolutos.\\
+Hasta el momento, hemos discutido medidas de similitud para los tiems. En algunas aplicaciones, son las variables, en lugar de los items, las que deben ser agrupadas. Las medidas de similitud para variables suelen tomar la forma de coeficientes de correlaciones muestrales. Además, en algunas aplicaciones de clustering, las correlaciones negativas son reemlazadas por sus valores absolutos.\\
 Cuando las variables son binarias, los datos se pueden organizar en una tabla de contingencia. Sin embargo, esta vez las variables, en lugar de los items, definen las categorías. Para cada par de variables hay $n$ items categorizados en la tabla. Con la codificación usual en 0 y 1, la tabla es como sigue: 
 
-\begin{table}[]
+\begin{table}[h]
+\centering
+\resizebox{7.5cm}{!} {
 \begin{tabular}{ll|clc|c|l}
 \multicolumn{2}{l|}{\multirow{2}{*}{}} & \multicolumn{3}{c}{Variable k} & \multicolumn{2}{c|}{\multirow{2}{*}{Total}} \\
 \multicolumn{2}{l|}{}                  & 1        &       & 0       & \multicolumn{2}{c|}{}                        \\ \hline
@@ -419,6 +441,7 @@ Cuando las variables son binarias, los datos se pueden organizar en una tabla de
                               & 0      & c        &       & d       & \multicolumn{2}{c|}{c+d}                     \\ \hline
 \multicolumn{2}{l|}{Total}            & a+c      &       & b+d     & \multicolumn{2}{c|}{n=a+b+c+d}              
 \end{tabular}
+}
 \end{table}
 
 Por ejemplo, la variable $i$ vale $1$ y la variable $k$ vale $0$ para $b$ de los $n$ items.\\
@@ -431,11 +454,13 @@ El coeficiente de correlación anterior se relaciona con la estadística chi-cua
 
 Dada la tabla anterior, se pueden desarrollar medidas de asociacion (o similitud) exactamente análogas a las listadas en la Tabla 12.1. El único cambio que se requiere es la sustitución de $n$ (el número de items) por $p$ (el número de variables).\\
 
-Para resumir esta sección, notamos que hay muchas medidas de similitud entre pares de objetos. Parece que la mayoría de profesionales usan distancias o los coeficientes de la Tabla 12.1 para el cluster de items y correlaciones para el cluster de variables. Sin embargo, en ocasiones, las entradas a los algoritmos \textit{clustering} pueden ser frecuencias simples.\\
+Para resumir esta sección, notamos que hay muchas medidas de similitud entre pares de objetos. Parece que la mayoría de profesionales usan distancias o los coeficientes de la Tabla 12.1 para el cluster de items y correlaciones para el cluster de variables. Sin embargo, en ocasiones, las entradas a los algoritmos clustering pueden ser frecuencias simples.\\
 
-Ejemplo (Midiendo las similitudes de 11 lenguajes) Los significados de las palabras cambian a lo largo de la historia. Sin embargo, el significado de los números 1,2,3,... representa una excepción llamática. Así, una primera comparación de lenguajes puede estar basado por exclusiva en los números naturales. La Tabla 12.2 (siguiente tabla) nos da los 10 primeros números en inglés, polaco, húngaro y otros ocho lenguajes europeos modernos. (Solamente consideramos lenguajes que utilizan el alfabeto romano y omitimos acentos y signos de puntuación.) Una observación rápida de la escritura de los números sugiere que los cinco primeros lenguajes (inglés, noruego, danés, holandés y alemán) son muy parecidos. El español, francés e italiano se parecen todavía más. El húngaro y finés parecen no estar relacionados con los demás lenguajes. El polaco tiene algunas características de los lenguajes de los subgrupos más grandes.
+Ejemplo (Midiendo las similitudes de 11 lenguajes) Los significados de las palabras cambian a lo largo de la historia. Sin embargo, el significado de los números 1,2,3,... representa una excepción llamatica. Así, una primera comparación de lenguajes puede estar basado por exclusiva en los números naturales. La Tabla 12.2 (siguiente tabla) nos da los 10 primeros números en inglés, polaco, húngaro y otros ocho lenguajes europeos modernos. (Solamente consideramos lenguajes que utilizan el alfabeto romano y omitimos acentos y signos de puntuación.) Una observación rápida de la escritura de los números sugiere que los cinco primeros lenguajes (inglés, noruego, danés, holandés y alemán) son muy parecidos. El español, francés e italiano se parecen todavía más. El húngaro y finés parecen no estar relacionados con los demás lenguajes. El polaco tiene algunas características de los lenguajes de los subgrupos más grandes.
 
-\begin{table}[]
+\begin{table}[h]
+\centering
+\resizebox{16cm}{!} {
 \begin{tabular}{|lllllllllll|}
 \hline
 \multicolumn{11}{|l|}{Tabla 12.2 Números en 11 lenguajes}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             \\ \hline
@@ -451,9 +476,12 @@ eight                                                & atte                     
 nine                                                 & ni                                                    & ni                                                   & negen                                                   & neun                                                 & neuf                                                   & nueve                                                  & nove                                                   & dziewiec                                             & kilenc                                                & yhdeksan                                             \\
 ten                                                  & ti                                                    & ti                                                   & tien                                                    & zehn                                                 & dix                                                    & diez                                                   & dieci                                                  & dziesiec                                             & tiz                                                   & kymmenen                                             \\ \hline
 \end{tabular}
+}
 \end{table}
 
-\begin{table}[]
+\begin{table}[h]
+\centering
+\resizebox{12cm}{!} {
 \begin{tabular}{|cccccccccccc|}
 \hline
 \multicolumn{12}{|l|}{Tabla 12.3 Concordancia de la primera letra para 10 números en 11 lenguajes} \\ \hline
@@ -470,12 +498,13 @@ P      & 3      & 3      & 4      & 0      & 2     & 5     & 7     & 6     & 10 
 H      & 1      & 2      & 2      & 2      & 1     & 0     & 0     & 0     & 0     & 10    &       \\
 Fi     & 1      & 1      & 1      & 1      & 1     & 1     & 1     & 1     & 1     & 2     & 10    \\ \hline
 \end{tabular}
+}
 \end{table}
 
-Por propósitos ilustrativos, comparamos los lenguajes mirando la primera letra de cada número. Las palabras para el mismo número son concordantes si tienen la misma primera letra y discordantes en caso contrario. De esta forma de la tabla 12.2 obtenemos la tabla 12.3. Podemos observar que el inglés y el noruego comparten la misma primera letra para 8 de las 10 parejas de números. El resto de frecuencias se ha calculado de la misma forma.\\
+Por porpósitos ilustrativos, comparamos los lenguajes mirando la primera letra de cada número. Las palabras para el mismo número son concordantes si tienen la misma primera letra y discordantes en caso contrario. De esta forma de la tabla 12.2 obtenemos la tabla 12.3. Podemos observar que el inglés y el noruego comparten la misma primera letra para 8 de las 10 parejas de números. El resto de frecuencias se ha calculado de la misma forma.\\
 Los resultados en la Tabla 12.3 confirman la impresión visual inicial de la Tabla 12.2. Ésto es, que el inglés, noruego, danés, holandés y alemán parecen formar un grupo. El francés, español, italiano y polaco forman otro, mientras que el húngaro y el finés no forman parte de ninguno.\\
 
-En los ejemplos hasta el momento, hemos utilizado nuestra impresión visual de las medidas de similitud o distancia para formar grupos. Más adelante discutiremos formas menos subjetivas para crear los \textit{clusters}. 
+En los ejemplo hasta el momento, hemos utilizado nuestra impresión visual de las medidas de similitud o distancia para formar grupos. Más adelante discutiremos formas menos subjetivas para crear los clusters. 
 
 \section{Métodos de agrupamiento}
 \subsection{Jerárquicos}
