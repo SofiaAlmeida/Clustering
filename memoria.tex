@@ -186,17 +186,15 @@ Subtítulo} % Subtitle
 }
 \pagebreak
 % TODO:
-% - Pasar a textit: clustering, clusters, cluster
-% TODO:
 % - Referenciar referencias...
 
 \section{Introducción}
 
-El clustering consiste en agrupar objetos similares. Dos objetos se consideran similares si, considerando alguna medida de error, las observaciones podrían ser del mismo objeto. Esta clasificación ocurre constantemente en nuestra vida diaria, damos el mismo nombre a objetos que difieren en detalles insignificantes. 
+El \textit{clustering} consiste en agrupar objetos similares. Dos objetos se consideran similares si, considerando alguna medida de error, las observaciones podrían ser del mismo objeto. Esta clasificación ocurre constantemente en nuestra vida diaria, damos el mismo nombre a objetos que difieren en detalles insignificantes. 
 
 %Las técnicas de clustering se desarrollaron por primera vez en el ámbito aplicado de la taxonomía o clasificación biológica
 
-Si tenemos una serie de observaciones sin clasificar, el objetivo del clustering es agrupar los datos en clases o clusters. Por ejemplo, cuando en ámbitos biológicos se quiere determinar las especies de una planta concreta. Este tipo de problema aparece cuando queremos no solo identificar especies nuevas, sino también cuando queremos establecer las relaciones entre ellas. El término clustering se considera sinónimo a taxonomía numérica o clasificación. En el ámbito de la ciencia de datos se considera problemas diferentes clasificación donde se conocen a priori las clases posibles (aprendizaje supervisado) y agrupamiento (aprendizaje no supervisado) donde el número de grupos es desconocido. En el primero conocemos de antemano las clases de los objetos, mientras que en el segundo, a partir de los grupos creados se inferirán las características principales de los grupos.
+Si tenemos una serie de observaciones sin clasificar, el objetivo del \textit{clustering} es agrupar los datos en clases o \textit{clusters}. Por ejemplo, en ámbitos biológicos para determinar la especie de una planta concreta. Este tipo de problema aparece cuando queremos no solo identificar especies nuevas, sino también cuando queremos establecer las relaciones entre ellas. El término \textit{clustering} se considera sinónimo a taxonomía numérica o clasificación. En el ámbito de la ciencia de datos se considera problemas diferentes clasificación donde se conocen a priori las clases posibles (aprendizaje supervisado) y agrupamiento (aprendizaje no supervisado) donde el número de grupos es desconocido. En el primero conocemos de antemano las clases de los objetos, mientras que en el segundo, a partir de los grupos creados se inferirán las características principales de los grupos.
 
 Utilizando el lenguaje matemático, podemos definir el problema como sigue:
 
@@ -221,7 +219,7 @@ La mayoría de los esfuerzos para producir una estructura de grupo más simple a
 
 Cuando los items (unidades o casos) son agrupados, la proximidad se suele indicar mediante alguna medida de la distancia. En contraste, las variables se suelen agrupar según los coeficientes de correlación o medidas de asociación
 
-\subsection{Distancias y coeficientes de similitud para parejas de tiems}
+\subsection{Distancias y coeficientes de similitud para parejas de items}
 
 Recordamos que la distancia euclídea entre dos observaciones p-dimensionales (items) $x' = [x_1,x_2,...,x_p]$ e $y'=[y_1,y_2,...,y_p]$ es
 
@@ -231,7 +229,7 @@ La distancia estadística entre las mismas dos observaciones es de la forma:
 
 $$d(x,y)=\sqrt{(x-y)'A(x-y)} $$
 
-Normalmente, $A=S^{-1}$, donde $S$ contiene las varianzas y covarianzas de la muestra. Sin embargo, sin conocimiento previo de los distintos grupos, estas cantidades de las muestras no puede ser calculadas. Por esta razón, usualmente se prefiere la distancia euclídea para clustering.\\
+Normalmente, $A=S^{-1}$, donde $S$ contiene las varianzas y covarianzas de la muestra. Sin embargo, sin conocimiento previo de los distintos grupos, estas cantidades de las muestras no puede ser calculadas. Por esta razón, usualmente se prefiere la distancia euclídea para \textit{clustering}.\\
 
 Otra medida de la distancia es a métrica de Minkowski
 
@@ -245,7 +243,7 @@ Metrica de Canberra:       $ d(x,y)=\sum_{i=1}^{p}{\frac{|x_i-y_i|}{(x_i+y_i)}}$
 
 Coeficiente de Czekanowski:   $d(x,y)=1-\frac{2\sum_{i=1}^{p}{min(x_i,y_i)}}{\sum_{i=1}^{p}{(x_i+y_i}}$ \\
 
-Es aconsejable que cuando sea posible se utilicen distancias "verdaderas" para clustering, ésto es, distancias que verifiquen las siguientes propiedades: 
+Es aconsejable que cuando sea posible se utilicen distancias "verdaderas" para \textit{clustering}, ésto es, distancias que verifiquen las siguientes propiedades: 
 $$d(P,Q)=d(Q,P)$$
 $$d(P,Q)>0\ si\ P\neq Q$$
 $$d(P,Q)=0\ si\ P=Q$$
@@ -253,9 +251,9 @@ $$d(P,Q)\leq d(P,r)+d(R,Q)$$
 
 siendo P y Q dos puntos cualquiera y R un punto intermedio.\\ 
 
-Por otro lado, la mayoría de los algoritmos clustering aceptarán números de distancia que no satisfagan la desigualdad triangular.\\
+Por otro lado, la mayoría de los algoritmos \textit{clustering} aceptarán números de distancia que no satisfagan la desigualdad triangular.\\
 
-Cuando los items no puedan ser representados por medidas p-dimensionales significativas, las parejas de items se suelen comparar segú la presencia o ausencia de ciertas características. Items similares tienen más características en común que items desemejantes. La presencia o ausencia de una característica se puede describir matemáticamente introduciendo una variable binaria, que toma el valor 1 si la característica está presente y el valor 0 cuando la característica está ausente. 
+Cuando los items no puedan ser representados por medidas p-dimensionales significativas, las parejas de items se suelen comparar según la presencia o ausencia de ciertas características. Items similares tienen más características en común que items desemejantes. La presencia o ausencia de una característica se puede describir matemáticamente introduciendo una variable binaria, que toma el valor 1 si la característica está presente y el valor 0 cuando la característica está ausente. 
 
 \begin{table}[]
 \begin{tabular}{llllll}
@@ -301,7 +299,7 @@ La siguiente tabla lista coeficientes de similitud comunes definidos en término
 \begin{table}[]
 \begin{tabular}{|ll|}
 \hline
-\multicolumn{2}{|l|}{Tabla 12.1 Coeficientes de similitud para items clustering}                                                                                                              \\ \hline
+\multicolumn{2}{|l|}{Tabla 12.1 Coeficientes de similitud para items \textit{clustering}}                                                                                                              \\ \hline
 \multicolumn{1}{|c}{Coeficiente} & \multicolumn{1}{c|}{Fundamento}                                                                                                                 \\ \hline
 1. $\frac{a+d}{p}$                              & Las parejas 1-1 y 0-0 ponderan lo mismo .                                                                                                       \\
 2.  $\frac{2(a+d)}{2(a+d)+b+c}$                            & Las parejas 1-1 y 0-0 ponderan el doble.                                                                                                        \\
@@ -316,7 +314,7 @@ La siguiente tabla lista coeficientes de similitud comunes definidos en término
 
 Los coeficientes 1, 2 y 3 de la tabla están monotónicamente relacionados. Supongamos que el coeficiente 1 se calcula para dos tablas de contingencia, Tabla I y Tabla II. Entonces si $(a_I+d_I)/p \geq (a_{II}+d_{II})/p$, tenemos que $2(a_I+d_I)/[2(a_I+d_I)+b_I+c_I] \geq 2(a_{II}+d_{II})/[2(a_{II}+d_{II})+b_{II}+c_{II}]$ y el coeficiente 3 será al menos tan grande para la Tabla I como lo es para la Tabla II. Los coeficientes 5, 6 y 7 también mantienen sus órdenes relativos.\\
 
-La monotonicidad es importante, ya que algunos procedimientos de clustering no se ven afectados si la definición de similitud se modifica de manera que los órdenes relativos de similitud no cambian. Los procedimientos jerárquicos de asociación simple y asociación completa que se verán en la sección siguiente no se ven afectados Para estos métodos, cualquier elección entre los coeficientes 1, 2 y 3 de la tabla anterior producirá las mismas agrupaciones. Análogamente, cualquier elección entre los coefcientes 5, 6 y 7 también resultará en agrupaciones idénticas.\\
+La monotonicidad es importante, ya que algunos procedimientos de \textit{clustering} no se ven afectados si la definición de similitud se modifica de manera que los órdenes relativos de similitud no cambian. Los procedimientos jerárquicos de asociación simple y asociación completa que se verán en la sección siguiente no se ven afectados Para estos métodos, cualquier elección entre los coeficientes 1, 2 y 3 de la tabla anterior producirá las mismas agrupaciones. Análogamente, cualquier elección entre los coefcientes 5, 6 y 7 también resultará en agrupaciones idénticas.\\
 
 Ejemplo (Calculando los valores de un coeficiente de similitud) Supongamos cinco individuos con las siguientes características:
 
@@ -401,7 +399,7 @@ Hemos descrito la construcción de distancias y similitudes. Siempre se pueden c
 $$ s_{ik} = \frac{1}{1+d_{ik}}$$ 
 
 donde $0<s_{ik}\leq 1$ es la similitud entre los items $i$ y $k$ y $d_{ik}$ es la distancia correspondiente.\\
-Sin embargo, no siempre podemos construir distancias "verdaderas", que cumplan las propiedades para clustering, a partir de similitudes. Sólo se pueden construir si la matriz de similitudes es definida no negativa.\\
+Sin embargo, no siempre podemos construir distancias "verdaderas", que cumplan las propiedades para \textit{clustering}, a partir de similitudes. Sólo se pueden construir si la matriz de similitudes es definida no negativa.\\
 Con la condición de definida no negativa y la máxima similitud escada de manera que $s_{ii}=1$,
 
 $$ d_{ik}=\sqrt{2(1-s_{ik})}$$
@@ -410,7 +408,7 @@ cumple las propiedades de una distancia.
 
 \subsection{Medidas de similitud y asociación para parejas de variables}
 
-Hasta el momento, hemos discutido medidas de similitud para los tiems. En algunas aplicaciones, son las variables, en lugar de los items, las que deben ser agrupadas. Las medidas de similitud para variables suelen tomar la forma de coeficientes de correlaciones muestrales. Además, en algunas aplicaciones de clustering, las correlaciones negativas son reemlazadas por sus valores absolutos.\\
+Hasta el momento, hemos discutido medidas de similitud para los items. En algunas aplicaciones, son las variables, en lugar de los items, las que deben ser agrupadas. Las medidas de similitud para variables suelen tomar la forma de coeficientes de correlaciones muestrales. Además, en algunas aplicaciones de \textit{clustering}, las correlaciones negativas son reemlazadas por sus valores absolutos.\\
 Cuando las variables son binarias, los datos se pueden organizar en una tabla de contingencia. Sin embargo, esta vez las variables, en lugar de los items, definen las categorías. Para cada par de variables hay $n$ items categorizados en la tabla. Con la codificación usual en 0 y 1, la tabla es como sigue: 
 
 \begin{table}[]
@@ -433,9 +431,9 @@ El coeficiente de correlación anterior se relaciona con la estadística chi-cua
 
 Dada la tabla anterior, se pueden desarrollar medidas de asociacion (o similitud) exactamente análogas a las listadas en la Tabla 12.1. El único cambio que se requiere es la sustitución de $n$ (el número de items) por $p$ (el número de variables).\\
 
-Para resumir esta sección, notamos que hay muchas medidas de similitud entre pares de objetos. Parece que la mayoría de profesionales usan distancias o los coeficientes de la Tabla 12.1 para el cluster de items y correlaciones para el cluster de variables. Sin embargo, en ocasiones, las entradas a los algoritmos clustering pueden ser frecuencias simples.\\
+Para resumir esta sección, notamos que hay muchas medidas de similitud entre pares de objetos. Parece que la mayoría de profesionales usan distancias o los coeficientes de la Tabla 12.1 para el cluster de items y correlaciones para el cluster de variables. Sin embargo, en ocasiones, las entradas a los algoritmos \textit{clustering} pueden ser frecuencias simples.\\
 
-Ejemplo (Midiendo las similitudes de 11 lenguajes) Los significados de las palabras cambian a lo largo de la historia. Sin embargo, el significado de los números 1,2,3,... representa una excepción llamatica. Así, una primera comparación de lenguajes puede estar basado por exclusiva en los números naturales. La Tabla 12.2 (siguiente tabla) nos da los 10 primeros números en inglés, polaco, húngaro y otros ocho lenguajes europeos modernos. (Solamente consideramos lenguajes que utilizan el alfabeto romano y omitimos acentos y signos de puntuación.) Una observación rápida de la escritura de los números sugiere que los cinco primeros lenguajes (inglés, noruego, danés, holandés y alemán) son muy parecidos. El español, francés e italiano se parecen todavía más. El húngaro y finés parecen no estar relacionados con los demás lenguajes. El polaco tiene algunas características de los lenguajes de los subgrupos más grandes.
+Ejemplo (Midiendo las similitudes de 11 lenguajes) Los significados de las palabras cambian a lo largo de la historia. Sin embargo, el significado de los números 1,2,3,... representa una excepción llamática. Así, una primera comparación de lenguajes puede estar basado por exclusiva en los números naturales. La Tabla 12.2 (siguiente tabla) nos da los 10 primeros números en inglés, polaco, húngaro y otros ocho lenguajes europeos modernos. (Solamente consideramos lenguajes que utilizan el alfabeto romano y omitimos acentos y signos de puntuación.) Una observación rápida de la escritura de los números sugiere que los cinco primeros lenguajes (inglés, noruego, danés, holandés y alemán) son muy parecidos. El español, francés e italiano se parecen todavía más. El húngaro y finés parecen no estar relacionados con los demás lenguajes. El polaco tiene algunas características de los lenguajes de los subgrupos más grandes.
 
 \begin{table}[]
 \begin{tabular}{|lllllllllll|}
@@ -474,13 +472,14 @@ Fi     & 1      & 1      & 1      & 1      & 1     & 1     & 1     & 1     & 1  
 \end{tabular}
 \end{table}
 
-Por porpósitos ilustrativos, comparamos los lenguajes mirando la primera letra de cada número. Las palabras para el mismo número son concordantes si tienen la misma primera letra y discordantes en caso contrario. De esta forma de la tabla 12.2 obtenemos la tabla 12.3. Podemos observar que el inglés y el noruego comparten la misma primera letra para 8 de las 10 parejas de números. El resto de frecuencias se ha calculado de la misma forma.\\
+Por propósitos ilustrativos, comparamos los lenguajes mirando la primera letra de cada número. Las palabras para el mismo número son concordantes si tienen la misma primera letra y discordantes en caso contrario. De esta forma de la tabla 12.2 obtenemos la tabla 12.3. Podemos observar que el inglés y el noruego comparten la misma primera letra para 8 de las 10 parejas de números. El resto de frecuencias se ha calculado de la misma forma.\\
 Los resultados en la Tabla 12.3 confirman la impresión visual inicial de la Tabla 12.2. Ésto es, que el inglés, noruego, danés, holandés y alemán parecen formar un grupo. El francés, español, italiano y polaco forman otro, mientras que el húngaro y el finés no forman parte de ninguno.\\
 
-En los ejemplo hasta el momento, hemos utilizado nuestra impresión visual de las medidas de similitud o distancia para formar grupos. Más adelante discutiremos formas menos subjetivas para crear los clusters. 
+En los ejemplos hasta el momento, hemos utilizado nuestra impresión visual de las medidas de similitud o distancia para formar grupos. Más adelante discutiremos formas menos subjetivas para crear los \textit{clusters}. 
 
 \section{Métodos de agrupamiento}
 \subsection{Jerárquicos}
+
 \subsection{No jerárquicos}
 \section{Número de clústeres}
 En los algoritmos de \textit{clustering}, uno de los problemas es determinar el número idóneo de clústeres $ k $, el cual, es distinto al propio proceso de agrupamiento. Este procedimiento conlleva tener en cuenta varios índices. Evaluar la solución obtenida para $ k $ clústeres es similar a la práctica de determinar la dimensión del espacio en el análisis de componentes principales o el orden de los factores en análisis factorial.
@@ -517,7 +516,7 @@ El objetivo del análisis clúster es encontrar en menor número de clústeres h
 \[
 s^2 = \sum_{i=1}^{n_k} \norm{\yy_i - \bar{\yy}_k}^2/ p(n_k-1).
 \]
-Grande valores de la varianza agrupada indica que los clústeres no son homogéneos. Por lo tanto, si tiene hacia cero para algún $  k < n $ indica la formación de un clúster homogéneo. \\
+Valores grandes de la varianza agrupada indica que los clústeres no son homogéneos. Por lo tanto, si tiende hacia cero para algún $  k < n $ indica la formación de un clúster homogéneo. \\
 
 Bajo una normal multivariante e independencia de los $ n $ vectores de dimensión $ p $ para $ \Sigma = \sigma^2 \textbf{I} $, podríamos hacer una prueba para verificar que los $ k $ clústeres muestran una separación significativa usando, por ejemplo, un análisis de la varianza (ANOVA) mediante una prueba $ F $ de Fisher. También podemos comprobar si dos medias están lo suficientemente separadas en cualquier nivel usando un estadístico $ t $, que son los más comunes en las pruebas $ t $ de Student. Como no es común que la independencia y la distribución normal multivariante se den a la voz, los estadísticos se denominan pseudo estadísticos $ F $ y  $ t^2 $. El pseudo estadístico $ F $ se define como
 \[
@@ -610,22 +609,22 @@ El conjunto de datos contiene 50 muestras de cada una de tres especies de flor \
 A continuación, se mostrarán los resultados obtenidos por los algoritmos en este caso de estudio. Utilizaremos una tabla comparativa donde incluiremos el nombre de los algoritmos, los resultados obtenidos por las métricas utilizadas (Calinski-Harabaz y Silhouette) y los tiempos de ejecución de los mismos. Las métricas utilizadas se interpretarán de la siguiente forma:
 
 \begin{itemize}
-\item \textbf{Calinski-Harabaz}: se basa en el concepto de densidad y de como de bien están separados los clusters. Especifica la relación entre la dispersión entre los clusters y la dispersión dentro de los clusters. Nos indicará si estamos usando un buen número de clusters para un algoritmo en concreto. El número óptimo de clusters es la solución con el valor de índice Calinski-Harabasz más alto.
-\item \textbf{Silhouette}: es una medida que indica como de similar es un objeto respecto a su propio grupo (cohesión) en comparación con otros grupos (separación). Toma valores entre -1 y +1, donde un alto valor indica que el objeto es bastante similar a su grupo y muy diferente a los de otros cluster. Si el valor es cercano a 1, la configuración de los cluster es apropiada, si no, habrá más o menos clusters de los necesarios.
+\item \textbf{Calinski-Harabaz}: se basa en el concepto de densidad y de como de bien están separados los \textit{clusters}. Especifica la relación entre la dispersión entre los \textit{clusters} y la dispersión dentro de los \textit{clusters}. Nos indicará si estamos usando un buen número de \textit{clusters} para un algoritmo en concreto. El número óptimo de \textit{clusters} es la solución con el valor de índice Calinski-Harabasz más alto.
+\item \textbf{Silhouette}: es una medida que indica como de similar es un objeto respecto a su propio grupo (cohesión) en comparación con otros grupos (separación). Toma valores entre -1 y +1, donde un alto valor indica que el objeto es bastante similar a su grupo y muy diferente a los de otros cluster. Si el valor es cercano a 1, la configuración de los \textit{cluster} es apropiada, si no, habrá más o menos \textit{clusters} de los necesarios.
 \end{itemize}
 
-Los algoritmos elegidos han sido los siguientes: \textbf{K-Means, MeanShift, DBSCAN y Agglomerative Clustering} (clustering jerárquico). A la hora de elegir las mejores versiones de cada algoritmo, nos basaremos en el coeficiente de Calinski-Harabaz (\textbf{CH}) que como hemos explicado antes, tendrá mayor valor si estamos usando el número adecuado de clusters.
+Los algoritmos elegidos han sido los siguientes: \textbf{K-Means, MeanShift, DBSCAN y Agglomerative \textit{clustering}} (clustering jerárquico). A la hora de elegir las mejores versiones de cada algoritmo, nos basaremos en el coeficiente de Calinski-Harabaz (\textbf{CH}) que como hemos explicado antes, tendrá mayor valor si estamos usando el número adecuado de \textit{clusters}.
 
 \clearpage
 
-Mostraremos la tabla comparativa que contiene las mejores versiones de cada algoritmo ejecutado. Se hará un estudio más profundo sobre aquellos dos algoritmos que obtengan un mayor valor del coeficiente de Silhouette. En este caso, \textbf{K-Means} y \textbf{Agglomerative Clustering}.\\
+Mostraremos la tabla comparativa que contiene las mejores versiones de cada algoritmo ejecutado. Se hará un estudio más profundo sobre aquellos dos algoritmos que obtengan un mayor valor del coeficiente de Silhouette. En este caso, \textbf{K-Means} y \textbf{Agglomerative \textit{clustering}}.\\
 
 \begin{table}[h]
 \centering
 \resizebox{15cm}{!} {
 \begin{tabular}{|c|c|c|c|c|c|}
 \hline
-\textbf{Name} & \textbf{Nº Clusters} & \textbf{CH} & \textbf{SH} & \textbf{Time} & \textbf{Clusters}                                                                                                          \\ \hline
+\textbf{Name} & \textbf{Nº \textit{clusters}} & \textbf{CH} & \textbf{SH} & \textbf{Time} & \textbf{\textit{clusters}}                                                                                                          \\ \hline
 K-Means       & 3                    & 359.845074 & 0.504769    & 0.016456      & \begin{tabular}[c]{@{}c@{}}0:    61 (40.67\%)\\
 1:    50 (33.33\%) \\2:    39 (26.00\%)\end{tabular}\\ \hline
 DBSCAN        & 4                   &  94.991819   & 0.306404   &  0.002353      & \begin{tabular}[c]{@{}c@{}}0:    45 (30.00\%)
@@ -645,9 +644,9 @@ MeanShift     & 3                    & 290.470683  & 0.476961    & 0.289073     
 
 \subsection{K-Means.}
 
-K-Means es un algoritmo de clasificación no supervisada (clusterización) que agrupa objetos en K grupos basándose en sus características. El agrupamiento se realiza minimizando la suma de distancias entre cada objeto y el centroide de su grupo o cluster.\\ 
+K-Means es un algoritmo de clasificación no supervisada (clusterización) que agrupa objetos en K grupos basándose en sus características. El agrupamiento se realiza minimizando la suma de distancias entre cada objeto y el centroide de su grupo o \textit{cluster}.\\ 
 
-El algoritmo K-Means resuelve un problema de optimización, siendo la función a optimizar (minimizar) la suma de las distancias cuadráticas de cada objeto al centroide de su cluster. Es necesario especificar el valor de K previamente antes de ejecutar el algoritmo.\\
+El algoritmo K-Means resuelve un problema de optimización, siendo la función a optimizar (minimizar) la suma de las distancias cuadráticas de cada objeto al centroide de su \textit{cluster}. Es necesario especificar el valor de K previamente antes de ejecutar el algoritmo.\\
 
 Para el algoritmo K-Means se ha utilizado el siguiente código en python y se ha obtenido la siguiente agrupación de las muestras:\\
 
@@ -666,11 +665,11 @@ Se mostrarán 4 gráficas realizadas y se hará un estudio sobre los resultados 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.62]{dani/scatmatrixK-MeansIRIS.png}
-\caption{Scatter Matrix para K-Means con 3 clusters.}
+\caption{Scatter Matrix para K-Means con 3 \textit{clusters}.}
 \label{smkm}
 \end{figure}\
 
-En la Figura \ref{smkm} se representa la matriz de dispersión de las 150 muestras agrupadas en 3 clústers: donde el cluster 0 representa las \textbf{Iris} versicolor, el cluster 1 setosa y el cluster 2 virginica. Un gráfico de matriz de dispersión es una herramienta de exploración de datos que permite buscar patrones y relaciones entre diferentes muestras en una distribución multivariante. En el gráfico se muestra el gráfico de dispersión para cada par de variables seleccionadas y una serie de histogramas en la diagonal mostrando la distribución de valores para cada una de las variables.\\
+En la Figura \ref{smkm} se representa la matriz de dispersión de las 150 muestras agrupadas en 3 clústers: donde el \textit{cluster} 0 representa las \textbf{Iris} versicolor, el \textit{cluster} 1 setosa y el \textit{cluster} 2 virginica. Un gráfico de matriz de dispersión es una herramienta de exploración de datos que permite buscar patrones y relaciones entre diferentes muestras en una distribución multivariante. En el gráfico se muestra el gráfico de dispersión para cada par de variables seleccionadas y una serie de histogramas en la diagonal mostrando la distribución de valores para cada una de las variables.\\
 
 En la Figura \ref{hmkm} y \ref{kpkm} podemos ver la media y forma de las distribuciones de cada variable para cada clúster generado con el algoritmo K-Means. En el HeatMap, podemos observar la media de los centroides y podemos hacernos una idea de las características claves para clasificar cada muestra en uno de los tres tipos de flor de \textbf{Iris}.\\
 
@@ -679,7 +678,7 @@ Las muestras del clúster 1 (tipo setosa) se caracteriza por tener un pétalo co
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.55]{dani/heatmapK-MeansIRIS.png}
-\caption{HeatMap para K-Means con 3 clusters.}
+\caption{HeatMap para K-Means con 3 \textit{clusters}.}
 \label{hmkm}
 \end{figure}
 
@@ -689,7 +688,7 @@ Las muestras del clúster 1 (tipo setosa) se caracteriza por tener un pétalo co
 \centering
 \includegraphics[scale=0.4]{dani/kdeplotK-MeansIRIS.png}
 \includegraphics[scale=0.32]{dani/boxplotK-MeansIRIS.png}
-\caption{KPlot y BoxPlot para K-Means con 3 clusters.}
+\caption{KPlot y BoxPlot para K-Means con 3 \textit{clusters}.}
 \label{kpkm}
 \end{figure}
 
@@ -729,7 +728,7 @@ Podemos observar que la matriz de dispersión generada por este algoritmo se ase
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.64]{dani/scatmatrixAggClusterIRIS.png}
-\caption{Scatter Matrix para Agglomerative Clustering con 3 clusters.}
+\caption{Scatter Matrix para Agglomerative \textit{clustering} con 3 \textit{clusters}.}
 \label{smac}
 \end{figure}
 
@@ -738,7 +737,7 @@ Podemos observar que la matriz de dispersión generada por este algoritmo se ase
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.63]{dani/heatmapAggClusterIRIS.png}
-\caption{HeatMap para Agglomerative Clustering con 3 clusters.}
+\caption{HeatMap para Agglomerative \textit{clustering} con 3 \textit{clusters}.}
 \label{hmac}
 \end{figure}
 
@@ -757,7 +756,7 @@ En nuestro caso hemos impuesto que existan 3 clústers por lo que podríamos cor
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.35]{dani/dendrogramAggClusterIRIS.png}
-\caption{Dendrograma para Agglomerative Clustering con 3 clusters.}
+\caption{Dendrograma para Agglomerative \textit{clustering} con 3 \textit{clusters}.}
 \label{dac}
 \end{figure}
 
@@ -767,7 +766,7 @@ En nuestro caso hemos impuesto que existan 3 clústers por lo que podríamos cor
 \centering
 \includegraphics[scale=0.35]{dani/dendrogramcolor.png}
 \includegraphics[scale=0.35]{dani/dendscatAggClusterIRIS.png}
-\caption{Dendrogramas para Agglomerative Clustering con 3 clusters.}
+\caption{Dendrogramas para Agglomerative \textit{clustering} con 3 \textit{clusters}.}
 \label{dac}
 \end{figure}
 
@@ -775,7 +774,7 @@ En nuestro caso hemos impuesto que existan 3 clústers por lo que podríamos cor
 
 \subsection{DBSCAN}
 
-Al contrario de la estrategia seguida por K-Means, DBSCAN (\textit{Density-Based Spatial Clustering of Applications with Noise}) no presupone clusters convexos, sino que se basa en la densidad de las muestras para identificar los clusters. Por este motivo, los clusters identificados por DBSCAN pueden ser de cualquier forma.\\
+Al contrario de la estrategia seguida por K-Means, DBSCAN (\textit{Density-Based Spatial \textit{clustering} of Applications with Noise}) no presupone \textit{clusters} convexos, sino que se basa en la densidad de las muestras para identificar los \textit{clusters}. Por este motivo, los \textit{clusters} identificados por DBSCAN pueden ser de cualquier forma.\\
 
 Dos parámetros importantes para definir este algoritmo son: \textbf{eps}, máxima distancia entre dos muestras para poder ser consideradas pertenecientes al mismo "vecindario", y \textbf{min\_samples}, número de muestras en un vecindario para que una región pueda ser considerada densa.\\
 
@@ -787,9 +786,9 @@ Consideremos un conjunto de puntos a ser agrupados en un espacio determinado. La
 \item Un punto que no sea alcanzable desde cualquier otro se considera ruido.
 \end{itemize}
 
-Si $p$ es un punto núcleo, este forma un cluster junto a otros puntos que sean alcanzables desde él. Cada cluster contiene al menos un punto núcleo. Los puntos no núcleos alcanzables pueden pertenecer a un cluster pero actúan como una barrera puesto que no es posible alcanzar más puntos desde estos.\\
+Si $p$ es un punto núcleo, este forma un \textit{cluster} junto a otros puntos que sean alcanzables desde él. Cada \textit{cluster} contiene al menos un punto núcleo. Los puntos no núcleos alcanzables pueden pertenecer a un \textit{cluster} pero actúan como una barrera puesto que no es posible alcanzar más puntos desde estos.\\
 
-Se puede observar que la relación de ser alcanzable no es simétrica. Por definición, ningún punto puede ser alcanzable desde un punto que no sea núcleo, sin importar la distancia a la que se encuentre. Por lo tanto la noción de connectividad es necesaria para definir formalmente la extensión de un cluster dada por DBSCAN. Dos puntos $p$ y $q$ están conectados densamente si existe un punto $o$ tal que ambos $p$ y $q$ sean directamente alcanzables desde $o$. La relación estar densamente conectado es simétrica.\\
+Se puede observar que la relación de ser alcanzable no es simétrica. Por definición, ningún punto puede ser alcanzable desde un punto que no sea núcleo, sin importar la distancia a la que se encuentre. Por lo tanto la noción de connectividad es necesaria para definir formalmente la extensión de un \textit{cluster} dada por DBSCAN. Dos puntos $p$ y $q$ están conectados densamente si existe un punto $o$ tal que ambos $p$ y $q$ sean directamente alcanzables desde $o$. La relación estar densamente conectado es simétrica.\\
 
 Por tanto un clúster generado por el método DBSCAN satisface dos propiedades:
 
@@ -816,7 +815,7 @@ En este caso podemos ver como tenemos un cuarto clúster formado por las muestra
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.64]{dani/scatmatrixDBSCANIRIS.png}
-\caption{Scatter Matrix para DBSCAN con 4 clusters.}
+\caption{Scatter Matrix para DBSCAN con 4 \textit{clusters}.}
 \label{smdb}
 \end{figure}
 
@@ -825,7 +824,7 @@ En este caso podemos ver como tenemos un cuarto clúster formado por las muestra
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.62]{dani/heatmapDBSCANIRIS.png}
-\caption{HeatMap para DBSCAN con 4 clusters.}
+\caption{HeatMap para DBSCAN con 4 \textit{clusters}.}
 \label{hmdb}
 \end{figure}
 
@@ -878,7 +877,7 @@ Las gráficas obtenidas para este caso, serán la matriz de dispersión (Scatter
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.64]{dani/scatmatrixMeanShiftIRIS.png}
-\caption{Scatter Matrix para Mean Shift con 3 clusters.}
+\caption{Scatter Matrix para Mean Shift con 3 \textit{clusters}.}
 \label{smms}
 \end{figure}
 
@@ -887,18 +886,18 @@ Las gráficas obtenidas para este caso, serán la matriz de dispersión (Scatter
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.62]{dani/heatmapMeanShiftIRIS.png}
-\caption{HeatMap para Mean Shift con 3 clusters.}
+\caption{HeatMap para Mean Shift con 3 \textit{clusters}.}
 \label{hmms}
 \end{figure}
 
 \clearpage
 
 \section{Conclusiones}
-El análisis cluster es una metodología de análisis exploratorio de datos. Trata de descubrir cómo algunos objetos se relacionan. Este tipo de análisis depende de la cantidad de ruido en los datos, la existencia de datos anómalos, las variables seleccionadas para el análisis, la medida de proximidad utilizada, las propiedades espaciales de los datos y el método de agrupamiento empleado.
+El análisis \textit{cluster} es una metodología de análisis exploratorio de datos. Trata de descubrir cómo algunos objetos se relacionan. Este tipo de análisis depende de la cantidad de ruido en los datos, la existencia de datos anómalos, las variables seleccionadas para el análisis, la medida de proximidad utilizada, las propiedades espaciales de los datos y el método de agrupamiento empleado.
 
-Una ventaja de los métodos jerárquicos sobre los no jerárquicos es que uno no tiene que saber de antemano el número de clusters (que hemos visto que no es fácil). Además los métodos jerárquicos muchas veces son llamados ``exploratorios'' mientras que los no jerárquicos se denominan ``confirmatorios''. Podemos ver ambos métodos como complementarios. Los métodos jerárquicos no solo dependen de la medida de proximidad utilizada, se ven afectados por el encadenamiento: los objetos tienen a unirse a un cluster existente más que a iniciar uno nuevo.
+Una ventaja de los métodos jerárquicos sobre los no jerárquicos es que uno no tiene que saber de antemano el número de \textit{clusters} (que hemos visto que no es fácil). Además los métodos jerárquicos muchas veces son llamados ``exploratorios'' mientras que los no jerárquicos se denominan ``confirmatorios''. Podemos ver ambos métodos como complementarios. Los métodos jerárquicos no solo dependen de la medida de proximidad utilizada, se ven afectados por el encadenamiento: los objetos tienen a unirse a un \textit{cluster} existente más que a iniciar uno nuevo.
 
-Un problema importante del clustering es la validación de la solución. Para ello deberemos usar criterios internos, externos y métodos de replicación o validación cruzada.
+Un problema importante del \textit{clustering} es la validación de la solución. Para ello deberemos usar criterios internos, externos y métodos de replicación o validación cruzada.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %       REFERENCIAS
