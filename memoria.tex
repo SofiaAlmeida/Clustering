@@ -199,204 +199,233 @@ Si tenemos una serie de observaciones sin clasificar, el objetivo del \textit{cl
 Utilizando el lenguaje matemático, podemos definir el problema como sigue:
 
 \begin{quote}
-  Dadas \textbf{$x_1$}$,\dots, $\textbf{$x_n$} medidas de $p$ variables en $n$ objetos considerados \textit{heterogéneos}. El objetivo del análisis cluster es agrupar estos objetos en $k$ clases \textit{homogéneas}, donde $k$ es también desconocido (aunque habitualmente se asume que es mucho menor que $n$).
+  Dadas \textbf{$x_1$}$,\cdots, $\textbf{$x_n$} medidas de $p$ variables en $n$ objetos considerados \textit{heterogéneos}. El objetivo del análisis cluster es agrupar estos objetos en $k$ clases \textit{homogéneas}, donde $k$ es también desconocido (aunque habitualmente se asume que es mucho menor que $n$).
 \end{quote}
 
 Decimos que un grupo es \textit{homogéneo} si sus miembros están cerca unos de otros pero los miembros de otros grupos son muy diferentes a estos. Esto lleva a definir dos métricas entre los puntos para indicar el grado de alejamiento y el de asociación o similitud. Se pueden tomar distintas distancias, creando aproximaciones diferentes al problema (trataremos este tema en más profundidad en la Sección \ref{sec:medidas}).
 
-El análisis cluster se aplica en numerosos campos como las ciencias naturales, médicas, económicas, \textit{marketing}, \dots En \textit{marketing}, por ejemplo, es útil dividir a los clientes y conocer las necesidades de cada segmento de mercado para lograr alcanzar a los clientes potenciales. En psicología puede ser útil encontrar tipos de personalidad a partir de los cuestionarios realizados. En arqueología se puede aplicar esta técnica para clasificar objetos en diferentes periodos.
+En la Figura \ref{fig:ejemplo} vemos un ejemplo de agrupamiento para los datos dados. Cada punto representa un objeto $x_i$ y los grupos encontrados se encuentran coloreados en diferentes colores.
 
-Para llevar a cabo un análisis cluster hay que realizar principalmente dos pasos:
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.3]{ejemplo}
+	\caption{Ejemplo de \textit{clustering}. \cite{chire_deutsch:_2011}}
+	\label{fig:ejemplo}
+\end{figure}
+
+El análisis \textit{cluster} se aplica en numerosos campos como las ciencias naturales, médicas, económicas, \textit{marketing}, \dots En \textit{marketing}, por ejemplo, es útil dividir a los clientes y conocer las necesidades de cada segmento de mercado para lograr alcanzar a los clientes potenciales. En psicología puede ser útil encontrar tipos de personalidad a partir de los cuestionarios realizados. En arqueología se puede aplicar esta técnica para clasificar objetos en diferentes periodos.
+
+Para llevar a cabo un análisis \textit{cluster} hay que realizar principalmente dos pasos:
 
 \begin{enumerate}
-\item Elegir una medida de similitud. Dependerá del objeto de estudio, tipo de medidas (nominales, ordinales, intervalos) y tipo de variables (continuas o discretas).
-\item Elegir un algoritmo para construir los grupos. Hay dos grupos principales: de particionamiento y jerárquicos (que a su vez se dividen entre divisivos y aglomerativos)
+\item Elegir una medida de similitud. Dependerá del objeto de estudio, tipo de medidas (nominales, ordinales, intervalos) y tipo de variables (continuas o discretas). Lo veremos en la Sección \ref{sec:medidas}.
+\item Elegir un algoritmo para construir los grupos. Hay dos grupos principales: de particionamiento y jerárquicos (que a su vez se dividen entre divisivos y aglomerativos). En la Sección \ref{sec:algoritmos} explicaremos la diferencia entre ambos grupos y veremos algunos ejemplos.
 \end{enumerate}
 
-\section{Medidas de similitud}\label{sec:medidas de similitud}
+Además, en la Sección \ref{sec:num} trataremos el problema de decidir el número de \textit{clusters} y veremos algunos métodos utilizados para determinarlo. Por último, hemos implementado un ejemplo de agrupamiento tomando los datos de las flores de iris de Fisher, el análisis se encuentra en la Sección \ref{sec:práctica}. %TODO: REFERENCIAR
 
-La mayoría de los esfuerzos para producir una estructura de grupo más simple a partir de un conjunto complejo de datos requiere una medida de 'cercanía' o  'similitud'. Habitualmente la subjetividad juega un papel importante en la elección de una medida de similitud, Algunas consideraciones importantes incluyen la naturaleza de las variables (discreta, continua, binaria), las escalas de las medidas (nominal, ordinal, intervalo) y conocimiento específico sobre el problema.
+\section{Medidas de similitud}\label{sec:medidas}
 
-Cuando los items (unidades o casos) son agrupados, la proximidad se suele indicar mediante alguna medida de la distancia. En contraste, las variables se suelen agrupar según los coeficientes de correlación o medidas de asociación
+La mayoría de los esfuerzos para producir una estructura de grupo más simple a partir de un conjunto complejo de datos requiere una medida de ``cercanía'' o  ``similitud''. Habitualmente la subjetividad juega un papel importante en la elección de una medida de similitud, Algunas consideraciones importantes incluyen la naturaleza de las variables (discreta, continua, binaria), las escalas de las medidas (nominal, ordinal, intervalo) y conocimiento específico sobre el problema. En cualquier caso, los valores de las variables consideradas serán normalizados, para evitar que unas variables tengan más peso que otras a la hora de realizar el agrupamiento.
 
-\subsection{Distancias y coeficientes de similitud para parejas de items}
+Cuando los ítems (unidades o casos) son agrupados, la proximidad se suele indicar mediante alguna medida de la distancia. En contraste, las variables se suelen agrupar según los coeficientes de correlación o medidas de asociación.
 
-Recordamos que la distancia euclídea entre dos observaciones p-dimensionales (items) $x' = [x_1,x_2,...,x_p]$ e $y'=[y_1,y_2,...,y_p]$ es
+\subsection{Distancias y coeficientes de similitud para parejas de ítems}
 
-$$ d(x,y) = \sqrt{(x_1-y_1)^2+(x_2-y_2)^2+...+(x_p-y_p})^2=\sqrt{(x-y)'(x-y)}$$
+Recordamos que la distancia euclídea entre dos observaciones $p$-dimensionales (ítems) $x' = [x_1,x_2,...,x_p]$ e $y'=[y_1,y_2,...,y_p]$ es
+
+\[d(x,y) = \sqrt{(x_1-y_1)^2+(x_2-y_2)^2+...+(x_p-y_p)^2}=\sqrt{(x-y)'(x-y)}.\]
 
 La distancia estadística entre las mismas dos observaciones es de la forma:
 
-$$d(x,y)=\sqrt{(x-y)'A(x-y)} $$
+$$d(x,y)=\sqrt{(x-y)'A(x-y)}. $$
 
-Normalmente, $A=S^{-1}$, donde $S$ contiene las varianzas y covarianzas de la muestra. Sin embargo, sin conocimiento previo de los distintos grupos, estas cantidades de las muestras no puede ser calculadas. Por esta razón, usualmente se prefiere la distancia euclídea para clustering.\\
+Normalmente, $A=S^{-1}$, donde $S$ contiene las varianzas y covarianzas de la muestra. Sin embargo, sin conocimiento previo de los distintos grupos, estas cantidades de las muestras no puede ser calculadas. Por esta razón, usualmente se prefiere la distancia euclídea para realizar \textit{clustering}.\\
 
-Otra medida de la distancia es a métrica de Minkowski
+Otra medida de la distancia es la métrica de Minkowski, que viene dada por:
 
-$$ d(x,y)=[\sum_{i_1=1}^{p}{|x_i-y_i|^m}]^{1/m}$$
+$$ d(x,y)=\left  [\sum_{i=1}^{p}{|x_i-y_i|^m} \right ]^{1/m}.$$
 
-Para $m=1$, $d(x,y)$ mide la distancia Manhattan entre dos puntos en p dimensiones. Para $m=2$,$d(x,y)$ se convierta en la distancia Euclídea. En general, variar $m$ cambia el peso dado a diferencias mayores y menores.\\
+Para $m=1$, $d(x,y)$ mide la distancia Manhattan entre dos puntos en $p$ dimensiones. Para $m=2$,$d(x,y)$ se convierta en la distancia euclídea. En general, variar $m$ cambia el peso dado a diferencias mayores y menores.\\
 
-Adicionalmente, dos medidas populares de "distancia" o disimilitud son las dadas por la métrica de Canberra y el coeficiente de Czekanowski. Ambas medidas están definidas únicamente para variables no negativas.\\
+Adicionalmente, dos medidas populares de distancia o ``disimilitud'' son las dadas por la métrica de Canberra y el coeficiente de Czekanowski. Ambas medidas están definidas únicamente para variables no negativas.\\
 
-Metrica de Canberra:       $ d(x,y)=\sum_{i=1}^{p}{\frac{|x_i-y_i|}{(x_i+y_i)}}$\\
+La métrica de Canberra se define como: \[d(x,y)=\sum_{i=1}^{p}{\frac{|x_i-y_i|}{(x_i+y_i)}}.\]\\
 
-Coeficiente de Czekanowski:   $d(x,y)=1-\frac{2\sum_{i=1}^{p}{min(x_i,y_i)}}{\sum_{i=1}^{p}{(x_i+y_i}}$ \\
+El coeficiente de Czekanowski es: \[d(x,y)=1-\frac{2\sum_{i=1}^{p}{min(x_i,y_i)}}{\sum_{i=1}^{p}{(x_i+y_i}}.\]
 
-Es aconsejable que cuando sea posible se utilicen distancias "verdaderas" para clustering, ésto es, distancias que verifiquen las siguientes propiedades: 
-$$d(P,Q)=d(Q,P)$$
-$$d(P,Q)>0\ si\ P\neq Q$$
-$$d(P,Q)=0\ si\ P=Q$$
-$$d(P,Q)\leq d(P,r)+d(R,Q)$$
+Es aconsejable que cuando sea posible se utilicen distancias ``verdaderas'' para \textit{clustering}, esto es, distancias que verifiquen las propiedades de la definición matemática de distancia:
+\begin{itemize}
+\item $d(P,Q)=d(Q,P)$,
+\item $d(P,Q)>0\ si\ P\neq Q$,
+\item $d(P,Q)=0\ si\ P=Q$,
+\item $d(P,Q)\leq d(P,R)+d(R,Q)$,
+\end{itemize}
 
-siendo P y Q dos puntos cualquiera y R un punto intermedio.\\ 
+siendo $P$ y $Q$ dos puntos cualquiera y $R$ un punto intermedio.\\ 
 
-Por otro lado, la mayoría de los algoritmos clustering aceptarán números de distancia que no satisfagan la desigualdad triangular.\\
+Sin embargo, la mayoría de los algoritmos de \textit{clustering} aceptarán números de distancia que no satisfagan la desigualdad triangular.\\
 
-Cuando los items no puedan ser representados por medidas p-dimensionales significativas, las parejas de items se suelen comparar segú la presencia o ausencia de ciertas características. Items similares tienen más características en común que items desemejantes. La presencia o ausencia de una característica se puede describir matemáticamente introduciendo una variable binaria, que toma el valor 1 si la característica está presente y el valor 0 cuando la característica está ausente. 
+Cuando los ítems no puedan ser representados por medidas $p$-dimensionales significativas, las parejas de ítems se suelen comparar según la presencia o ausencia de ciertas características. Ítems similares tienen más características en común que ítems desemejantes. La presencia o ausencia de una característica se puede describir matemáticamente introduciendo una variable binaria, que toma el valor 1 si la característica está presente y el valor 0 cuando la característica está ausente. 
 
-\begin{table}[h]
+\begin{table}[H]
+  \caption{Ejemplo de binarización de variables.}
+  \label{tab:binarizacion}
 \centering
-\resizebox{5cm}{!} {
-\begin{tabular}{llllll}
-       & \multicolumn{5}{c}{Variables} \\
-       & 1    & 2    & 3   & 4   & 5   \\
-Item i & 1    & 0    & 0   & 1   & 1   \\
-Item k & 1    & 1    & 0   & 1   & 0  
+  \begin{tabular}{lrrrrr}
+    \toprule
+  Variables    & 1    & 2    & 3   & 4   & 5   \\
+  \midrule
+Ítem $i$ & 1    & 0    & 0   & 1   & 1   \\
+Ítem $k$ & 1    & 1    & 0   & 1   & 0\\
+\bottomrule
 \end{tabular}
-}
 \end{table}
 
-En este caso, hay dos parejas 1-1, una pareja 0-0 y dos parejas que no coinciden.\\
+En la Tabla \ref{tab:binarizacion} vemos un ejemplo en el que se utilizan 5 variables binarias para medir la distancia entre los ítem $i$ y $j$. En este caso, hay dos parejas 1-1, una pareja 0-0 y dos parejas que no coinciden.\\
 
-Sea $x_{ij}$ la puntuación (0 ó 1) de la j-ésima variable binaria en el i-ésimo item y sea $x_{kj}$ la puntuación de la j-ésima variable binaria en el k-ésimo item, con $j=1,2,...,p$. Entonces,
+Sea $x_{ij}$ la puntuación (0 ó 1) de la $j$-ésima variable binaria en el $i$-ésimo ítem y sea $x_{kj}$ la puntuación de la $j$-ésima variable binaria en el $k$-ésimo ítem, con $j=1,2,...,p$. Entonces,
 
-$$(x_{ij}-x_{kj}^2) = \left \{ \begin{matrix} 0 & \mbox{si } x_{ij}=x_{kj}
+$$(x_{ij}-x_{kj})^2 = \left \{ \begin{matrix} 0 & \mbox{si } x_{ij}=x_{kj}
 \\ 3n+1 & \mbox{si }x_{ij}\neq x_{kj}\end{matrix}\right.   $$
 
-y la distancia Euclídea al cuadrado, $\sum_{j=1}^p{(x_{ij}-x_{kj})^2}$, proporcionan una forma de contar el número de disparidades. Una distancia grande corresponde a muchas disparidades, es decir, items desemejantes. En el ejemplo anterior, el cuadrado de las distancia entre los items $i$ y $k$ sería
+y la distancia euclídea al cuadrado, $\sum_{j=1}^p{(x_{ij}-x_{kj})^2}$, proporcionan una forma de contar el número de disparidades. Una distancia grande corresponde a muchas disparidades, es decir, ítems desemejantes. En el ejemplo de la Tabla \ref{tab:binarizacion}, el cuadrado de las distancia entre los ítems $i$ y $k$ sería
 
-$$\sum_{j=1}^5{(x_{ij}-x_{kj})^2}=(1-1)^2+(0-1)^2+(0-0)^2+(1-1)^2+(1-0)^2=2$$
+$$\sum_{j=1}^5{(x_{ij}-x_{kj})^2}=(1-1)^2+(0-1)^2+(0-0)^2+(1-1)^2+(1-0)^2=2.$$
 
 Aunque la distancia usada en el ejemplo anterior puede ser usada para medir la similitud, tiene la desventaja de que valora por igual las parejas 1-1 y 0-0. En algunos casos, una pareja 1-1 es una indicación mayor de similitud que una pareja 0-0. Por ejemplo, al agrupar gente, que dos personas sean capaz de leer griego antiguo es una evidencia mayor de similitud que la ausencia de dicha habilidad. Para reflejar este trato diferente entre las parejas de 1-1 y 0-0, se han sugerido diversos esquemas para definir los coeficientes de similitud.\\
-Para introducir dichos esquemas, vamos a organizar las frecuencias de las parejas que coinciden y las que no para los items $i$ y $k$ en la forma de una tabla de contingencia:
+Para introducir dichos esquemas, vamos a organizar las frecuencias de las parejas que coinciden y las que no para los ítems $i$ y $k$ en la forma de una tabla de contingencia:
 
-% Please add the following required packages to your document preamble:
-% \usepackage{multirow}
-
-\begin{table}[h]
-\centering
+\begin{table}[H]
+  \centering
+  \caption{Ejemplo tabla de contingencia.}
+  \label{tab:contingencia}
 \resizebox{7cm}{!} {
-\begin{tabular}{ll|clc|c|l}
-\multicolumn{2}{l|}{\multirow{2}{*}{}} & \multicolumn{3}{c}{Item k} & \multicolumn{2}{c|}{\multirow{2}{*}{Total}} \\
-\multicolumn{2}{l|}{}                  & 1        &       & 0       & \multicolumn{2}{c|}{}                        \\ \hline
-\multirow{2}{*}{Item i}       & 1      & a        &       & b       & \multicolumn{2}{c|}{a+b}                     \\
-                              & 0      & c        &       & d       & \multicolumn{2}{c|}{c+d}                     \\ \hline
-\multicolumn{2}{l|}{Total}            & a+c      &       & b+d     & \multicolumn{2}{c|}{p=a+b+c+d}              
+  \begin{tabular}{llrrrrr}
+    \toprule
+\multicolumn{2}{l}{\multirow{2}{*}{}} & \multicolumn{3}{c}{Ítem $k$} & \multicolumn{2}{c}{} \\\cmidrule{3-5}
+\multicolumn{2}{l}{}                  & 1        &       & 0       & \multicolumn{2}{c}{{Total}}                        \\
+\midrule
+{Ítem $i$}       & 1      & $a$        &       & $b$       & \multicolumn{2}{c}{$ab$}                     \\
+                              & 0      & $c$        &       & $d$       & \multicolumn{2}{c}{$c+d$}                     \\ \midrule
+\multicolumn{2}{l}{Total}            & $a+c$      &       & $b+d$     & \multicolumn{2}{c}{$p=a+b+c+d$}\\
+\bottomrule
 \end{tabular}
 }
 \end{table}
 
-En esta tabla, $a$ representa la frecuencia de parejas 1-1, $b$ es la frecuencia de parejas 1-0 y así sucesivamente. Dadas las anteriores cinco parejas, $a=2$ y $b=c=d=1$.\\
+En la Tabla \ref{tab:contingencia}, $a$ representa la frecuencia de parejas 1-1, $b$ es la frecuencia de parejas 1-0 y así sucesivamente. Dadas las anteriores cinco parejas, $a=2$ y $b=c=d=1$.\\
 
-La siguiente tabla lista coeficientes de similitud comunes definidos en términos de frecuencias de la anterior tabla.
+La Tabla \ref{tab:similitud} lista coeficientes de similitud comunes definidos en términos de frecuencias de la Tabla \ref{tab:contingencia}.
 
-\clearpage
-
-\begin{table}[h]
-\centering
+\begin{table}[H]
+  \centering
+  \caption{Coeficientes de similitud para ítems \textit{clustering}.}
+  \label{tab:similitud}
 \resizebox{13cm}{!} {
-\begin{tabular}{|ll|}
-\hline
-\multicolumn{2}{|l|}{Tabla 12.1 Coeficientes de similitud para items clustering}                                                                                                              \\ \hline
-\multicolumn{1}{|c}{Coeficiente} & \multicolumn{1}{c|}{Fundamento}                                                                                                                 \\ \hline
-1. $\frac{a+d}{p}$                              & Las parejas 1-1 y 0-0 ponderan lo mismo .                                                                                                       \\
-2.  $\frac{2(a+d)}{2(a+d)+b+c}$                            & Las parejas 1-1 y 0-0 ponderan el doble.                                                                                                        \\
-3.  $\frac{a+d}{a+d+2(b+c)}$                             & Las parejas que no coinciden ponderan el doble.                                                                                                 \\
-4.  $\frac{a}{p}$                             & No hay parejas 0-0 en el numerador.                                                                                                             \\
-5.  $\frac{a}{a+b+c}$                             & \begin{tabular}[c]{@{}l@{}}No hay parejas 0-0 en el numerador ni el denominador.\\ (Las parejas 0-0 son irrelevantes)\end{tabular}              \\
-6.  $\frac{2a}{2a+b+c}$                             & \begin{tabular}[c]{@{}l@{}}No hay parejas 0-0 en el numerador ni el denominador.\\ Las parejas 1-1 ponderan el doble.\end{tabular}              \\
-7.  $\frac{a}{a+2(b+c)}$                             & \begin{tabular}[c]{@{}l@{}}No hay parejas 0-0 en el numerador ni el denominador.\\ Las parejas que no coinciden ponderan el doble.\end{tabular} \\
-8.  $\frac{a}{b+c}$                             & \begin{tabular}[c]{@{}l@{}}Proporción de parejas que coinciden (excluyendo las 0-0) en\\  relación a las parejas que no coinciden.\end{tabular} \\ \hline
+\begin{tabular}{ll}
+\toprule               
+\multicolumn{1}{l}{Coeficiente} & \multicolumn{1}{l}{Fundamento}\\
+\midrule
+1 $\quad\frac{a+d}{p}$                            & Las parejas 1-1 y 0-0 ponderan lo mismo.\\ \\
+2 $\quad\frac{2(a+d)}{2(a+d)+b+c}$                            & Las parejas 1-1 y 0-0 ponderan el doble.                                                                                                        \\\\
+3 $\quad\frac{a+d}{a+d+2(b+c)}$                             & Las parejas que no coinciden ponderan el doble.                                                                                                 \\\\
+4  $\quad\frac{a}{p}$                             & No hay parejas 0-0 en el numerador.                                                                                                    \\         \\
+5 $\quad\frac{a}{a+b+c}$                             & \begin{tabular}[c]{@{}l@{}}No hay parejas 0-0 en el numerador ni el denominador\\ (Las parejas 0-0 son irrelevantes).\end{tabular}              \\\\
+6 $\quad\frac{2a}{2a+b+c}$                             & \begin{tabular}[c]{@{}l@{}}No hay parejas 0-0 en el numerador ni el denominador.\\ Las parejas 1-1 ponderan el doble.\end{tabular}              \\\\
+7 $\quad\frac{a}{a+2(b+c)}$                             & \begin{tabular}[c]{@{}l@{}}No hay parejas 0-0 en el numerador ni el denominador.\\ Las parejas que no coinciden ponderan el doble.\end{tabular} \\\\
+8 $\quad\frac{a}{b+c}$                             & \begin{tabular}[c]{@{}l@{}}Proporción de parejas que coinciden (excluyendo las 0-0) en\\  relación a las parejas que no coinciden.\end{tabular} \\\\
+\bottomrule
 \end{tabular}
 }
 \end{table}
 
-Los coeficientes 1, 2 y 3 de la tabla están monotónicamente relacionados. Supongamos que el coeficiente 1 se calcula para dos tablas de contingencia, Tabla I y Tabla II. Entonces si $(a_I+d_I)/p \geq (a_{II}+d_{II})/p$, tenemos que $2(a_I+d_I)/[2(a_I+d_I)+b_I+c_I] \geq 2(a_{II}+d_{II})/[2(a_{II}+d_{II})+b_{II}+c_{II}]$ y el coeficiente 3 será al menos tan grande para la Tabla I como lo es para la Tabla II. Los coeficientes 5, 6 y 7 también mantienen sus órdenes relativos.\\
+Los coeficientes 1, 2 y 3 de la Tabla \ref{tab:similitud} están monotónicamente relacionados. Supongamos que el coeficiente 1 se calcula para dos tablas de contingencia: Tabla I y Tabla II. Entonces, si $(a_I+d_I)/p \geq (a_{II}+d_{II})/p$, tenemos que $2(a_I+d_I)/[2(a_I+d_I)+b_I+c_I] \geq 2(a_{II}+d_{II})/[2(a_{II}+d_{II})+b_{II}+c_{II}]$ y el coeficiente 3 será al menos tan grande para la Tabla I como lo es para la Tabla II. Los coeficientes 5, 6 y 7 también mantienen sus órdenes relativos.\\
 
-La monotonicidad es importante, ya que algunos procedimientos de clustering no se ven afectados si la definición de similitud se modifica de manera que los órdenes relativos de similitud no cambian. Los procedimientos jerárquicos de asociación simple y asociación completa que se verán en la sección siguiente no se ven afectados Para estos métodos, cualquier elección entre los coeficientes 1, 2 y 3 de la tabla anterior producirá las mismas agrupaciones. Análogamente, cualquier elección entre los coefcientes 5, 6 y 7 también resultará en agrupaciones idénticas.\\
+La monotonicidad es importante, ya que algunos procedimientos de \textit{clustering} no se ven afectados si la definición de similitud se modifica de manera que los órdenes relativos de similitud no cambian. Los procedimientos jerárquicos de asociación simple y asociación completa que se verán en la Sección \ref{sec:algoritmos} no se ven afectados Para estos métodos, cualquier elección entre los coeficientes 1, 2 y 3 de la Tabla \ref{tab:similitud} producirá las mismas agrupaciones. Análogamente, cualquier elección entre los coefcientes 5, 6 y 7 también resultará en agrupaciones idénticas.\\ % ¿Referenciar la sección de jerárquicos?
 
-Ejemplo (Calculando los valores de un coeficiente de similitud) Supongamos cinco individuos con las siguientes características:
+Veamos un ejemplo de cálculo de coeficientes de similitud. Supongamos cinco individuos con las características mostradas en la Tabla \ref{tab:ej-similitud}.
 
 \begin{table}[h]
-\centering
+  \centering
+  \caption{Ejemplo.}
+  \label{tab:ej-similitud}
 \resizebox{15cm}{!} {
-\begin{tabular}{l|cccccc}
-            & \multicolumn{1}{l}{Altura} & \multicolumn{1}{l}{Peso} & \multicolumn{1}{l}{Color de ojos} & \multicolumn{1}{l}{Color de pelo} & \multicolumn{1}{l}{Mano predominante} & \multicolumn{1}{l}{Género} \\ \hline
-Individuo 1 & 68 in                      & 140 lb                   & verde                             & rubio                             & derecha                               & femenino                   \\
-Individuo 2 & 73 in                      & 185 lb                   & marrón                            & moreno                            & derecha                               & masculino                  \\
-Individuo 3 & 67 in                      & 165 lb                   & azul                              & rubio                             & derecha                               & masculino                  \\
-Individuo 4 & 64 in                      & 120 lb                   & marrón                            & moreno                            & derecha                               & femenino                   \\
-Individuo 5 & 76 in                      & 210 lb                   & marrón                            & moreno                            & izquiera                              & masculino                 
+  \begin{tabular}{lrrrrrr}
+    \toprule
+            & Altura (in) & Peso (lb) & Color de ojos & Color de pelo & Mano predominante & Género \\ \midrule
+Individuo 1 & 68                       & 140                    & Verde                             & Rubio                             & Derecha                               & Femenino\\
+Individuo 2 & 73 & 185 & Marrón & Moreno & Derecha & Masculino                  \\
+Individuo 3 & 67 & 165 & Azul & Rubio & Derecha & Masculino                  \\
+Individuo 4 & 64 & 120 & Marrón & Moreno                            & Derecha & Femenino \\
+Individuo 5 & 76 & 210 & Marrón & Moreno & Izquierda & Masculino                 
 \end{tabular}
 }
 \end{table}
 
 Definimos seis variables binarias $X_1,X_2,X_3,X_4,X_5,X_6$ como:
 
-$$X_1 = \left \{ \begin{matrix} 1 & \mbox{si } altura \geq 72 
-\\ 0 & \mbox{si } altura < 72 \end{matrix}\right.   $$
+$$X_1 = \left \{ \begin{matrix} 1 & \mbox{si Altura}  \geq 72 
+\\ 0 & \mbox{si Altura}  < 72 \end{matrix}\right.$$
 
-$$X_2 = \left \{ \begin{matrix} 1 & \mbox{si } peso \geq 150 
-\\ 0 & \mbox{si } peso < 150 \end{matrix}\right.   $$
+$$X_2 = \left \{ \begin{matrix} 1 & \mbox{si Peso}  \geq 150 
+\\ 0 & \mbox{si Peso}  < 150 \end{matrix}\right.   $$
 
-$$X_3 = \left \{ \begin{matrix} 1 & \mbox{si } ojos \ marrones 
-\\ 0 & \mbox{si } otro\ color\ de \ ojos\end{matrix}\right.   $$
+$$X_3 = \left \{ \begin{matrix} 1 & \mbox{si Ojos marrones} 
+\\ 0 & \mbox{si otro color de ojos}\end{matrix}\right.   $$
 
-$$X_4 = \left \{ \begin{matrix} 1 & \mbox{si } pelo rubio
-\\ 0 & \mbox{si } otro\ color\ de\ pelo \end{matrix}\right.   $$
+$$X_4 = \left \{ \begin{matrix} 1 & \mbox{si Pelo rubio} 
+\\ 0 & \mbox{si otro color de pelo } \end{matrix}\right.   $$
 
-$$X_5 = \left \{ \begin{matrix} 1 & \mbox{si } diestro
-\\ 0 & \mbox{si } zurdo \end{matrix}\right.   $$
+$$X_5 = \left \{ \begin{matrix} 1 & \mbox{si Diestro} 
+\\ 0 & \mbox{si Zurdo } \end{matrix}\right.   $$
 
-$$X_6 = \left \{ \begin{matrix} 1 & \mbox{si } masculino
-\\ 0 & \mbox{si } femenino \end{matrix}\right.   $$
+$$X_6 = \left \{ \begin{matrix} 1 & \mbox{si Masculino} 
+\\ 0 & \mbox{si Femenino}  \end{matrix}\right.   .$$
 
-Las puntuaciones de los individuos 1 y 2 en las p=6 variables binarias son:
+Las puntuaciones de los individuos 1 y 2 en las $p=6$ variables binarias son las encontradas en la Tabla \ref{tab:puntuaciones}
 
 \begin{table}[h]
-\centering
+  \centering
+  \caption{Puntuaciones individuos 1 y 2.}
+  \label{tab:puntuaciones}
 \resizebox{8cm}{!} {
-\begin{tabular}{l|cccccc}
-            & \multicolumn{1}{l}{$X_1$} & \multicolumn{1}{l}{$X_2$} & \multicolumn{1}{l}{$X_3$} & \multicolumn{1}{l}{$X_4$} & \multicolumn{1}{l}{$X_5$} & \multicolumn{1}{l}{$X_6$} \\ \hline
+  \begin{tabular}{lrrrrrr}
+    \toprule
+            & \multicolumn{1}{l}{$X_1$} & \multicolumn{1}{l}{$X_2$} & \multicolumn{1}{l}{$X_3$} & \multicolumn{1}{l}{$X_4$} & \multicolumn{1}{l}{$X_5$} & \multicolumn{1}{l}{$X_6$} \\ \midrule
 Individuo 1 & 0                        & 0                        & 0                        & 1                        & 1                        & 1                        \\
-Individuo 2 & 1                        & 1                        & 1                        & 0                        & 1                        & 0                       
+Individuo 2 & 1                        & 1                        & 1                        & 0                        & 1                        & 0\\
+\bottomrule
 \end{tabular}
 }
 \end{table}
 
-y el número de parejas que coinciden y las que no se indican en la siguiente tabla:
+y el número de parejas que coinciden y las que no se indican en la Tabla \ref{tab:contingencias-ej}
 
 \begin{table}[h]
-\centering
+  \centering
+  \caption{Tabla de contingencias para los individuos 1 y 2 del ejemplo.}
+  \label{tab:contingencias-ej}
 \resizebox{6.5cm}{!} {
-\begin{tabular}{ll|clc|c|l}
-\multicolumn{2}{l|}{\multirow{2}{*}{}} & \multicolumn{3}{c}{Individuo 2} & \multicolumn{2}{c|}{\multirow{2}{*}{Total}} \\
-\multicolumn{2}{l|}{}                  & 1        &       & 0       & \multicolumn{2}{c|}{}                        \\ \hline
-\multirow{2}{*}{Individuo 1}       & 1      & 1        &       & 2       & \multicolumn{2}{c|}{3}                     \\
-                              & 0      & 3        &       & 0       & \multicolumn{2}{c|}{3}                     \\ \hline
-\multicolumn{2}{l|}{Total}            & 4      &       & 2     & \multicolumn{2}{c|}{6}              
+  \begin{tabular}{lrrrrr}
+    \toprule
+\multicolumn{2}{l}{\multirow{2}{*}{}} & \multicolumn{2}{c}{Individuo 2} & \\\cmidrule{3-4}
+\multicolumn{2}{l}{}                  & 1        &   0       & \multicolumn{2}{c}{Total}                        \\ \midrule
+Individuo 1      & 1      & 1        &  2       & \multicolumn{2}{c}{3}                     \\
+                              & 0      & 3        &    0       & \multicolumn{2}{c}{3}                     \\ \midrule
+\multicolumn{2}{l}{Total}            & 4     & 2     & \multicolumn{2}{c}{6}\\
+\bottomrule
 \end{tabular}
 }
 \end{table}
 
 Empleando el coeficiente de similitud 1, que pondera por igual las parejas que coinciden, calculamos
 
-$$\frac{a+d}{p}=\frac{1+0}{6}=\frac{1}{6} $$
+$$\frac{a+d}{p}=\frac{1+0}{6}=\frac{1}{6}. $$
 
-Continuando con el coeficiente de similitud 1, calculamos los demás números de similitud para las parejas de individuos. Mostramos los resultados en una matriz simétrica 5 x 5.
+Continuando con el coeficiente de similitud 1, calculamos los demás números de similitud para las parejas de individuos. Mostramos los resultados en la matriz simétrica 5 x 5 a continuación.
 
-\begin{table}[h]
+\begin{table}[H]
 \centering
 \resizebox{7.5cm}{!} {
 \begin{tabular}{lllllll}
@@ -416,11 +445,11 @@ Notar que $X_3=0$ implica una ausencia de ojos marrones, así dos personas, una 
 
 Hemos descrito la construcción de distancias y similitudes. Siempre se pueden construir similitudes a partir de distancias. Por ejemplo, podemos fijar
 
-$$ s_{ik} = \frac{1}{1+d_{ik}}$$ 
+$$ s_{ik} = \frac{1}{1+d_{ik}},$$ 
 
-donde $0<s_{ik}\leq 1$ es la similitud entre los items $i$ y $k$ y $d_{ik}$ es la distancia correspondiente.\\
-Sin embargo, no siempre podemos construir distancias "verdaderas", que cumplan las propiedades para clustering, a partir de similitudes. Sólo se pueden construir si la matriz de similitudes es definida no negativa.\\
-Con la condición de definida no negativa y la máxima similitud escada de manera que $s_{ii}=1$,
+donde $0<s_{ik}\leq 1$ es la similitud entre los ítems $i$ y $k$ y $d_{ik}$ es la distancia correspondiente.\\
+Sin embargo, no siempre podemos construir distancias ``verdaderas'', que cumplan las propiedades para \textit{clustering}, a partir de similitudes. Sólo se pueden construir si la matriz de similitudes es definida no negativa.\\
+Si la matriz de similitudes fuera definida no negativa y la máxima similitud es cada de manera que $s_{ii}=1$,
 
 $$ d_{ik}=\sqrt{2(1-s_{ik})}$$
 
@@ -428,8 +457,8 @@ cumple las propiedades de una distancia.
 
 \subsection{Medidas de similitud y asociación para parejas de variables}
 
-Hasta el momento, hemos discutido medidas de similitud para los tiems. En algunas aplicaciones, son las variables, en lugar de los items, las que deben ser agrupadas. Las medidas de similitud para variables suelen tomar la forma de coeficientes de correlaciones muestrales. Además, en algunas aplicaciones de clustering, las correlaciones negativas son reemlazadas por sus valores absolutos.\\
-Cuando las variables son binarias, los datos se pueden organizar en una tabla de contingencia. Sin embargo, esta vez las variables, en lugar de los items, definen las categorías. Para cada par de variables hay $n$ items categorizados en la tabla. Con la codificación usual en 0 y 1, la tabla es como sigue: 
+Hasta el momento, hemos discutido medidas de similitud para los tiems. En algunas aplicaciones, son las variables, en lugar de los ítems, las que deben ser agrupadas. Las medidas de similitud para variables suelen tomar la forma de coeficientes de correlaciones muestrales. Además, en algunas aplicaciones de clustering, las correlaciones negativas son reemlazadas por sus valores absolutos.\\
+Cuando las variables son binarias, los datos se pueden organizar en una tabla de contingencia. Sin embargo, esta vez las variables, en lugar de los ítems, definen las categorías. Para cada par de variables hay $n$ ítems categorizados en la tabla. Con la codificación usual en 0 y 1, la tabla es como sigue: 
 
 \begin{table}[h]
 \centering
@@ -444,7 +473,7 @@ Cuando las variables son binarias, los datos se pueden organizar en una tabla de
 }
 \end{table}
 
-Por ejemplo, la variable $i$ vale $1$ y la variable $k$ vale $0$ para $b$ de los $n$ items.\\
+Por ejemplo, la variable $i$ vale $1$ y la variable $k$ vale $0$ para $b$ de los $n$ ítems.\\
 La fórmula usual del coeficiente de correlación producto-momento aplicada a las variables binarias de la tabla de contingencia nos da
 
 $$r = \frac{ad-bc}{[(a+b)(c+d)(a+c)(b+d)]^{1/2}}$$
@@ -452,9 +481,9 @@ $$r = \frac{ad-bc}{[(a+b)(c+d)(a+c)(b+d)]^{1/2}}$$
 Este número se puede tomar como la medida de similitud entre las dos variables.\\
 El coeficiente de correlación anterior se relaciona con la estadística chi-cuadrado ($r^2=\chi^2/n$) para evaluar la independencia de dos variables categóricas. Para un $n$ fijo, una similitud (o correlación) grande es consistente con la presencia de dependencia.\\
 
-Dada la tabla anterior, se pueden desarrollar medidas de asociacion (o similitud) exactamente análogas a las listadas en la Tabla 12.1. El único cambio que se requiere es la sustitución de $n$ (el número de items) por $p$ (el número de variables).\\
+Dada la tabla anterior, se pueden desarrollar medidas de asociacion (o similitud) exactamente análogas a las listadas en la Tabla 12.1. El único cambio que se requiere es la sustitución de $n$ (el número de ítems) por $p$ (el número de variables).\\
 
-Para resumir esta sección, notamos que hay muchas medidas de similitud entre pares de objetos. Parece que la mayoría de profesionales usan distancias o los coeficientes de la Tabla 12.1 para el cluster de items y correlaciones para el cluster de variables. Sin embargo, en ocasiones, las entradas a los algoritmos clustering pueden ser frecuencias simples.\\
+Para resumir esta sección, notamos que hay muchas medidas de similitud entre pares de objetos. Parece que la mayoría de profesionales usan distancias o los coeficientes de la Tabla 12.1 para el cluster de ítems y correlaciones para el cluster de variables. Sin embargo, en ocasiones, las entradas a los algoritmos clustering pueden ser frecuencias simples.\\
 
 Ejemplo (Midiendo las similitudes de 11 lenguajes) Los significados de las palabras cambian a lo largo de la historia. Sin embargo, el significado de los números 1,2,3,... representa una excepción llamatica. Así, una primera comparación de lenguajes puede estar basado por exclusiva en los números naturales. La Tabla 12.2 (siguiente tabla) nos da los 10 primeros números en inglés, polaco, húngaro y otros ocho lenguajes europeos modernos. (Solamente consideramos lenguajes que utilizan el alfabeto romano y omitimos acentos y signos de puntuación.) Una observación rápida de la escritura de los números sugiere que los cinco primeros lenguajes (inglés, noruego, danés, holandés y alemán) son muy parecidos. El español, francés e italiano se parecen todavía más. El húngaro y finés parecen no estar relacionados con los demás lenguajes. El polaco tiene algunas características de los lenguajes de los subgrupos más grandes.
 
@@ -506,11 +535,11 @@ Los resultados en la Tabla 12.3 confirman la impresión visual inicial de la Tab
 
 En los ejemplo hasta el momento, hemos utilizado nuestra impresión visual de las medidas de similitud o distancia para formar grupos. Más adelante discutiremos formas menos subjetivas para crear los clusters. 
 
-\section{Métodos de agrupamiento}
+\section{Métodos de agrupamiento}\label{sec:algoritmos}
 \subsection{Jerárquicos}
 
 \subsection{No jerárquicos}
-\section{Número de clústeres}
+\section{Número de clústeres}\label{sec:num}
 En los algoritmos de \textit{clustering}, uno de los problemas es determinar el número idóneo de clústeres $ k $, el cual, es distinto al propio proceso de agrupamiento. Este procedimiento conlleva tener en cuenta varios índices. Evaluar la solución obtenida para $ k $ clústeres es similar a la práctica de determinar la dimensión del espacio en el análisis de componentes principales o el orden de los factores en análisis factorial.
 La correcta elección de $ k $ suele ser ambigua ya que depende de las interpretaciones según la forma y la escala de de la distribución de los datos y la solución deseada. También hay que tener en cuenta que incluso con datos aleatorios se pueden detectar falsos clústeres. \\
 
@@ -609,7 +638,7 @@ Así, lo ideal sería tomar $ k = 4 $.
 
 \clearpage
 
-\section{Parte práctica}
+\section{Parte práctica}\label{sec:práctica}
 
 El objetivo de este apartado consiste en el estudio de técnicas de aprendizaje no supervisado para análisis relacional mediante segmentación. Usaremos distintos algoritmos de \textit{clustering} sobre el conjunto de datos de prueba y extraeremos conclusiones sobre los resultados obtenidos.\\
 
