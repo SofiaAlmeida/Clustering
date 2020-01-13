@@ -677,7 +677,8 @@ Dada la matriz de proximidad $D=(d_{ij})$ y un número de clusters K, la descono
 En los algoritmos de \textit{clustering}, uno de los problemas es determinar el número idóneo de clústeres $ k $, el cual, es distinto al propio proceso de agrupamiento. Este procedimiento conlleva tener en cuenta varios índices. Evaluar la solución obtenida para $ k $ clústeres es similar a la práctica de determinar la dimensión del espacio en el análisis de componentes principales o el orden de los factores en análisis factorial.
 La correcta elección de $ k $ suele ser ambigua ya que depende de las interpretaciones según la forma y la escala de de la distribución de los datos y la solución deseada. También hay que tener en cuenta que incluso con datos aleatorios se pueden detectar falsos clústeres. \\
 
-En cada paso de nuestro proceso se crea un nuevo clúster formado por dos observaciones, una observación y otro clúster o dos clústeres ya obtenidos. Así, el número de clústeres $ k $ decrece de $ n $ (número de observaciones) a 1. La distancia entre dos clústeres es la euclídea o la de disimilitud. Por ejemplo, para los enlaces únicos, completos o de medias las distancias son el mínimo, máximo y la euclídea media respectivamente. Para el método de Ward, es la suma de las distancias entre clústeres al cuadrado dada en la fórmula (REFERENCIAR). Como $ k $ decrece de $ n $ a 1, el valor de la distancia debería aumentar ya que tendría que ser mayor cuando dos clústeres distintos se agrupan en uno solo. \\
+En cada paso de nuestro proceso se crea un nuevo clúster formado por dos observaciones, una observación y otro clúster o dos clústeres ya obtenidos. Así, el número de clústeres $ k $ decrece de $ n $ (número de observaciones) a 1. La distancia entre dos clústeres es la euclídea o la de disimilitud. %Por ejemplo, para los enlaces únicos, completos o de medias las distancias son el mínimo, máximo y la euclídea media respectivamente. Para el método de Ward, es la suma de las distancias entre clústeres al cuadrado dada en la fórmula (REFERENCIAR). 
+Como $ k $ decrece de $ n $ a 1, el valor de la distancia debería aumentar ya que tendría que ser mayor cuando dos clústeres distintos se agrupan en uno solo. \\
 
 Uno de los procedimientos para determinar el número de clústeres, por ejemplo en el algoritmo $ k$-medias, es el denominado ``método del codo'' o \textit{elbow method}. Suele ser ambiguo y no muy fiable por lo que se recomienda el uso de otras técnicas. Consiste en dibujar la gráfica de las distancia a los centros de cada clúster en función del número de clústeres. En un punto, se observará que la gráfica forma una especie de codo, de ahí nombre del método, por lo que se escoge dicho punto. Así, llamamos:\\
 \[
@@ -702,15 +703,15 @@ Podemos construir otra serie de índices más complejos siguiendo la misma filos
 \[
 R^{2}_{k} = \frac{T - \sum_k SSE_k}{T}.
 \]
-Para $ n $ clústeres $ SSE_k = 0 $ por lo que $ R^2 = 1 $. A medida que vamos realizando los agrupamientos, estos estarán más separados. Una gran disminución en $ R^2_k $ representaría un agrupamiento diferente. También podríamos tener en cuenta el cambio en $ R^2 $ al unir los clústeres $ R $ y $ S $ como $ SR^2 = R_k^2 - R^2_{k-1} $. El estadístico $ SR^2 $ representa,en función de $ T $, la proporción de $ SSE_t - (SSE_r + SSE_s) $ donde los clústeres $ C_R $ y $ C_S $ se han unido para formar el clúster $ C_T $.  Cuanto mayor sea el índice mayor será la pérdida de homogeneidad.\\
+Para $ n $ clústeres $ SSE_k = 0 $ por lo que $ R^2 = 1 $. A medida que vamos realizando los agrupamientos, estos estarán más separados. Una gran disminución en $ R^2_k $ representaría un agrupamiento diferente. También podríamos tener en cuenta el cambio en $ R^2 $ al unir los clústeres $ R $ y $ S $ como $ SR^2 = R_k^2 - R^2_{k-1} $. El estadístico $ SR^2 $ representa, en función de $ T $, la proporción de $ SSE_t - (SSE_r + SSE_s) $ donde los clústeres $ C_R $ y $ C_S $ se han unido para formar el clúster $ C_T $.  Cuanto mayor sea el índice mayor será la pérdida de homogeneidad.\\
 
 El objetivo del análisis clúster es encontrar en menor número de clústeres homogéneos. Para un solo clúster, la varianza agrupada para todas las variables es la media de las varianzas de cada una de las variables, es decir, $ s^2 = \sum_{i=1}^{n} \norm{\yy_i - \bar{\yy}}^2/ p(n-1)$. También podemos calcularla para un clúster $ C_k $ con $ n_k $ observaciones de la siguiente manera:
 \[
 s^2 = \sum_{i=1}^{n_k} \norm{\yy_i - \bar{\yy}_k}^2/ p(n_k-1).
 \]
-Valores grandes de la varianza agrupada indica que los clústeres no son homogéneos. Por lo tanto, si tiende hacia cero para algún $  k < n $ indica la formación de un clúster homogéneo. \\
+Valores grandes de la varianza agrupada indica que los clústeres no son homogéneos. Por lo tanto, si tiende a cero para algún $  k < n $ indica la formación de un clúster homogéneo. \\
 
-Bajo una normal multivariante e independencia de los $ n $ vectores de dimensión $ p $ para $ \Sigma = \sigma^2 \textbf{I} $, podríamos hacer una prueba para verificar que los $ k $ clústeres muestran una separación significativa usando, por ejemplo, un análisis de la varianza (ANOVA) mediante una prueba $ F $ de Fisher. También podemos comprobar si dos medias están lo suficientemente separadas en cualquier nivel usando un estadístico $ t $, que son los más comunes en las pruebas $ t $ de Student. Como no es común que la independencia y la distribución normal multivariante se den a la voz, los estadísticos se denominan pseudo estadísticos $ F $ y  $ t^2 $. El pseudo estadístico $ F $ se define como
+Bajo una normal multivariante e independencia de los $ n $ vectores de dimensión $ p $ para $ \Sigma = \sigma^2 \textbf{I} $, podríamos hacer una prueba para verificar que los $ k $ clústeres muestran una separación significativa usando, por ejemplo, un análisis de la varianza (ANOVA) mediante una prueba $ F $ de Fisher. También podemos comprobar si dos medias están lo suficientemente separadas en cualquier nivel usando un estadístico $ t $, que son los más comunes en las pruebas $ t $ de Student. Como no es común que la independencia y la distribución normal multivariante se den a la vez, los estadísticos se denominan pseudo estadísticos $ F $ y  $ t^2 $. El pseudo estadístico $ F $ se define como
 \[
 F^*_k = \frac{(T-\sum_k SSE_k) / (k-1)}{\sum_k SSE_k / (n-k)}.
 \]
@@ -763,9 +764,9 @@ W_k = \sum_{R = 1}^{k}\frac{1}{2 n_R}\sum_{i j \in C_R} d(i,j).
 \]
 Notamos que se puede usar para cualquier método y distancia. Según \cite{tibshirani2001estimating} el número 2 en la fórmula de $ W_k $ es para que funcione correctamente. Gráficamente se obtendría una gráfica como la siguiente:
 
-\begin{figure}[h!]
+\begin{figure}[H]
 	\centering
-	\includegraphics[scale=0.3]{pedro/gapGraph}
+	\includegraphics[scale=0.2]{pedro/gapGraph}
 	\caption{Ejemplo del método de la brecha \cite{gapGraph}.}
 \end{figure}
 Así, lo ideal sería tomar $ k = 4 $.
@@ -1090,6 +1091,7 @@ Una ventaja de los métodos jerárquicos sobre los no jerárquicos es que uno no
 
 Un problema importante del \textit{clustering} es la validación de la solución. Para ello deberemos usar criterios internos, externos y métodos de replicación o validación cruzada.
 
+\clearpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %       REFERENCIAS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
