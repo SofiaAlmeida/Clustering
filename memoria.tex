@@ -225,7 +225,7 @@ Para llevar a cabo un análisis \textit{cluster} hay que realizar principalmente
 \item Elegir un algoritmo para construir los grupos. Hay dos grupos principales: de particionamiento y jerárquicos (que a su vez se dividen entre divisivos y aglomerativos). En la Sección \ref{sec:algoritmos} explicaremos la diferencia entre ambos grupos y veremos algunos ejemplos.
 \end{enumerate}
 
-Además, en la Sección \ref{sec:num} trataremos el problema de decidir el número de \textit{clusters} y veremos algunos métodos utilizados para determinarlo. Por último, hemos implementado un ejemplo de agrupamiento tomando los datos de las flores de iris de Fisher, el análisis se encuentra en la Sección \ref{sec:práctica}. %TODO: REFERENCIAR
+Además, en la Sección \ref{sec:num} trataremos el problema de decidir el número de \textit{clusters} y veremos algunos métodos utilizados para determinarlo. Por último, hemos implementado un ejemplo de agrupamiento tomando los datos de las flores de iris de Fisher, el análisis se encuentra en la Sección \ref{sec:practica}. %TODO: REFERENCIAR
 
 \section{Medidas de similitud}\label{sec:medidas}
 
@@ -466,12 +466,14 @@ Cuando las variables son binarias, los datos se pueden organizar en una tabla de
 \begin{table}[h]
 \centering
 \resizebox{7.5cm}{!} {
-\begin{tabular}{ll|clc|c|l}
-\multicolumn{2}{l|}{\multirow{2}{*}{}} & \multicolumn{3}{c}{Variable k} & \multicolumn{2}{c|}{\multirow{2}{*}{Total}} \\
-\multicolumn{2}{l|}{}                  & 1        &       & 0       & \multicolumn{2}{c|}{}                        \\ \hline
-\multirow{2}{*}{Variable i}       & 1      & a        &       & b       & \multicolumn{2}{c|}{a+b}                     \\
-                              & 0      & c        &       & d       & \multicolumn{2}{c|}{c+d}                     \\ \hline
-\multicolumn{2}{l|}{Total}            & a+c      &       & b+d     & \multicolumn{2}{c|}{n=a+b+c+d}              
+\begin{tabular}{llclccl}
+\toprule
+\multicolumn{2}{l}{\multirow{2}{*}{}} & \multicolumn{3}{c}{Variable k} & \multicolumn{2}{c}{\multirow{2}{*}{Total}} \\\cmidrule{3-5}
+\multicolumn{2}{l}{}                  & 1        &       & 0       & \multicolumn{2}{c}{}                        \\ \hline
+\multirow{2}{*}{Variable i}       & 1      & a        &       & b       & \multicolumn{2}{c}{a+b}                     \\
+                              & 0      & c        &       & d       & \multicolumn{2}{c}{c+d}                     \\ \hline
+\multicolumn{2}{l}{Total}            & a+c      &       & b+d     & \multicolumn{2}{c}{n=a+b+c+d}\\
+\bottomrule            
 \end{tabular}
 }
 \end{table}
@@ -488,14 +490,15 @@ Dada la tabla anterior, se pueden desarrollar medidas de asociacion (o similitud
 
 Para resumir esta sección, notamos que hay muchas medidas de similitud entre pares de objetos. Parece que la mayoría de profesionales usan distancias o los coeficientes de la Tabla 12.1 para el cluster de ítems y correlaciones para el cluster de variables. Sin embargo, en ocasiones, las entradas a los algoritmos clustering pueden ser frecuencias simples.\\
 
-Ejemplo (Midiendo las similitudes de 11 lenguajes) Los significados de las palabras cambian a lo largo de la historia. Sin embargo, el significado de los números 1,2,3,... representa una excepción llamatica. Así, una primera comparación de lenguajes puede estar basado por exclusiva en los números naturales. La Tabla 12.2 (siguiente tabla) nos da los 10 primeros números en inglés, polaco, húngaro y otros ocho lenguajes europeos modernos. (Solamente consideramos lenguajes que utilizan el alfabeto romano y omitimos acentos y signos de puntuación.) Una observación rápida de la escritura de los números sugiere que los cinco primeros lenguajes (inglés, noruego, danés, holandés y alemán) son muy parecidos. El español, francés e italiano se parecen todavía más. El húngaro y finés parecen no estar relacionados con los demás lenguajes. El polaco tiene algunas características de los lenguajes de los subgrupos más grandes.
+Ejemplo (Midiendo las similitudes de 11 lenguajes) Los significados de las palabras cambian a lo largo de la historia. Sin embargo, el significado de los números 1,2,3,... representa una excepción llamatica. Así, una primera comparación de lenguajes puede estar basado por exclusiva en los números naturales. La Tabla \ref{tab:leng}  nos da los 10 primeros números en inglés, polaco, húngaro y otros ocho lenguajes europeos modernos. (Solamente consideramos lenguajes que utilizan el alfabeto romano y omitimos acentos y signos de puntuación.) Una observación rápida de la escritura de los números sugiere que los cinco primeros lenguajes (inglés, noruego, danés, holandés y alemán) son muy parecidos. El español, francés e italiano se parecen todavía más. El húngaro y finés parecen no estar relacionados con los demás lenguajes. El polaco tiene algunas características de los lenguajes de los subgrupos más grandes.
 
+%Tabla 12.2 para refencias
 \begin{table}[h]
+\label{tab:leng}
+\caption{Números en 11 lenguajes}
 \centering
 \resizebox{16cm}{!} {
-\begin{tabular}{|lllllllllll|}
-\hline
-\multicolumn{11}{|l|}{Tabla 12.2 Números en 11 lenguajes}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             \\ \hline
+\begin{tabular}{lllllllllll}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         \\ \hline
 \begin{tabular}[c]{@{}l@{}}Inglés\\ (E)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Noruego\\ (N)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Danés\\ (Da)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Holandés\\ (Du)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Alemán\\ (G)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Francés\\ (Fr)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Español\\ (Sp)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Italiano\\ (I)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Polaco\\ (P)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Húngaro\\ (H)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Finés\\ (Fi)\end{tabular} \\ \hline
 one                                                  & en                                                    & en                                                   & een                                                     & eins                                                 & un                                                     & uno                                                    & uno                                                    & jeden                                                & egy                                                   & yksi                                                 \\
 two                                                  & to                                                    & to                                                   & twee                                                    & zwei                                                 & deux                                                   & dos                                                    & due                                                    & dwa                                                  & ketto                                                 & kaksi                                                \\
@@ -511,12 +514,15 @@ ten                                                  & ti                       
 }
 \end{table}
 
+%Tabla 12.3 para referencias
 \begin{table}[h]
+\label{tab:lengConc}
+\caption{Concordancia de la primera letra para 10 números en 11 lenguajes}
 \centering
 \resizebox{12cm}{!} {
-\begin{tabular}{|cccccccccccc|}
+\begin{tabular}{cccccccccccc}
+\\
 \hline
-\multicolumn{12}{|l|}{Tabla 12.3 Concordancia de la primera letra para 10 números en 11 lenguajes} \\ \hline
        & E      & N      & Da     & Du     & G     & Fr    & Sp    & I     & P     & H     & Fi    \\ \hline
 E      & 10     &        &        &        &       &       &       &       &       &       &       \\
 N      & 8      & 10     &        &        &       &       &       &       &       &       &       \\
@@ -533,8 +539,8 @@ Fi     & 1      & 1      & 1      & 1      & 1     & 1     & 1     & 1     & 1  
 }
 \end{table}
 
-Por porpósitos ilustrativos, comparamos los lenguajes mirando la primera letra de cada número. Las palabras para el mismo número son concordantes si tienen la misma primera letra y discordantes en caso contrario. De esta forma de la tabla 12.2 obtenemos la tabla 12.3. Podemos observar que el inglés y el noruego comparten la misma primera letra para 8 de las 10 parejas de números. El resto de frecuencias se ha calculado de la misma forma.\\
-Los resultados en la Tabla 12.3 confirman la impresión visual inicial de la Tabla 12.2. Ésto es, que el inglés, noruego, danés, holandés y alemán parecen formar un grupo. El francés, español, italiano y polaco forman otro, mientras que el húngaro y el finés no forman parte de ninguno.\\
+Por porpósitos ilustrativos, comparamos los lenguajes mirando la primera letra de cada número. Las palabras para el mismo número son concordantes si tienen la misma primera letra y discordantes en caso contrario. De esta forma de la tabla \ref{tab:leng} obtenemos la tabla \ref{tab:lengConc}. Podemos observar que el inglés y el noruego comparten la misma primera letra para 8 de las 10 parejas de números. El resto de frecuencias se ha calculado de la misma forma.\\
+Los resultados en la tabla \ref{tab:lengConc} confirman la impresión visual inicial de la tabla \ref{tab:leng}. Ésto es, que el inglés, noruego, danés, holandés y alemán parecen formar un grupo. El francés, español, italiano y polaco forman otro, mientras que el húngaro y el finés no forman parte de ninguno.\\
 
 En los ejemplo hasta el momento, hemos utilizado nuestra impresión visual de las medidas de similitud o distancia para formar grupos. Más adelante discutiremos formas menos subjetivas para crear los clusters. 
 
@@ -560,7 +566,7 @@ Sean $P$ y $Q$ dos grupos que vamos a unir, generando un nuevo grupo $P$ + $Q$. 
 	d(R, P+Q) = \delta_1 d(R,P) + \delta_2 d(R,Q) + \delta_3 d(P,Q) + \delta_4 \textvertline d(R,P) - d(R,Q) \textvertline
 \end{equation}
 
-Donde los $\delta_i$ son los factores de ponderación que dan lugar a los diferentes algoritmos de aglomeración, algunos se describen en la tabla \ref{tab:groupDist). Antes definimos $n_P$ como el número de elementos que hay en el grupo $P$, de la misma forma se definen $n_Q$ y $n_R$.
+Donde los $\delta_i$ son los factores de ponderación que dan lugar a los diferentes algoritmos de aglomeración, algunos se describen en la tabla \ref{tab:groupDist}. Antes definimos $n_P$ como el número de elementos que hay en el grupo $P$, de la misma forma se definen $n_Q$ y $n_R$.
 
 %Tabla 13.2 Härdle-Simar 2015 chapter cluster analysis
 \begin{table}[H]
@@ -586,8 +592,8 @@ La secuencia de \textit{cluster} se representan gráficamente mediante un dendro
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=0.3]{victoria/aglomerativo}
-	\caption{Ejemplo de dendrograma. 
+	\includegraphics[scale=0.7]{victoria/aglomerativo}
+	\caption{Ejemplo de dendrograma.}
 	\label{fig:ejemplo}
 \end{figure}
 
@@ -597,8 +603,8 @@ Los algoritmos disociativos parten de un único \textit{cluster} consiste en ir 
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=0.3]{victoria/disociativo}
-	\caption{Ejemplo de dendrograma. 
+	\includegraphics[scale=0.7]{victoria/disociativo}
+	\caption{Ejemplo de dendrograma.}
 	\label{fig:ejemplo}
 \end{figure}
 
@@ -669,7 +675,7 @@ Destacamos que si $ |C_i| = 1 $ entonces $ s(i) = 0 $. Así, si muchos objetos t
 
 \begin{table}[h!]
 	\centering
-	\begin{tabular}{| c | c |} 
+	\begin{tabular}{cc} 
 		\hline
 		k & Silhouette coeff. \\
 		\hline
@@ -703,7 +709,7 @@ Así, lo ideal sería tomar $ k = 4 $.
 
 \clearpage
 
-\section{Parte práctica}\label{sec:práctica}
+\section{Parte práctica}\label{sec:practica}
 
 El objetivo de este apartado consiste en el estudio de técnicas de aprendizaje no supervisado para análisis relacional mediante segmentación. Usaremos distintos algoritmos de \textit{clustering} sobre el conjunto de datos de prueba y extraeremos conclusiones sobre los resultados obtenidos.\\
 
@@ -745,18 +751,18 @@ Mostraremos la tabla comparativa que contiene las mejores versiones de cada algo
 \begin{table}[h]
 \centering
 \resizebox{15cm}{!} {
-\begin{tabular}{|c|c|c|c|c|c|}
+\begin{tabular}{cccccc}
 \hline
 \textbf{Name} & \textbf{Nº \textit{clusters}} & \textbf{CH} & \textbf{SH} & \textbf{Time} & \textbf{\textit{clusters}}                                                                                                          \\ \hline
 K-Means       & 3                    & 359.845074 & 0.504769    & 0.016456      & \begin{tabular}[c]{@{}c@{}}0:    61 (40.67\%)\\
-1:    50 (33.33\%) \\2:    39 (26.00\%)\end{tabular}\\ \hline
+1:    50 (33.33\%) \\2:    39 (26.00\%)\end{tabular}\\ \\
 DBSCAN        & 4                   &  94.991819   & 0.306404   &  0.002353      & \begin{tabular}[c]{@{}c@{}}0:    45 (30.00\%)
 \\1:    39 (26.00\%)
 \\-1:    36 (24.00\%)
-\\2:    30 (20.00\%)\end{tabular} \\ \hline
+\\2:    30 (20.00\%)\end{tabular} \\ \\
 AggCluster    & 3                    & 349.254185 & 0.504800    & 0.019058      & \begin{tabular}[c]{@{}c@{}}0:    67 (44.67\%)
 \\1:    50 (33.33\%)
-\\2:    33 (22.00\%)\end{tabular}                       \\ \hline
+\\2:    33 (22.00\%)\end{tabular}                       \\ \\
 MeanShift     & 3                    & 290.470683  & 0.476961    & 0.289073      & \begin{tabular}[c]{@{}c@{}}0:    81 (54.00\%)
 \\1:    50 (33.33\%)
 \\2:    19 (12.67\%)\end{tabular}                                             \\ \hline
@@ -787,7 +793,7 @@ Se mostrarán 4 gráficas realizadas y se hará un estudio sobre los resultados 
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.62]{dani/scatmatrixK-MeansIRIS.png}
+\includegraphics[width=10cm]{dani/scatmatrixK-MeansIRIS.png}
 \caption{Scatter Matrix para K-Means con 3 \textit{clusters}.}
 \label{smkm}
 \end{figure}\
@@ -800,16 +806,15 @@ Las muestras del clúster 1 (tipo setosa) se caracteriza por tener un pétalo co
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.55]{dani/heatmapK-MeansIRIS.png}
+\includegraphics[width=10cm]{dani/heatmapK-MeansIRIS.png}
 \caption{HeatMap para K-Means con 3 \textit{clusters}.}
 \label{hmkm}
 \end{figure}
 
-\clearpage
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.4]{dani/kdeplotK-MeansIRIS.png}
+\includegraphics[scale=0.3]{dani/kdeplotK-MeansIRIS.png}
 \includegraphics[scale=0.32]{dani/boxplotK-MeansIRIS.png}
 \caption{KPlot y BoxPlot para K-Means con 3 \textit{clusters}.}
 \label{kpkm}
