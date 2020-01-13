@@ -610,6 +610,69 @@ Los algoritmos disociativos parten de un único \textit{cluster} consiste en ir 
 
 
 \subsection{No jerárquicos}
+Los métodos de clustering no jerárquicos simplemente  dividen los datos observados en un número K predeterminado de grupos o clusters, donde no hay una relación jerárquica entre la solución de K-cluster y la solución de (K+1)-cluster. Dado K nosotros buscamos una partición de los datos en K clusters de tal manera que los datos dentro de cada cluster sean similares entre ellos, mientras que los datos de diferentes clusters estan bastante diferenciados.
+ 
+Un método clustering no jerárquico probablemente involucraría como primer paso la enumeración total de todos los posibles agrupamientos de los datos. Entonces, usando algún criterio de optimización, el agrupamiento que es elegido como el mejor sería la partición que optimizara dicho criterio. Claramente, para un conjunto de datos grande, tal método se vuelve rapidamente inviable, requiriendo cantidades ingentes de tiempo de procesamiento y almacenamiento. Como resultado, todas las técnicas de clustering disponibles son iterativas y trabajan con una cantidad de agrupamientos muy limitada. Los métodos no jerárquicos suelen ser computacionalmente más eficientes que los métodos jerárquicos.
+
+\subsubsection{K-Medias}
+
+El algoritmo K-medias es muy popular porque es extremadamente eficiente y a menudo es usado para proyectos de clustering de gran escala. Hacemos la observación de que el algoritmo K-medias necesita tener acceso a los datos originales.
+
+El algoritmo K-medias comienza o por asignación de los datos a uno de los K cluster predeterminados y luego calculando los centroides de los K cluster o por pre-especificación de los centroides de los K cluster. La pre-especificación de los centroides puede ser aleatoriamente seleccionados o pueden ser obtenidos cortando una dendrograma a una altura apropiada. Luego, de manera iterativa, el algoritmo busca minimizar la ESS (suma de las distancias euclídeas al cuadrado) por reasignación de los datos a los clusters. El proceso se detiene cuando no hay más reasignaciones  que reduzcan el valor de la suma.
+
+La solución (una configuración de los datos dentro de los K clusters) puede no ser única. El algoritmo solo encontrará un mínimo local de la ESS. Es recomendable ejecutar el algoritmo varias veces usando una asignación aleatoria inicial diferente de los datos en los K clusters para encontrar el mínimo más bajo de la ESS, y por tanto, la mejor solución basada en K clusters. Los pasos del algoritmo son:
+\begin{enumerate}
+\item Entrada: $\textbf{L}=\{\textbf{x}_i,i=1,2,...,n\}$, K=número de clusters.
+
+\item Hacer uno de los siguientes:
+\begin{itemize}
+\item Formar una asignación aleatoria inicial de los datos en los K clusters y, para los K clusters, calcular su centroide, $\overline{\textbf{x}}_k, k=1,2,...,K$
+\item Pre-especificar los centroides de los K clusters, $\overline{\textbf{x}}_k, k=1,2,...,K$
+\end{itemize}
+\item Calcular la distancia euclídea al cuadrado para cada dato al centroide de su cluster actual:
+$$ESS=\sum_{k=1}^{K}\sum_{c(i)=k}(\textbf{x}_i - \overline{\textbf{x}}_k)^T(\textbf{x}_i - \overline{\textbf{x}}_k)$$
+
+donde $\overline{\textbf{x}}_k$ es el centroide del $k$-ésimo cluster y $c(i)$ es el cluster que contiene $\textbf{x}_i$
+
+\item Reasignamos cada dato al cluster con el centroide más cercano de tal manera que ESS se reduce en magnitud. Actualizamos los centroides de los clusters despues de la reasignación de los datos. 
+\item Repetimos los pasos 3 y 4 hasta que no se produzcan más reasignaciones.
+\end{enumerate}
+
+\subsubsection{Particionamiento Alrededor de Medoides (PAM)}
+
+Este método de clustering es una modificación del algoritmo de clustering K-medoides. Aunque similar al clustering de K-medias este algoritmo busca los K "objetos representativos" (o medoides), en vez de los centroides, entre los datos del conjunto, y se usa una distancia basada en la disimilitud en lugar de la distancia euclídea al cuadrado. Por ello minimiza la suma de las disimilitudes en vez de la suma de las distancias euclídeas, el método es más robusto a datos anómalos como valores atípicos y valores faltantes.
+
+Este algoritmo comienza con la matriz de proximidad $\textbf{D}=(d_{ij})$, donde $d_{ij}=d(\textbf{x}_i,\textbf{x}_j)$, ya sea dada o calculada a partir del conjunto de datos, y una configuración inicial de los datos dentro de los K clusters. Usando \textbf{D}, nosotros encontramos ese dato (llamado objeto representativo o medoide) dentro de cada cluster que minimiza la disimilitud total para todos los datos dentro de su cluster. En el algoritmo de K-medoides, los centroides de los pasos 2,3 y 4 en el algoritmo de K-medias son remplazados por los medoides, y la función objetivo ESS es sustituida por $ESS_{med}$ (definido más adelante).
+
+El algoritmo de particionamiento alrededor de medoides (PAM) es una modificación de el algoritmo de K-medoides que introduce una estrategia de intercambio por la cual el medoide de cada cluster es reemplazado por otro dato de ese cluster, pero solo si este intercambio reduce el valor de la función objetivo. Una desventaja para ambos algoritmos es que aunque funciona bien en pequeños conjuntos de datos, no son suficientemente eficientes para usar en clustering de grandes conjuntos de datos. Los pasos del algoritmo PAM son:
+
+\begin{enumerate}
+\item Entrada: $\textbf{D}=(d_{ij})$, K=número de clusters.
+\item Formar una asignación inicial en los K clusters.
+\item Localizar el medoide de cada cluster. El medoide del $k$-ésimo cluster esta definido como ese dato en el $k$-ésimo cluster que minimiza la disimilitud total a los otros datos dentro del cluster, $k=1,2,...,K$.
+
+
+\item[$4a.$] Para el clustering de K-medoides:
+\begin{itemize}
+\item Para el $k$-ésimo cluster, reasignamos el $i_k$ésimo dato al cluster con su medoide más cercano para que la función objetivo, $$ESS_{med}=\sum_{k=1}^{K}\sum_{c(i)=k}d_{ii_k}$$
+sea reducida en magnitud, donde $c(i)$ es el cluster que contiene el $i$ésimo dato.
+\item Repetir el paso 3 y el paso de reasignación hasta que no se produzcan mas reasignaciones.
+\end{itemize}
+\item[$4b.$] Para  el clustering de particionamiento alrededor de medoides:
+
+\begin{itemize}
+\item Buscamos un dato no medoide tal que al intercambiarlo por otro medoide se produce una reducción en $ESS_{med}$, considerando el cambio que se produce en los clusters al cambiar de medoide (si hay varios medoides que cumplen esta condición, seleccionar el que mayor reducción produzca) y se produce el cambio.
+
+\item Repetir el proceso de intercambio hasta que no se produzca ninguna reducción del $ESS_{med}$.
+\end{itemize}
+\end{enumerate}
+
+\subsubsection{Análisis difuso(fanny)}
+
+La idea detrás del clustering difuso es que los datos para ser agrupados pueden ser asignadas probabilidades de pertenencia a cada uno de los K clusters. Sea $u_{ik}$ como denotamos a la fuerza de pertenencia del $i$ésimo dato al $k$ésimo cluster. Para que el $i$ésimo dato, nosotros necesitamos que $\{u_{ik}\}$ se comporte como una probabilidad. Eso es que $u_{ik}\geq0$, para todo $i$ y $k=1,2,...,K$, y $\sum_{k=1}^{K}u_{ik}=1$ para cada $i$. Esto choca con los métodos de particionamiento de K-medias o PAM, donde cada dato es asignado a un solo cluster.
+Dada la matriz de proximidad $D=(d_{ij})$ y un número de clusters K, la desconocida fuerza de pertenencia, $\{u_{ik}\}$, es encontrada minimizando la función objetivo, $$\sum_{k=1}^{K}\frac{\sum_i\sum_ju_{ik}^2u_{jk}^2d_{ij}}{2\sum_lu_{lk}^2}$$ La función objetivo se minimiza bajo las restricciones de no negatividad y unidad de la suma usando un algoritmo iterativo.
+
+
 \section{Número de clústeres}\label{sec:num}
 En los algoritmos de \textit{clustering}, uno de los problemas es determinar el número idóneo de clústeres $ k $, el cual, es distinto al propio proceso de agrupamiento. Este procedimiento conlleva tener en cuenta varios índices. Evaluar la solución obtenida para $ k $ clústeres es similar a la práctica de determinar la dimensión del espacio en el análisis de componentes principales o el orden de los factores en análisis factorial.
 La correcta elección de $ k $ suele ser ambigua ya que depende de las interpretaciones según la forma y la escala de de la distribución de los datos y la solución deseada. También hay que tener en cuenta que incluso con datos aleatorios se pueden detectar falsos clústeres. \\
