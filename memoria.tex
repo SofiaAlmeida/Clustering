@@ -56,6 +56,9 @@
 
 %%% Matemáticas
 \usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsbsy}
+\usepackage{tipa}
 \newcommand{\norm}[1]{\left\lVert#1\right\rVert}
 \newcommand{\yy}{\textbf{y}}
 
@@ -537,6 +540,68 @@ En los ejemplo hasta el momento, hemos utilizado nuestra impresión visual de la
 
 \section{Métodos de agrupamiento}\label{sec:algoritmos}
 \subsection{Jerárquicos}
+El agrupamiento jerárquico es un método de análisis de grupos puntuales, que se basa en buscar una construcción de una jerarquía de grupos. Por tanto, los algoritmos jerárquicos van minimizando las distancias  o, visto de otra forma, maximizando  las similitudes. Podemos diferenciar dos técnicas para el agrupamiento jerárquico aglomerativas y disociativas. La diferencia es que las primeras son de un acercamiento ascendente, mientras que las segundas son de un acercamiento descendente.
+
+\subsubsection{Técnicas aglomerativas}
+Los algoritmos aglomerativos son prácticamente los más usados. Consiste en formar grupos o aglemerados según su similitud, uniendo los \textit{cluster} que se encuentran a una menor distancia, habrá tantos \textit{clusters} al inicio como individuos haya. Este algoritmo sigue los pasos que se muestran a continuación:
+
+\begin{enumerate}
+	\item Construir la mejor partición.
+	\item Calcular la matriz distancia $D$.
+	\item Repetir los siguientes pasos hasta que todos los \textit{clusters} están aglomerados en $\mathcal{X}$.
+	\item Encuentrar los dos grupos con la distancia más cercana.
+	\item Poner los dos grupos en un grupo.
+	\item Calcular la distancia entre los nuevos grupos y obtener una matriz de distancia reducida $D$.
+\end{enumerate}
+
+Sean $P$ y $Q$ dos grupos que vamos a unir, generando un nuevo grupo $P$ + $Q$. Ahora calculamos la distancia entre $P$ + $Q$ y $R$ utilizando la siguiente función (\ref{eq:distAglo}):
+
+\begin{equation}\label{eq:distAglo}
+	d(R, P+Q) = \delta_1 d(R,P) + \delta_2 d(R,Q) + \delta_3 d(P,Q) + \delta_4 \textvertline d(R,P) - d(R,Q) \textvertline
+\end{equation}
+
+Donde los $\delta_i$ son los factores de ponderación que dan lugar a los diferentes algoritmos de aglomeración, algunos se describen en la tabla \ref{tab:groupDist). Antes definimos $n_P$ como el número de elementos que hay en el grupo $P$, de la misma forma se definen $n_Q$ y $n_R$.
+
+%Tabla 13.2 Härdle-Simar 2015 chapter cluster analysis
+\begin{table}[H]
+  \caption{Distancias entre grupos}
+  \label{tab:groupDist}
+\centering
+  \begin{tabular}{lrrrr}
+  \toprule
+  Métodos & $\delta_1$ & $\delta_2$ & $\delta_3$ & $\delta_4$  \\
+  \midrule
+	Single linkage & 1/2 & 1/2 & 0 & -1/2\\
+	Complete linkage & 1/2 & 1/2 & 0 & 1/2\\
+	Average linkage (unweighted) & 1/2 & 1/2 & 0 & 0\\
+	Average linkage (weighted) & $\frac{n_P}{n_P + n_Q}$ & $\frac{n_Q}{n_P + n_Q}$ & 0 & 0\\
+	Centroid & $\frac{n_P}{n_P + n_Q}$ & $\frac{n_Q}{n_P + n_Q}$ & $-\frac{n_Q n_P}{{n_P + n_Q}^2}$ & 0\\
+	Median & 1/2 & 1/2 & -1/4 & 0\\
+	Ward & $\frac{n_R + n_P}{n_R + n_P + n_Q}$ & $\frac{n_R + n_Q}{n_R + n_P + n_Q}$ & $-\frac{n_R}{n_R + n_P + n_Q}$ & 0\\
+  \bottomrule
+\end{tabular}
+\end{table}
+
+La secuencia de \textit{cluster} se representan gráficamente mediante un dendrograma, esto es un digrama de datos en forma de árbol que organiza los datos en subcategorías que se van dividiendo en otros, donde se ven claramente las relaciones entre los datos y los grupos.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.3]{victoria/aglomerativo}
+	\caption{Ejemplo de dendrograma. 
+	\label{fig:ejemplo}
+\end{figure}
+
+%No se si es disociativo o divisorio
+\subsubsection{Técnicas disociativas}
+Los algoritmos disociativos parten de un único \textit{cluster} consiste en ir dividiendo \textit{clusters} según la disimilitud entre los componentes del mismo, bajando así en la jerarquía.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.3]{victoria/disociativo}
+	\caption{Ejemplo de dendrograma. 
+	\label{fig:ejemplo}
+\end{figure}
+
 
 \subsection{No jerárquicos}
 \section{Número de clústeres}\label{sec:num}
