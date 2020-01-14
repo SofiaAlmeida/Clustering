@@ -778,8 +778,6 @@ Notamos que se puede usar para cualquier método y distancia. Según \cite{tibsh
 \end{figure}
 Así, lo ideal sería tomar $ k = 4 $.
 
-\clearpage
-
 \section{Parte práctica}\label{sec:practica}
 
 El objetivo de este apartado consiste en el estudio de técnicas de aprendizaje no supervisado para análisis relacional mediante segmentación. Usaremos distintos algoritmos de \textit{clustering} sobre el conjunto de datos de prueba y extraeremos conclusiones sobre los resultados obtenidos.\\
@@ -815,8 +813,6 @@ A continuación, se mostrarán los resultados obtenidos por los algoritmos en es
 
 Los algoritmos elegidos han sido los siguientes: \textbf{K-Means, MeanShift, DBSCAN y Agglomerative \textit{clustering}} (clustering jerárquico). A la hora de elegir las mejores versiones de cada algoritmo, nos basaremos en el coeficiente de Calinski-Harabaz (\textbf{CH}) que como hemos explicado antes, tendrá mayor valor si estamos usando el número adecuado de \textit{clusters}.
 
-\clearpage
-
 Mostraremos la tabla comparativa que contiene las mejores versiones de cada algoritmo ejecutado. Se hará un estudio más profundo sobre aquellos dos algoritmos que obtengan un mayor valor del coeficiente de Silhouette. En este caso, \textbf{K-Means} y \textbf{Agglomerative \textit{clustering}}.\\
 
 \begin{table}[h]
@@ -842,6 +838,8 @@ MeanShift     & 3                    & 290.470683  & 0.476961    & 0.289073     
 \caption{Tabla comparativa algoritmos.}
 \end{table}
 
+\clearpage
+
 \subsection{K-Means.}
 
 K-Means es un algoritmo de clasificación no supervisada (clusterización) que agrupa objetos en K grupos basándose en sus características. El agrupamiento se realiza minimizando la suma de distancias entre cada objeto y el centroide de su grupo o \textit{cluster}.\\ 
@@ -858,16 +856,7 @@ KMeans(init='k-means++', n_clusters=3, n_init=5, random_state=12345)
 2:    39 (26.00%)
 \end{lstlisting}\
 
-Se mostrarán 4 gráficas realizadas y se hará un estudio sobre los resultados obtenidos. Las gráficas obtenidas para este caso, serán \textbf{Scatter Matrix, Heatmap, KPlot y BoxPlot} que mostrarán la matriz de dispersión de las muestras, mapa de calor de los centroides para cada variable y distribución de las muestras según cada variable.
-
-\clearpage
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=10cm]{dani/scatmatrixK-MeansIRIS.png}
-\caption{Scatter Matrix para K-Means con 3 \textit{clusters}.}
-\label{smkm}
-\end{figure}\
+Se mostrarán 4 gráficas realizadas y se hará un estudio sobre los resultados obtenidos. Las gráficas obtenidas para este caso, serán \textbf{Scatter Matrix, Heatmap, KPlot y BoxPlot} que mostrarán la matriz de dispersión de las muestras, mapa de calor de los centroides para cada variable y distribución de las muestras según cada variable.\\
 
 En la Figura \ref{smkm} se representa la matriz de dispersión de las 150 muestras agrupadas en 3 clústers: donde el \textit{cluster} 0 representa las \textbf{Iris} versicolor, el \textit{cluster} 1 setosa y el \textit{cluster} 2 virginica. Un gráfico de matriz de dispersión es una herramienta de exploración de datos que permite buscar patrones y relaciones entre diferentes muestras en una distribución multivariante. En el gráfico se muestra el gráfico de dispersión para cada par de variables seleccionadas y una serie de histogramas en la diagonal mostrando la distribución de valores para cada una de las variables.\\
 
@@ -875,9 +864,18 @@ En la Figura \ref{hmkm} y \ref{kpkm} podemos ver la media y forma de las distrib
 
 Las muestras del clúster 1 (tipo setosa) se caracteriza por tener un pétalo corto y delgado, mientras que el ancho del sépalo es más ancho que la media. Las del clúster 2 (tipo virginica), se caracterizan por tener un pétalo y sépalo más grandes respecto a los otros tipos y las del clúster 3 (tipo versicolor) tienen un pétalo similar al de la virginica pero se caracteriza por tener el sépalo un poco más delgado. Podemos observar que las flores más dificiles de diferenciar serán las de los tipos virginica y versicolor puesto que tienen más características en común. Esto se puede visualizar en la matriz de dispersión y en la Figura \ref{kpkm}.
 
+\clearpage
+
 \begin{figure}[h]
 \centering
-\includegraphics[width=10cm]{dani/heatmapK-MeansIRIS.png}
+\includegraphics[scale=0.63]{dani/scatmatrixK-MeansIRIS.png}
+\caption{Scatter Matrix para K-Means con 3 \textit{clusters}.}
+\label{smkm}
+\end{figure}\
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.63]{dani/heatmapK-MeansIRIS.png}
 \caption{HeatMap para K-Means con 3 \textit{clusters}.}
 \label{hmkm}
 \end{figure}
@@ -885,8 +883,8 @@ Las muestras del clúster 1 (tipo setosa) se caracteriza por tener un pétalo co
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.3]{dani/kdeplotK-MeansIRIS.png}
-\includegraphics[scale=0.32]{dani/boxplotK-MeansIRIS.png}
+\includegraphics[scale=0.41]{dani/kdeplotK-MeansIRIS.png}
+\includegraphics[scale=0.31]{dani/boxplotK-MeansIRIS.png}
 \caption{KPlot y BoxPlot para K-Means con 3 \textit{clusters}.}
 \label{kpkm}
 \end{figure}
