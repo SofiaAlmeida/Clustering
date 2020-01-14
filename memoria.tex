@@ -109,12 +109,9 @@
   linkcolor=RoyalBlue
 }
 
-%%% Bibliografía
-%\usepackage[backend=biber]{biblatex}
-%\DefineBibliographyStrings{spanish}{
-%  urlseen = {Último acceso}
-%}
-%\addbibresource{IN-P2.bib}
+%%%%%%%%%% Contador ejemplos
+\newcounter{EJCounter}
+\newcommand{\ej}[1]{\refstepcounter{EJCounter}\textbf{\rmfamily Ejemplo \theEJCounter}\label{#1}}
 
 %----------------------------------------------------------------------------------------
 %	TÍTULO
@@ -207,13 +204,13 @@ Utilizando el lenguaje matemático, podemos definir el problema como sigue:
 
 Decimos que un grupo es \textit{homogéneo} si sus miembros están cerca unos de otros pero los miembros de otros grupos son muy diferentes a estos. Esto lleva a definir dos métricas entre los puntos para indicar el grado de alejamiento y el de asociación o similitud. Se pueden tomar distintas distancias, creando aproximaciones diferentes al problema (trataremos este tema en más profundidad en la Sección \ref{sec:medidas}).
 
-En la Figura \ref{fig:ejemplo} vemos un ejemplo de agrupamiento para los datos dados. Cada punto representa un objeto $x_i$ y los grupos encontrados se encuentran coloreados en diferentes colores.
+En la Figura \ref{fig:ejemplo1} vemos un ejemplo de agrupamiento para los datos dados. Cada punto representa un objeto $x_i$ y los grupos encontrados se encuentran coloreados en diferentes colores.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.3]{ejemplo}
 	\caption{Ejemplo de \textit{clustering}. \cite{chire_deutsch:_2011}}
-	\label{fig:ejemplo}
+	\label{fig:ejemplo1}
 \end{figure}
 
 El análisis \textit{cluster} se aplica en numerosos campos como las ciencias naturales, médicas, económicas, \textit{marketing}, \dots En \textit{marketing}, por ejemplo, es útil dividir a los clientes y conocer las necesidades de cada segmento de mercado para lograr alcanzar a los clientes potenciales. En psicología puede ser útil encontrar tipos de personalidad a partir de los cuestionarios realizados. En arqueología se puede aplicar esta técnica para clasificar objetos en diferentes periodos.
@@ -272,7 +269,7 @@ Sin embargo, la mayoría de los algoritmos de \textit{clustering} aceptarán nú
 Cuando los ítems no puedan ser representados por medidas $p$-dimensionales significativas, las parejas de ítems se suelen comparar según la presencia o ausencia de ciertas características. Ítems similares tienen más características en común que ítems desemejantes. La presencia o ausencia de una característica se puede describir matemáticamente introduciendo una variable binaria, que toma el valor 1 si la característica está presente y el valor 0 cuando la característica está ausente. 
 
 \begin{table}[H]
-  \caption{Ejemplo de binarización de variables.}
+  \caption{Ejemplo \ref{ej:binarizacion}, binarización de variables.}
   \label{tab:binarizacion}
 \centering
   \begin{tabular}{lrrrrr}
@@ -285,23 +282,23 @@ Cuando los ítems no puedan ser representados por medidas $p$-dimensionales sign
 \end{tabular}
 \end{table}
 
-En la Tabla \ref{tab:binarizacion} vemos un ejemplo en el que se utilizan 5 variables binarias para medir la distancia entre los ítem $i$ y $j$. En este caso, hay dos parejas 1-1, una pareja 0-0 y dos parejas que no coinciden.\\
+En la Tabla \ref{tab:binarizacion} vemos un ejemplo (\ej{ej:binarizacion}) en el que se utilizan 5 variables binarias para medir la distancia entre los ítem $i$ y $j$. En este caso, hay dos parejas 1-1, una pareja 0-0 y dos parejas que no coinciden.\\
 
 Sea $x_{ij}$ la puntuación (0 ó 1) de la $j$-ésima variable binaria en el $i$-ésimo ítem y sea $x_{kj}$ la puntuación de la $j$-ésima variable binaria en el $k$-ésimo ítem, con $j=1,2,...,p$. Entonces,
 
 $$(x_{ij}-x_{kj})^2 = \left \{ \begin{matrix} 0 & \mbox{si } x_{ij}=x_{kj}
 \\ 3n+1 & \mbox{si }x_{ij}\neq x_{kj}\end{matrix}\right.   $$
 
-y la distancia euclídea al cuadrado, $\sum_{j=1}^p{(x_{ij}-x_{kj})^2}$, proporcionan una forma de contar el número de disparidades. Una distancia grande corresponde a muchas disparidades, es decir, ítems desemejantes. En el ejemplo de la Tabla \ref{tab:binarizacion}, el cuadrado de las distancia entre los ítems $i$ y $k$ sería
+y la distancia euclídea al cuadrado, $\sum_{j=1}^p{(x_{ij}-x_{kj})^2}$, proporcionan una forma de contar el número de disparidades. Una distancia grande corresponde a muchas disparidades, es decir, ítems desemejantes. En el Ejemplo \ref{ej:binarizacion}, el cuadrado de las distancia entre los ítems $i$ y $k$ sería
 
 $$\sum_{j=1}^5{(x_{ij}-x_{kj})^2}=(1-1)^2+(0-1)^2+(0-0)^2+(1-1)^2+(1-0)^2=2.$$
 
-Aunque la distancia usada en el ejemplo anterior puede ser usada para medir la similitud, tiene la desventaja de que valora por igual las parejas 1-1 y 0-0. En algunos casos, una pareja 1-1 es una indicación mayor de similitud que una pareja 0-0. Por ejemplo, al agrupar gente, que dos personas sean capaz de leer griego antiguo es una evidencia mayor de similitud que la ausencia de dicha habilidad. Para reflejar este trato diferente entre las parejas de 1-1 y 0-0, se han sugerido diversos esquemas para definir los coeficientes de similitud.\\
+Aunque la distancia usada en el Ejemplo \ref{ej:binarizacion} puede ser usada para medir la similitud, tiene la desventaja de que valora por igual las parejas 1-1 y 0-0. En algunos casos, una pareja 1-1 es una indicación mayor de similitud que una pareja 0-0. Por ejemplo, al agrupar gente, que dos personas sean capaz de leer griego antiguo es una evidencia mayor de similitud que la ausencia de dicha habilidad. Para reflejar este trato diferente entre las parejas de 1-1 y 0-0, se han sugerido diversos esquemas para definir los coeficientes de similitud.\\
 Para introducir dichos esquemas, vamos a organizar las frecuencias de las parejas que coinciden y las que no para los ítems $i$ y $k$ en la forma de una tabla de contingencia:
 
 \begin{table}[H]
   \centering
-  \caption{Ejemplo tabla de contingencia.}
+  \caption{Ejemplo \ref{ej:binarizacion}, tabla de contingencia.}
   \label{tab:contingencia}
 \resizebox{7cm}{!} {
   \begin{tabular}{llrrrrr}
@@ -347,11 +344,11 @@ Los coeficientes 1, 2 y 3 de la Tabla \ref{tab:similitud} están monotónicament
 
 La monotonicidad es importante, ya que algunos procedimientos de \textit{clustering} no se ven afectados si la definición de similitud se modifica de manera que los órdenes relativos de similitud no cambian. Los procedimientos jerárquicos de asociación simple y asociación completa que se verán en la Sección \ref{sec:algoritmos} no se ven afectados Para estos métodos, cualquier elección entre los coeficientes 1, 2 y 3 de la Tabla \ref{tab:similitud} producirá las mismas agrupaciones. Análogamente, cualquier elección entre los coefcientes 5, 6 y 7 también resultará en agrupaciones idénticas.\\ % ¿Referenciar la sección de jerárquicos?
 
-Veamos un ejemplo de cálculo de coeficientes de similitud. Supongamos cinco individuos con las características mostradas en la Tabla \ref{tab:ej-similitud}.
+Veamos un ejemplo (\ej{ej:coef_similitud}) de cálculo de coeficientes de similitud. Supongamos cinco individuos con las características mostradas en la Tabla \ref{tab:ej-similitud}.
 
 \begin{table}[h]
   \centering
-  \caption{Ejemplo.}
+  \caption{Individuos y características del Ejemplo \ref{ej:coef_similitud}.}
   \label{tab:ej-similitud}
 \resizebox{15cm}{!} {
   \begin{tabular}{lrrrrrr}
@@ -386,7 +383,7 @@ $$X_5 = \left \{ \begin{matrix} 1 & \mbox{si Diestro}
 $$X_6 = \left \{ \begin{matrix} 1 & \mbox{si Masculino} 
 \\ 0 & \mbox{si Femenino}  \end{matrix}\right.   .$$
 
-Las puntuaciones de los individuos 1 y 2 en las $p=6$ variables binarias son las encontradas en la Tabla \ref{tab:puntuaciones}
+Las puntuaciones de los individuos 1 y 2 en las $p=6$ variables binarias son las encontradas en la Tabla \ref{tab:puntuaciones}.
 
 \begin{table}[h]
   \centering
@@ -403,11 +400,11 @@ Individuo 2 & 1                        & 1                        & 1           
 }
 \end{table}
 
-y el número de parejas que coinciden y las que no se indican en la Tabla \ref{tab:contingencias-ej}
+El número de parejas que coinciden y las que no se indican en la Tabla \ref{tab:contingencias-ej}.
 
 \begin{table}[h]
   \centering
-  \caption{Tabla de contingencias para los individuos 1 y 2 del ejemplo.}
+  \caption{Tabla de contingencias para los individuos 1 y 2 del Ejemplo \ref{ej:coef_similitud}.}
   \label{tab:contingencias-ej}
 \resizebox{6.5cm}{!} {
   \begin{tabular}{lrrrrr}
@@ -460,46 +457,52 @@ cumple las propiedades de una distancia.
 
 \subsection{Medidas de similitud y asociación para parejas de variables}
 
-Hasta el momento, hemos discutido medidas de similitud para los tiems. En algunas aplicaciones, son las variables, en lugar de los ítems, las que deben ser agrupadas. Las medidas de similitud para variables suelen tomar la forma de coeficientes de correlaciones muestrales. Además, en algunas aplicaciones de clustering, las correlaciones negativas son reemlazadas por sus valores absolutos.\\
-Cuando las variables son binarias, los datos se pueden organizar en una tabla de contingencia. Sin embargo, esta vez las variables, en lugar de los ítems, definen las categorías. Para cada par de variables hay $n$ ítems categorizados en la tabla. Con la codificación usual en 0 y 1, la tabla es como sigue: 
+Hasta el momento, hemos discutido medidas de similitud para los ítems. En algunas aplicaciones, son las variables, en lugar de los ítems, las que deben ser agrupadas. Las medidas de similitud para variables suelen tomar la forma de coeficientes de correlaciones muestrales. Además, en algunas aplicaciones de \textit{clustering}, las correlaciones negativas son reemlazadas por sus valores absolutos.\\
+Cuando las variables son binarias, los datos se pueden organizar en una tabla de contingencia. Sin embargo, esta vez las variables, en lugar de los ítems, definen las categorías. Para cada par de variables hay $n$ ítems categorizados en la tabla. Con la codificación usual en 0 y 1, la tabla de contingencia es como se ve en la Tabla \ref{tab:contingencia_var}. Por ejemplo, la variable $i$ vale $1$ para $a$ ítems y la variable $k$ vale $0$ para $b$ de los $n$ ítems.\\
 
 \begin{table}[h]
-\centering
+  \centering
+  \caption{Tabla de contingencia para un par de variables.}
+  \label{tab:contingencia_var}
 \resizebox{7.5cm}{!} {
-\begin{tabular}{llclccl}
+\begin{tabular}{llrrrr}
 \toprule
-\multicolumn{2}{l}{\multirow{2}{*}{}} & \multicolumn{3}{c}{Variable k} & \multicolumn{2}{c}{\multirow{2}{*}{Total}} \\\cmidrule{3-5}
-\multicolumn{2}{l}{}                  & 1        &       & 0       & \multicolumn{2}{c}{}                        \\ \hline
-\multirow{2}{*}{Variable i}       & 1      & a        &       & b       & \multicolumn{2}{c}{a+b}                     \\
-                              & 0      & c        &       & d       & \multicolumn{2}{c}{c+d}                     \\ \hline
-\multicolumn{2}{l}{Total}            & a+c      &       & b+d     & \multicolumn{2}{c}{n=a+b+c+d}\\
+\multicolumn{2}{l}{\multirow{2}{*}{}} & \multicolumn{2}{c}{Variable $k$} & \multicolumn{2}{c}{\multirow{2}{*}{Total}} \\\cmidrule{3-4}
+\multicolumn{2}{l}{}                  & 1             & 0       & \multicolumn{2}{c}{}                        \\ \hline
+\multirow{2}{*}{Variable $i$}       & 1      & $a$          & $b$       & \multicolumn{2}{c}{$a+b$}                     \\
+                              & 0      & c            & $d$       & \multicolumn{2}{c}{$c+d$}                     \\ \hline
+\multicolumn{2}{l}{Total}            & $a+c$          & $b+d$     & \multicolumn{2}{c}{$n=a+b+c+d$}\\
 \bottomrule            
 \end{tabular}
 }
 \end{table}
 
-Por ejemplo, la variable $i$ vale $1$ y la variable $k$ vale $0$ para $b$ de los $n$ ítems.\\
 La fórmula usual del coeficiente de correlación producto-momento aplicada a las variables binarias de la tabla de contingencia nos da
 
-$$r = \frac{ad-bc}{[(a+b)(c+d)(a+c)(b+d)]^{1/2}}$$
+$$r = \frac{ad-bc}{[(a+b)(c+d)(a+c)(b+d)]^{1/2}}.$$
 
 Este número se puede tomar como la medida de similitud entre las dos variables.\\
+
 El coeficiente de correlación anterior se relaciona con la estadística chi-cuadrado ($r^2=\chi^2/n$) para evaluar la independencia de dos variables categóricas. Para un $n$ fijo, una similitud (o correlación) grande es consistente con la presencia de dependencia.\\
 
-Dada la tabla anterior, se pueden desarrollar medidas de asociacion (o similitud) exactamente análogas a las listadas en la Tabla 12.1. El único cambio que se requiere es la sustitución de $n$ (el número de ítems) por $p$ (el número de variables).\\
+Dada la Tabla \ref{tab:contingencia_var}, se pueden desarrollar medidas de asociacion (o similitud) exactamente análogas a las listadas en la Tabla \ref{tab:similitud}. El único cambio que se requiere es la sustitución de $n$ (el número de ítems) por $p$ (el número de variables).\\
 
-Para resumir esta sección, notamos que hay muchas medidas de similitud entre pares de objetos. Parece que la mayoría de profesionales usan distancias o los coeficientes de la Tabla 12.1 para el cluster de ítems y correlaciones para el cluster de variables. Sin embargo, en ocasiones, las entradas a los algoritmos clustering pueden ser frecuencias simples.\\
+Para resumir esta sección, notamos que hay muchas medidas de similitud entre pares de objetos. Parece que la mayoría de profesionales usan distancias o los coeficientes de la Tabla \ref{tab:similitud} para el \textit{cluster} de ítems y correlaciones para el \textit{cluster} de variables. Sin embargo, en ocasiones, las entradas a los algoritmos de \textit{clustering} pueden ser frecuencias simples.\\
 
-Ejemplo (Midiendo las similitudes de 11 lenguajes) Los significados de las palabras cambian a lo largo de la historia. Sin embargo, el significado de los números 1,2,3,... representa una excepción llamatica. Así, una primera comparación de lenguajes puede estar basado por exclusiva en los números naturales. La Tabla \ref{tab:leng}  nos da los 10 primeros números en inglés, polaco, húngaro y otros ocho lenguajes europeos modernos. (Solamente consideramos lenguajes que utilizan el alfabeto romano y omitimos acentos y signos de puntuación.) Una observación rápida de la escritura de los números sugiere que los cinco primeros lenguajes (inglés, noruego, danés, holandés y alemán) son muy parecidos. El español, francés e italiano se parecen todavía más. El húngaro y finés parecen no estar relacionados con los demás lenguajes. El polaco tiene algunas características de los lenguajes de los subgrupos más grandes.
+\ej{ej:leng}: Midiendo las similitudes de 11 lenguajes. Los significados de las palabras cambian a lo largo de la historia. Sin embargo, el significado de los números 1,2,3,... representa una excepción llamativa. Así, una primera comparación de lenguajes puede estar basada en exclusiva en los números naturales. La Tabla \ref{tab:leng}  nos da los 10 primeros números en inglés, polaco, húngaro y otros ocho lenguajes europeos modernos. Solamente consideramos lenguajes que utilizan el alfabeto romano y omitimos acentos y signos de puntuación.
+
+Una observación rápida de la escritura de los números sugiere que los cinco primeros lenguajes (inglés, noruego, danés, holandés y alemán) son muy parecidos. El español, francés e italiano se parecen todavía más. El húngaro y finés parecen no estar relacionados con los demás lenguajes. El polaco tiene algunas características de los lenguajes de los subgrupos más grandes.
 
 %Tabla 12.2 para refencias
 \begin{table}[h]
+\caption{Ejemplo \ref{ej:leng}. Números en 11 lenguajes.}
 \label{tab:leng}
-\caption{Números en 11 lenguajes}
 \centering
-\resizebox{16cm}{!} {
-\begin{tabular}{lllllllllll}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         \\ \hline
-\begin{tabular}[c]{@{}l@{}}Inglés\\ (E)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Noruego\\ (N)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Danés\\ (Da)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Holandés\\ (Du)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Alemán\\ (G)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Francés\\ (Fr)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Español\\ (Sp)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Italiano\\ (I)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Polaco\\ (P)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Húngaro\\ (H)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Finés\\ (Fi)\end{tabular} \\ \hline
+ \makebox[\textwidth][c]{
+%\resizebox{16cm}{!} {
+  \begin{tabular}{lllllllllll}
+    \toprule
+\begin{tabular}[c]{@{}l@{}}Inglés\\ (E)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Noruego\\ (N)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Danés\\ (Da)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Holandés\\ (Du)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Alemán\\ (G)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Francés\\ (Fr)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Español\\ (Sp)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Italiano\\ (I)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Polaco\\ (P)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Húngaro\\ (H)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Finés\\ (Fi)\end{tabular} \\ \midrule
 one                                                  & en                                                    & en                                                   & een                                                     & eins                                                 & un                                                     & uno                                                    & uno                                                    & jeden                                                & egy                                                   & yksi                                                 \\
 two                                                  & to                                                    & to                                                   & twee                                                    & zwei                                                 & deux                                                   & dos                                                    & due                                                    & dwa                                                  & ketto                                                 & kaksi                                                \\
 three                                                & tre                                                   & tre                                                  & drie                                                    & drei                                                 & trois                                                  & tres                                                   & tre                                                    & trzy                                                 & harom                                                 & kolme                                                \\
@@ -516,14 +519,14 @@ ten                                                  & ti                       
 
 %Tabla 12.3 para referencias
 \begin{table}[h]
+\caption{Ejemplo \ref{ej:leng}. Concordancia de la primera letra para 10 números en 11 lenguajes.}
 \label{tab:lengConc}
-\caption{Concordancia de la primera letra para 10 números en 11 lenguajes}
 \centering
-\resizebox{12cm}{!} {
-\begin{tabular}{cccccccccccc}
+\makebox[\textwidth][c]{
+\begin{tabular}{lrrrrrrrrrrr}
 \\
-\hline
-       & E      & N      & Da     & Du     & G     & Fr    & Sp    & I     & P     & H     & Fi    \\ \hline
+\toprule
+       & E      & N      & Da     & Du     & G     & Fr    & Sp    & I     & P     & H     & Fi    \\ \midrule
 E      & 10     &        &        &        &       &       &       &       &       &       &       \\
 N      & 8      & 10     &        &        &       &       &       &       &       &       &       \\
 Da     & 8      & 9      & 10     &        &       &       &       &       &       &       &       \\
@@ -534,29 +537,33 @@ Sp     & 4      & 4      & 5      & 1      & 3     & 8     & 10    &       &    
 I      & 4      & 4      & 5      & 1      & 3     & 9     & 9     & 10    &       &       &       \\
 P      & 3      & 3      & 4      & 0      & 2     & 5     & 7     & 6     & 10    &       &       \\
 H      & 1      & 2      & 2      & 2      & 1     & 0     & 0     & 0     & 0     & 10    &       \\
-Fi     & 1      & 1      & 1      & 1      & 1     & 1     & 1     & 1     & 1     & 2     & 10    \\ \hline
+Fi     & 1      & 1      & 1      & 1      & 1     & 1     & 1     & 1     & 1     & 2     & 10    \\ \bottomrule
 \end{tabular}
 }
 \end{table}
 
-Por porpósitos ilustrativos, comparamos los lenguajes mirando la primera letra de cada número. Las palabras para el mismo número son concordantes si tienen la misma primera letra y discordantes en caso contrario. De esta forma de la tabla \ref{tab:leng} obtenemos la tabla \ref{tab:lengConc}. Podemos observar que el inglés y el noruego comparten la misma primera letra para 8 de las 10 parejas de números. El resto de frecuencias se ha calculado de la misma forma.\\
-Los resultados en la tabla \ref{tab:lengConc} confirman la impresión visual inicial de la tabla \ref{tab:leng}. Ésto es, que el inglés, noruego, danés, holandés y alemán parecen formar un grupo. El francés, español, italiano y polaco forman otro, mientras que el húngaro y el finés no forman parte de ninguno.\\
+Por porpósitos ilustrativos, comparamos los lenguajes mirando la primera letra de cada número. Las palabras para el mismo número son concordantes si tienen la misma primera letra y discordantes en caso contrario. De esta forma de la Tabla \ref{tab:leng} obtenemos la Tabla \ref{tab:lengConc}. Podemos observar que el inglés y el noruego comparten la misma primera letra para 8 de las 10 parejas de números. El resto de frecuencias se ha calculado de la misma forma.\\
+Los resultados en la Tabla \ref{tab:lengConc} confirman la impresión visual inicial de la Tabla \ref{tab:leng}. Esto es, que el inglés, noruego, danés, holandés y alemán parecen formar un grupo. El francés, español, italiano y polaco forman otro, mientras que el húngaro y el finés no forman parte de ninguno.\\
 
-En los ejemplo hasta el momento, hemos utilizado nuestra impresión visual de las medidas de similitud o distancia para formar grupos. Más adelante discutiremos formas menos subjetivas para crear los clusters. 
+En los ejemplo hasta el momento, hemos utilizado nuestra impresión visual de las medidas de similitud o distancia para formar grupos. En la Sección \ref{sec:algoritmos} discutiremos formas menos subjetivas para crear los \textit{clusters}, distintos algoritmos para crear los grupos. 
 
 \section{Métodos de agrupamiento}\label{sec:algoritmos}
+% TODO: Introducción a métodos de agrupamiento
+% TODO: Añadir foto con los 2?
 \subsection{Jerárquicos}
-El agrupamiento jerárquico es un método de análisis de grupos puntuales, que se basa en buscar una construcción de una jerarquía de grupos. Por tanto, los algoritmos jerárquicos van minimizando las distancias  o, visto de otra forma, maximizando  las similitudes. Podemos diferenciar dos técnicas para el agrupamiento jerárquico aglomerativas y disociativas. La diferencia es que las primeras son de un acercamiento ascendente, mientras que las segundas son de un acercamiento descendente.
+El agrupamiento jerárquico es un método de análisis de grupos puntuales, que se basa en buscar una construcción de una jerarquía de grupos. Por tanto, los algoritmos jerárquicos van minimizando las distancias  o, visto de otra forma, maximizando  las similitudes. Es destacable que en este tipo de métodos no es necesario imponer a priori el número de grupos a formar, ya que devolverán una jerarquíade \textit{clusters} en la que según el nivel en el que nos quedemos tendremos un número u otro de grupos.
+
+Podemos diferenciar dos técnicas para el agrupamiento jerárquico: aglomerativas y divisivas. La diferencia es que las primeras son de un acercamiento ascendente, mientras que las segundas son de un acercamiento descendente.
 
 \subsubsection{Técnicas aglomerativas}
-Los algoritmos aglomerativos son prácticamente los más usados. Consiste en formar grupos o aglemerados según su similitud, uniendo los \textit{cluster} que se encuentran a una menor distancia, habrá tantos \textit{clusters} al inicio como individuos haya. Este algoritmo sigue los pasos que se muestran a continuación:
+Los algoritmos aglomerativos son prácticamente los más usados. Consisten en formar grupos o aglomerados según su similitud, uniendo los \textit{cluster} que se encuentran a una menor distancia, habrá tantos \textit{clusters} al inicio como individuos haya. Estos algoritmos siguen los pasos que se muestran a continuación:
 
 \begin{enumerate}
 	\item Construir la mejor partición.
 	\item Calcular la matriz distancia $D$.
-	\item Repetir los siguientes pasos hasta que todos los \textit{clusters} están aglomerados en $\mathcal{X}$.
-	\item Encuentrar los dos grupos con la distancia más cercana.
-	\item Poner los dos grupos en un grupo.
+	\item Repetir los siguientes pasos hasta que todos los \textit{clusters} están aglomerados. % en $\mathcal{X}$. ...no se ha definido!
+	\item Encontrar los dos grupos con la distancia más cercana.
+	\item Unir los dos grupos.
 	\item Calcular la distancia entre los nuevos grupos y obtener una matriz de distancia reducida $D$.
 \end{enumerate}
 
@@ -566,11 +573,11 @@ Sean $P$ y $Q$ dos grupos que vamos a unir, generando un nuevo grupo $P$ + $Q$. 
 	d(R, P+Q) = \delta_1 d(R,P) + \delta_2 d(R,Q) + \delta_3 d(P,Q) + \delta_4 \textvertline d(R,P) - d(R,Q) \textvertline
 \end{equation}
 
-Donde los $\delta_i$ son los factores de ponderación que dan lugar a los diferentes algoritmos de aglomeración, algunos se describen en la tabla \ref{tab:groupDist}. Antes definimos $n_P$ como el número de elementos que hay en el grupo $P$, de la misma forma se definen $n_Q$ y $n_R$.
+Donde los $\delta_i$ son los factores de ponderación que dan lugar a los diferentes algoritmos de aglomeración, algunos se describen en la Tabla \ref{tab:groupDist}. Definimos $n_P$ como el número de elementos que hay en el grupo $P$, de la misma forma se definen $n_Q$ y $n_R$.
 
 %Tabla 13.2 Härdle-Simar 2015 chapter cluster analysis
 \begin{table}[H]
-  \caption{Distancias entre grupos}
+  \caption{Distancias entre grupos.}
   \label{tab:groupDist}
 \centering
   \begin{tabular}{lrrrr}
@@ -598,8 +605,8 @@ La secuencia de \textit{cluster} se representan gráficamente mediante un dendro
 \end{figure}
 
 %No se si es disociativo o divisorio
-\subsubsection{Técnicas disociativas}
-Los algoritmos disociativos parten de un único \textit{cluster} consiste en ir dividiendo \textit{clusters} según la disimilitud entre los componentes del mismo, bajando así en la jerarquía.
+\subsubsection{Técnicas divisivas}
+Los algoritmos divisivas parten de un único \textit{cluster} y en cada iteración van dividiendo \textit{clusters} según la disimilitud entre los componentes del mismo, bajando así en la jerarquía.
 
 \begin{figure}[H]
 	\centering
@@ -610,58 +617,58 @@ Los algoritmos disociativos parten de un único \textit{cluster} consiste en ir 
 
 
 \subsection{No jerárquicos}
-Los métodos de clustering no jerárquicos simplemente  dividen los datos observados en un número K predeterminado de grupos o clusters, donde no hay una relación jerárquica entre la solución de K-cluster y la solución de (K+1)-cluster. Dado K nosotros buscamos una partición de los datos en K clusters de tal manera que los datos dentro de cada cluster sean similares entre ellos, mientras que los datos de diferentes clusters estan bastante diferenciados.
+Los métodos de \textit{clustering} no jerárquicos, también denominados de particionamiento, simplemente  dividen los datos observados en un número $K$ predeterminado de grupos o \textit{clusters}, donde no hay una relación jerárquica entre la solución de $K$-\textit{clusters} y la solución de (K+1)-\textit{clusters}. Dado un valor $K$ buscamos una partición de los datos en $K$ \textit{clusters} de tal manera que los datos dentro de cada \textit{cluster} sean similares entre ellos, mientras que los datos de diferentes \textit{clusters} están bastante diferenciados.
  
-Un método clustering no jerárquico probablemente involucraría como primer paso la enumeración total de todos los posibles agrupamientos de los datos. Entonces, usando algún criterio de optimización, el agrupamiento que es elegido como el mejor sería la partición que optimizara dicho criterio. Claramente, para un conjunto de datos grande, tal método se vuelve rapidamente inviable, requiriendo cantidades ingentes de tiempo de procesamiento y almacenamiento. Como resultado, todas las técnicas de clustering disponibles son iterativas y trabajan con una cantidad de agrupamientos muy limitada. Los métodos no jerárquicos suelen ser computacionalmente más eficientes que los métodos jerárquicos.
+Un método de \textit{clustering} no jerárquico probablemente involucraría como primer paso la enumeración total de todos los posibles agrupamientos de los datos. Entonces, usando algún criterio de optimización, el agrupamiento que es elegido como el mejor sería la partición que optimizara dicho criterio. Claramente, para un conjunto de datos grande, tal método se vuelve rápidamente inviable, requiriendo cantidades ingentes de tiempo de procesamiento y almacenamiento. Por ello, todas las técnicas de \textit{clustering} disponibles son iterativas y trabajan con una cantidad de agrupamientos muy limitada. Los métodos no jerárquicos suelen ser computacionalmente más eficientes que los jerárquicos.
 
-\subsubsection{K-Medias}
+\subsubsection{$K$-Medias}
 
-El algoritmo K-medias es muy popular porque es extremadamente eficiente y a menudo es usado para proyectos de clustering de gran escala. Hacemos la observación de que el algoritmo K-medias necesita tener acceso a los datos originales.
+El algoritmo $K$-medias es muy popular porque es extremadamente eficiente y a menudo es usado para proyectos de \textit{clustering} de gran escala. Hacemos la observación de que el algoritmo K-medias necesita tener acceso a los datos originales.
 
-El algoritmo K-medias comienza o por asignación de los datos a uno de los K cluster predeterminados y luego calculando los centroides de los K cluster o por pre-especificación de los centroides de los K cluster. La pre-especificación de los centroides puede ser aleatoriamente seleccionados o pueden ser obtenidos cortando una dendrograma a una altura apropiada. Luego, de manera iterativa, el algoritmo busca minimizar la ESS (suma de las distancias euclídeas al cuadrado) por reasignación de los datos a los clusters. El proceso se detiene cuando no hay más reasignaciones  que reduzcan el valor de la suma.
+El algoritmo $K$-medias comienza o por asignación de los datos a uno de los $K$ \textit{clusters} predeterminados y luego calculando los centroides de los $K$ \textit{$cluster$} o por pre-especificación de los centroides de los $K$ \textit{clusters}. La pre-especificación de los centroides puede ser seleccionarlos aleatoriamente o pueden ser obtenidos cortando un dendrograma a una altura apropiada. Luego, de manera iterativa, el algoritmo busca minimizar la ESS (suma de las distancias euclídeas al cuadrado, por sus siglas en inglés \textit{Euclidean Sum of Squares}) por reasignación de los datos a los \textit{clusters}. El proceso se detiene cuando no hay más reasignaciones  que reduzcan el valor de la suma.
 
-La solución (una configuración de los datos dentro de los K clusters) puede no ser única. El algoritmo solo encontrará un mínimo local de la ESS. Es recomendable ejecutar el algoritmo varias veces usando una asignación aleatoria inicial diferente de los datos en los K clusters para encontrar el mínimo más bajo de la ESS, y por tanto, la mejor solución basada en K clusters. Los pasos del algoritmo son:
+La solución (una configuración de los datos dentro de los $K$ \textit{clusters}) puede no ser única. El algoritmo solo encontrará un mínimo local de la ESS. Es recomendable ejecutar el algoritmo varias veces usando una asignación aleatoria inicial diferente de los datos en los $K$ \textit{clusters} para encontrar el mínimo más bajo de la ESS, y por tanto, la mejor solución basada en $K$ \textit{clusters}. Los pasos del algoritmo son:
 \begin{enumerate}
-\item Entrada: $\textbf{L}=\{\textbf{x}_i,i=1,2,...,n\}$, K=número de clusters.
+\item Entrada: $\textbf{L}=\{\textbf{x}_i,\ i=1,2,...,n\}$, $K$: número de \textit{clusters}.
 
 \item Hacer uno de los siguientes:
 \begin{itemize}
-\item Formar una asignación aleatoria inicial de los datos en los K clusters y, para los K clusters, calcular su centroide, $\overline{\textbf{x}}_k, k=1,2,...,K$
-\item Pre-especificar los centroides de los K clusters, $\overline{\textbf{x}}_k, k=1,2,...,K$
+\item Formar una asignación aleatoria inicial de los datos en los $K$ \textit{clusters} y, para los $K$ \textit{clusters}, calcular su centroide, $\overline{\textbf{x}}_k,\ k=1,2,...,K$.
+\item Pre-especificar los centroides de los K \textit{clusters}, $\overline{\textbf{x}}_k,\ k=1,2,...,K$.
 \end{itemize}
-\item Calcular la distancia euclídea al cuadrado para cada dato al centroide de su cluster actual:
-$$ESS=\sum_{k=1}^{K}\sum_{c(i)=k}(\textbf{x}_i - \overline{\textbf{x}}_k)^T(\textbf{x}_i - \overline{\textbf{x}}_k)$$
+\item Calcular la distancia euclídea al cuadrado para cada dato al centroide de su \textit{cluster} actual:
+$$ESS=\sum_{k=1}^{K}\sum_{c(i)=k}(\textbf{x}_i - \overline{\textbf{x}}_k)^T(\textbf{x}_i - \overline{\textbf{x}}_k),$$
 
-donde $\overline{\textbf{x}}_k$ es el centroide del $k$-ésimo cluster y $c(i)$ es el cluster que contiene $\textbf{x}_i$
+donde $\overline{\textbf{x}}_k$ es el centroide del $k$-ésimo \textit{cluster} y $c(i)$ es el \textit{cluster} que contiene a $\textbf{x}_i$.
 
-\item Reasignamos cada dato al cluster con el centroide más cercano de tal manera que ESS se reduce en magnitud. Actualizamos los centroides de los clusters despues de la reasignación de los datos. 
+\item Reasignamos cada dato al \textit{cluster} con el centroide más cercano de tal manera que ESS se reduce en magnitud. Actualizamos los centroides de los \textit{clusters} después de la reasignación de los datos. 
 \item Repetimos los pasos 3 y 4 hasta que no se produzcan más reasignaciones.
 \end{enumerate}
 
 \subsubsection{Particionamiento Alrededor de Medoides (PAM)}
 
-Este método de clustering es una modificación del algoritmo de clustering K-medoides. Aunque similar al clustering de K-medias este algoritmo busca los K "objetos representativos" (o medoides), en vez de los centroides, entre los datos del conjunto, y se usa una distancia basada en la disimilitud en lugar de la distancia euclídea al cuadrado. Por ello minimiza la suma de las disimilitudes en vez de la suma de las distancias euclídeas, el método es más robusto a datos anómalos como valores atípicos y valores faltantes.
+Este método de \textit{clustering} es una modificación del algoritmo de \textit{clustering} $K$-medoides. Aunque es similar al \textit{clustering} de $K$-medias, este algoritmo busca los $K$ ``objetos representativos'' (o medoides), en vez de los centroides, entre los datos del conjunto, y se usa una distancia basada en la disimilitud en lugar de la distancia euclídea al cuadrado. Por ello, minimiza la suma de las disimilitudes en vez de la suma de las distancias euclídeas. Este método es más robusto a datos anómalos como valores atípicos y valores faltantes.
 
-Este algoritmo comienza con la matriz de proximidad $\textbf{D}=(d_{ij})$, donde $d_{ij}=d(\textbf{x}_i,\textbf{x}_j)$, ya sea dada o calculada a partir del conjunto de datos, y una configuración inicial de los datos dentro de los K clusters. Usando \textbf{D}, nosotros encontramos ese dato (llamado objeto representativo o medoide) dentro de cada cluster que minimiza la disimilitud total para todos los datos dentro de su cluster. En el algoritmo de K-medoides, los centroides de los pasos 2,3 y 4 en el algoritmo de K-medias son remplazados por los medoides, y la función objetivo ESS es sustituida por $ESS_{med}$ (definido más adelante).
+Este algoritmo comienza con la matriz de proximidad $\textbf{D}=(d_{ij})$, donde $d_{ij}=d(\textbf{x}_i,\textbf{x}_j)$, ya sea dada o calculada a partir del conjunto de datos, y una configuración inicial de los datos dentro de los K \textit{clusters}. Usando \textbf{D}, nosotros encontramos ese dato (llamado objeto representativo o medoide) dentro de cada \textit{cluster} que minimiza la disimilitud total para todos los datos dentro de su \textit{cluster}. En el algoritmo de K-medoides, los centroides de los pasos 2,3 y 4 en el algoritmo de K-medias son remplazados por los medoides, y la función objetivo ESS es sustituida por $ESS_{med}$ (definido más adelante).
 
-El algoritmo de particionamiento alrededor de medoides (PAM) es una modificación de el algoritmo de K-medoides que introduce una estrategia de intercambio por la cual el medoide de cada cluster es reemplazado por otro dato de ese cluster, pero solo si este intercambio reduce el valor de la función objetivo. Una desventaja para ambos algoritmos es que aunque funciona bien en pequeños conjuntos de datos, no son suficientemente eficientes para usar en clustering de grandes conjuntos de datos. Los pasos del algoritmo PAM son:
+El algoritmo de particionamiento alrededor de medoides (PAM) es una modificación de el algoritmo de K-medoides que introduce una estrategia de intercambio por la cual el medoide de cada \textit{cluster} es reemplazado por otro dato de ese \textit{cluster}, pero solo si este intercambio reduce el valor de la función objetivo. Una desventaja para ambos algoritmos es que aunque funciona bien en pequeños conjuntos de datos, no son suficientemente eficientes para usar en \textit{clustering} de grandes conjuntos de datos. Los pasos del algoritmo PAM son:
 
 \begin{enumerate}
-\item Entrada: $\textbf{D}=(d_{ij})$, K=número de clusters.
-\item Formar una asignación inicial en los K clusters.
-\item Localizar el medoide de cada cluster. El medoide del $k$-ésimo cluster esta definido como ese dato en el $k$-ésimo cluster que minimiza la disimilitud total a los otros datos dentro del cluster, $k=1,2,...,K$.
+\item Entrada: $\textbf{D}=(d_{ij})$, K=número de \textit{clusters}.
+\item Formar una asignación inicial en los K \textit{clusters}.
+\item Localizar el medoide de cada \textit{cluster}. El medoide del $k$-ésimo \textit{cluster} esta definido como ese dato en el $k$-ésimo \textit{cluster} que minimiza la disimilitud total a los otros datos dentro del \textit{cluster}, $k=1,2,...,K$.
 
 
-\item[$4a.$] Para el clustering de K-medoides:
+\item[$4a.$] Para el \textit{clustering} de K-medoides:
 \begin{itemize}
-\item Para el $k$-ésimo cluster, reasignamos el $i_k$ésimo dato al cluster con su medoide más cercano para que la función objetivo, $$ESS_{med}=\sum_{k=1}^{K}\sum_{c(i)=k}d_{ii_k}$$
-sea reducida en magnitud, donde $c(i)$ es el cluster que contiene el $i$ésimo dato.
+\item Para el $k$-ésimo \textit{cluster}, reasignamos el $i_k$ésimo dato al \textit{cluster} con su medoide más cercano para que la función objetivo, $$ESS_{med}=\sum_{k=1}^{K}\sum_{c(i)=k}d_{ii_k}$$
+sea reducida en magnitud, donde $c(i)$ es el \textit{cluster} que contiene el $i$ésimo dato.
 \item Repetir el paso 3 y el paso de reasignación hasta que no se produzcan mas reasignaciones.
 \end{itemize}
-\item[$4b.$] Para  el clustering de particionamiento alrededor de medoides:
+\item[$4b.$] Para  el \textit{clustering} de particionamiento alrededor de medoides:
 
 \begin{itemize}
-\item Buscamos un dato no medoide tal que al intercambiarlo por otro medoide se produce una reducción en $ESS_{med}$, considerando el cambio que se produce en los clusters al cambiar de medoide (si hay varios medoides que cumplen esta condición, seleccionar el que mayor reducción produzca) y se produce el cambio.
+\item Buscamos un dato no medoide tal que al intercambiarlo por otro medoide se produce una reducción en $ESS_{med}$, considerando el cambio que se produce en los \textit{clusters} al cambiar de medoide (si hay varios medoides que cumplen esta condición, seleccionar el que mayor reducción produzca) y se produce el cambio.
 
 \item Repetir el proceso de intercambio hasta que no se produzca ninguna reducción del $ESS_{med}$.
 \end{itemize}
@@ -669,8 +676,8 @@ sea reducida en magnitud, donde $c(i)$ es el cluster que contiene el $i$ésimo d
 
 \subsubsection{Análisis difuso(fanny)}
 
-La idea detrás del clustering difuso es que los datos para ser agrupados pueden ser asignadas probabilidades de pertenencia a cada uno de los K clusters. Sea $u_{ik}$ como denotamos a la fuerza de pertenencia del $i$ésimo dato al $k$ésimo cluster. Para que el $i$ésimo dato, nosotros necesitamos que $\{u_{ik}\}$ se comporte como una probabilidad. Eso es que $u_{ik}\geq0$, para todo $i$ y $k=1,2,...,K$, y $\sum_{k=1}^{K}u_{ik}=1$ para cada $i$. Esto choca con los métodos de particionamiento de K-medias o PAM, donde cada dato es asignado a un solo cluster.
-Dada la matriz de proximidad $D=(d_{ij})$ y un número de clusters K, la desconocida fuerza de pertenencia, $\{u_{ik}\}$, es encontrada minimizando la función objetivo, $$\sum_{k=1}^{K}\frac{\sum_i\sum_ju_{ik}^2u_{jk}^2d_{ij}}{2\sum_lu_{lk}^2}$$ La función objetivo se minimiza bajo las restricciones de no negatividad y unidad de la suma usando un algoritmo iterativo.
+La idea detrás del \textit{clustering} difuso es que los datos para ser agrupados pueden ser asignadas probabilidades de pertenencia a cada uno de los K \textit{clusters}. Sea $u_{ik}$ como denotamos a la fuerza de pertenencia del $i$ésimo dato al $k$ésimo \textit{cluster}. Para que el $i$ésimo dato, nosotros necesitamos que $\{u_{ik}\}$ se comporte como una probabilidad. Eso es que $u_{ik}\geq0$, para todo $i$ y $k=1,2,...,K$, y $\sum_{k=1}^{K}u_{ik}=1$ para cada $i$. Esto choca con los métodos de particionamiento de K-medias o PAM, donde cada dato es asignado a un solo \textit{cluster}.
+Dada la matriz de proximidad $D=(d_{ij})$ y un número de \textit{clusters} K, la desconocida fuerza de pertenencia, $\{u_{ik}\}$, es encontrada minimizando la función objetivo, $$\sum_{k=1}^{K}\frac{\sum_i\sum_ju_{ik}^2u_{jk}^2d_{ij}}{2\sum_lu_{lk}^2}$$ La función objetivo se minimiza bajo las restricciones de no negatividad y unidad de la suma usando un algoritmo iterativo.
 
 
 \section{Número de clústeres}\label{sec:num}
