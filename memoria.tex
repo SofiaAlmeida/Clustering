@@ -2,7 +2,6 @@
 % Plantilla de Memoria
 % Modificación de una plantilla de Latex de Nicolas Diaz para adaptarla 
 % al castellano y a las necesidades de escribir informática y matemáticas.
-%
 % Editada por: Mario Román
 %
 % License:
@@ -194,7 +193,7 @@ El \textit{clustering} consiste en agrupar objetos similares. Dos objetos se con
 
 %Las técnicas de clustering se desarrollaron por primera vez en el ámbito aplicado de la taxonomía o clasificación biológica
 
-Si tenemos una serie de observaciones sin clasificar, el objetivo del \textit{clustering} es agrupar los datos en clases o \textit{clusters}. Por ejemplo, en ámbitos biológicos para determinar la especie de una planta concreta. Este tipo de problema aparece cuando queremos no solo identificar especies nuevas, sino también cuando queremos establecer las relaciones entre ellas. El término \textit{clustering} se considera sinónimo a taxonomía numérica o clasificación. En el ámbito de la ciencia de datos se considera problemas diferentes clasificación donde se conocen a priori las clases posibles (aprendizaje supervisado) y agrupamiento (aprendizaje no supervisado) donde el número de grupos es desconocido. En el primero conocemos de antemano las clases de los objetos, mientras que en el segundo, a partir de los grupos creados se inferirán las características principales de los grupos.
+Si tenemos una serie de observaciones sin clasificar, el objetivo del \textit{clustering} es agrupar los datos en clases o clústeres. Por ejemplo, en ámbitos biológicos para determinar la especie de una planta concreta. Este tipo de problema aparece cuando queremos no solo identificar especies nuevas, sino también cuando queremos establecer las relaciones entre ellas. El término \textit{clustering} se considera sinónimo a taxonomía numérica o clasificación. En el ámbito de la ciencia de datos se considera problemas diferentes clasificación donde se conocen a priori las clases posibles (aprendizaje supervisado) y agrupamiento (aprendizaje no supervisado) donde el número de grupos es desconocido. En el primero conocemos de antemano las clases de los objetos, mientras que en el segundo, a partir de los grupos creados se inferirán las características principales de los grupos.
 
 Utilizando el lenguaje matemático, podemos definir el problema como sigue:
 
@@ -213,16 +212,16 @@ En la Figura \ref{fig:ejemplo1} vemos un ejemplo de agrupamiento para los datos 
 	\label{fig:ejemplo1}
 \end{figure}
 
-El análisis \textit{cluster} se aplica en numerosos campos como las ciencias naturales, médicas, económicas, \textit{marketing}, \dots En \textit{marketing}, por ejemplo, es útil dividir a los clientes y conocer las necesidades de cada segmento de mercado para lograr alcanzar a los clientes potenciales. En psicología puede ser útil encontrar tipos de personalidad a partir de los cuestionarios realizados. En arqueología se puede aplicar esta técnica para clasificar objetos en diferentes periodos.
+El análisis clúster se aplica en numerosos campos como las ciencias naturales, médicas, económicas, \textit{marketing}, \dots En \textit{marketing}, por ejemplo, es útil dividir a los clientes y conocer las necesidades de cada segmento de mercado para lograr alcanzar a los clientes potenciales. En psicología puede ser útil encontrar tipos de personalidad a partir de los cuestionarios realizados. En arqueología se puede aplicar esta técnica para clasificar objetos en diferentes periodos.
 
-Para llevar a cabo un análisis \textit{cluster} hay que realizar principalmente dos pasos:
+Para llevar a cabo un análisis clúster hay que realizar principalmente dos pasos:
 
 \begin{enumerate}
 \item Elegir una medida de similitud. Dependerá del objeto de estudio, tipo de medidas (nominales, ordinales, intervalos) y tipo de variables (continuas o discretas). Lo veremos en la Sección \ref{sec:medidas}.
 \item Elegir un algoritmo para construir los grupos. Hay dos grupos principales: de particionamiento y jerárquicos (que a su vez se dividen entre divisivos y aglomerativos). En la Sección \ref{sec:algoritmos} explicaremos la diferencia entre ambos grupos y veremos algunos ejemplos.
 \end{enumerate}
 
-Además, en la Sección \ref{sec:num} trataremos el problema de decidir el número de \textit{clusters} y veremos algunos métodos utilizados para determinarlo. Por último, hemos implementado un ejemplo de agrupamiento tomando los datos de las flores de iris de Fisher, el análisis se encuentra en la Sección \ref{sec:practica}. %TODO: REFERENCIAR
+Además, en la Sección \ref{sec:num} trataremos el problema de decidir el número de clústeres y veremos algunos métodos utilizados para determinarlo. Por último, hemos implementado un ejemplo de agrupamiento tomando los datos de las flores de iris de Fisher, el análisis se encuentra en la Sección \ref{sec:practica}. %TODO: REFERENCIAR
 
 \section{Medidas de similitud}\label{sec:medidas}
 
@@ -234,11 +233,11 @@ Cuando los ítems (unidades o casos) son agrupados, la proximidad se suele indic
 
 Recordamos que la distancia euclídea entre dos observaciones $p$-dimensionales (ítems) $x' = [x_1,x_2,...,x_p]$ e $y'=[y_1,y_2,...,y_p]$ es
 
-\[d(x,y) = \sqrt{(x_1-y_1)^2+(x_2-y_2)^2+...+(x_p-y_p)^2}=\sqrt{(x-y)'(x-y)}.\]
+\[d(x,y) = \sqrt{(x_1-y_1)^2+(x_2-y_2)^2+...+(x_p-y_p)^2}=\sqrt{(x-y)^T(x-y)}.\]
 
 La distancia estadística entre las mismas dos observaciones es de la forma:
 
-$$d(x,y)=\sqrt{(x-y)'A(x-y)}. $$
+$$d(x,y)=\sqrt{(x-y)^TA(x-y)}. $$
 
 Normalmente, $A=S^{-1}$, donde $S$ contiene las varianzas y covarianzas de la muestra. Sin embargo, sin conocimiento previo de los distintos grupos, estas cantidades de las muestras no puede ser calculadas. Por esta razón, usualmente se prefiere la distancia euclídea para realizar \textit{clustering}.\\
 
@@ -487,7 +486,7 @@ El coeficiente de correlación anterior se relaciona con la estadística chi-cua
 
 Dada la Tabla \ref{tab:contingencia_var}, se pueden desarrollar medidas de asociacion (o similitud) exactamente análogas a las listadas en la Tabla \ref{tab:similitud}. El único cambio que se requiere es la sustitución de $n$ (el número de ítems) por $p$ (el número de variables).\\
 
-Para resumir esta sección, notamos que hay muchas medidas de similitud entre pares de objetos. Parece que la mayoría de profesionales usan distancias o los coeficientes de la Tabla \ref{tab:similitud} para el \textit{cluster} de ítems y correlaciones para el \textit{cluster} de variables. Sin embargo, en ocasiones, las entradas a los algoritmos de \textit{clustering} pueden ser frecuencias simples.\\
+Para resumir esta sección, notamos que hay muchas medidas de similitud entre pares de objetos. Parece que la mayoría de profesionales usan distancias o los coeficientes de la Tabla \ref{tab:similitud} para el clúster de ítems y correlaciones para el clúster de variables. Sin embargo, en ocasiones, las entradas a los algoritmos de \textit{clustering} pueden ser frecuencias simples.\\
 
 \ej{ej:leng}: Midiendo las similitudes de 11 lenguajes. Los significados de las palabras cambian a lo largo de la historia. Sin embargo, el significado de los números 1,2,3,... representa una excepción llamativa. Así, una primera comparación de lenguajes puede estar basada en exclusiva en los números naturales. La Tabla \ref{tab:leng}  nos da los 10 primeros números en inglés, polaco, húngaro y otros ocho lenguajes europeos modernos. Solamente consideramos lenguajes que utilizan el alfabeto romano y omitimos acentos y signos de puntuación.
 
@@ -512,7 +511,7 @@ six                                                  & seks                     
 seven                                                & sju                                                   & syv                                                  & zeven                                                   & sieben                                               & sept                                                   & siete                                                  & sette                                                  & siedem                                               & het                                                   & seitseman                                            \\
 eight                                                & atte                                                  & otte                                                 & acht                                                    & acht                                                 & huit                                                   & ocho                                                   & otto                                                   & osiem                                                & nyolc                                                 & kahdeksan                                            \\
 nine                                                 & ni                                                    & ni                                                   & negen                                                   & neun                                                 & neuf                                                   & nueve                                                  & nove                                                   & dziewiec                                             & kilenc                                                & yhdeksan                                             \\
-ten                                                  & ti                                                    & ti                                                   & tien                                                    & zehn                                                 & dix                                                    & diez                                                   & dieci                                                  & dziesiec                                             & tiz                                                   & kymmenen                                             \\ \hline
+ten                                                  & ti                                                    & ti                                                   & tien                                                    & zehn                                                 & dix                                                    & diez                                                   & dieci                                                  & dziesiec                                             & tiz                                                   & kymmenen                                             \\ \bottomrule
 \end{tabular}
 }
 \end{table}
@@ -545,24 +544,27 @@ Fi     & 1      & 1      & 1      & 1      & 1     & 1     & 1     & 1     & 1  
 Por porpósitos ilustrativos, comparamos los lenguajes mirando la primera letra de cada número. Las palabras para el mismo número son concordantes si tienen la misma primera letra y discordantes en caso contrario. De esta forma de la Tabla \ref{tab:leng} obtenemos la Tabla \ref{tab:lengConc}. Podemos observar que el inglés y el noruego comparten la misma primera letra para 8 de las 10 parejas de números. El resto de frecuencias se ha calculado de la misma forma.\\
 Los resultados en la Tabla \ref{tab:lengConc} confirman la impresión visual inicial de la Tabla \ref{tab:leng}. Esto es, que el inglés, noruego, danés, holandés y alemán parecen formar un grupo. El francés, español, italiano y polaco forman otro, mientras que el húngaro y el finés no forman parte de ninguno.\\
 
-En los ejemplo hasta el momento, hemos utilizado nuestra impresión visual de las medidas de similitud o distancia para formar grupos. En la Sección \ref{sec:algoritmos} discutiremos formas menos subjetivas para crear los \textit{clusters}, distintos algoritmos para crear los grupos. 
+En los ejemplo hasta el momento, hemos utilizado nuestra impresión visual de las medidas de similitud o distancia para formar grupos. En la Sección \ref{sec:algoritmos} discutiremos formas menos subjetivas para crear los clústeres, distintos algoritmos para crear los grupos. 
 
 \section{Métodos de agrupamiento}\label{sec:algoritmos}
 % TODO: Introducción a métodos de agrupamiento
 % TODO: Añadir foto con los 2?
-Un método de agrupamiento es un procedimiento de agrupación de una serie de vectoires de acuerdo con un criterio. Estos criterios pueden ser por ejemplo la distancia o la similitud de una característica. La cercanía se define en términos de una determinada función de distancia como las vista en el apartado \ref{sec:medidas}. Aunque la medida más utilizada para calcular la simulitud entre los casos es la matriz de correlación entre los casos, también existen muchos algoritmos que se basan en la maximización de la verosimilitud.
+Un método de agrupamiento es un procedimiento de agrupación de una serie de vectores de acuerdo con un criterio. Estos criterios pueden ser, por ejemplo, la distancia o la similitud de una característica. La cercanía se define en términos de una determinada función de distancia como las vista en la Sección \ref{sec:medidas}. Aunque la medida más utilizada para calcular la simulitud entre los casos es la matriz de correlación entre los casos, también existen muchos algoritmos que se basan en la maximización de la verosimilitud.
+
+Los métodos de agrupamiento se pueden dividir en dos tipos: jerárquicos y no jerárquicos (o de particionamiento). La principal diferencia entre ambos métodos es que en los jerárquicos una vez que se asigna un elemento a un grupo, no se puede cambiar, mientras que en los no jerárquicos sí.
+
 \subsection{Jerárquicos}
-El agrupamiento jerárquico es un método de análisis de grupos puntuales, que se basa en buscar una construcción de una jerarquía de grupos. Por tanto, los algoritmos jerárquicos van minimizando las distancias  o, visto de otra forma, maximizando  las similitudes. Es destacable que en este tipo de métodos no es necesario imponer a priori el número de grupos a formar, ya que devolverán una jerarquía de \textit{clusters} en la que según el nivel en el que nos quedemos tendremos un número u otro de grupos.
+El agrupamiento jerárquico es un método de análisis de grupos puntuales, que se basa en buscar una construcción de una jerarquía de grupos. Por tanto, los algoritmos jerárquicos van minimizando las distancias  o, visto de otra forma, maximizando  las similitudes. Es destacable que en este tipo de métodos no es necesario imponer a priori el número de grupos a formar, ya que devolverán una jerarquía de clústeres en la que según el nivel en el que nos quedemos tendremos un número u otro de grupos.
 
 Podemos diferenciar dos técnicas para el agrupamiento jerárquico: aglomerativas y divisivas. La diferencia es que las primeras son de un acercamiento ascendente, mientras que las segundas son de un acercamiento descendente.
 
 \subsubsection{Técnicas aglomerativas}
-Los algoritmos aglomerativos son prácticamente los más usados. Consisten en formar grupos o aglomerados según su similitud, uniendo los \textit{cluster} que se encuentran a una menor distancia, habrá tantos \textit{clusters} al inicio como individuos haya. Estos algoritmos siguen los pasos que se muestran a continuación:
+Los algoritmos aglomerativos son prácticamente los más usados. Consisten en formar grupos o aglomerados según su similitud, uniendo los clúster que se encuentran a una menor distancia, habrá tantos clústeres al inicio como individuos haya. Estos algoritmos siguen los pasos que se muestran a continuación:
 
 \begin{enumerate}
 	\item Construir la mejor partición.
 	\item Calcular la matriz distancia $D$.
-	\item Repetir los siguientes pasos hasta que todos los \textit{clusters} están aglomerados. % en $\mathcal{X}$. ...no se ha definido!
+	\item Repetir los siguientes pasos hasta que todos los clústeres están aglomerados. % en $\mathcal{X}$. ...no se ha definido!
 	\item Encontrar los dos grupos con la distancia más cercana.
 	\item Unir los dos grupos.
 	\item Calcular la distancia entre los nuevos grupos y obtener una matriz de distancia reducida $D$.
@@ -596,7 +598,7 @@ Donde los $\delta_i$ son los factores de ponderación que dan lugar a los difere
 \end{tabular}
 \end{table}
 
-La secuencia de \textit{cluster} se representan gráficamente mediante un dendrograma, esto es un digrama de datos en forma de árbol que organiza los datos en subcategorías que se van dividiendo en otros, donde se ven claramente las relaciones entre los datos y los grupos.
+La secuencia de clúster se representan gráficamente mediante un dendrograma, esto es un digrama de datos en forma de árbol que organiza los datos en subcategorías que se van dividiendo en otros, donde se ven claramente las relaciones entre los datos y los grupos.
 
 \begin{figure}[H]
 	\centering
@@ -607,7 +609,7 @@ La secuencia de \textit{cluster} se representan gráficamente mediante un dendro
 
 %No se si es disociativo o divisorio
 \subsubsection{Técnicas divisivas}
-Los algoritmos divisivas parten de un único \textit{cluster} y en cada iteración van dividiendo \textit{clusters} según la disimilitud entre los componentes del mismo, bajando así en la jerarquía.
+Los algoritmos divisivos parten de un único clúster y en cada iteración van dividiendo clústeres según la disimilitud entre los componentes del mismo, bajando así en la jerarquía.
 
 En cada paso del algoritmo divisivo se deben de aplicar tres opciones:
 
@@ -628,7 +630,7 @@ En cada paso del algoritmo divisivo se deben de aplicar tres opciones:
 
 
 \subsection{No jerárquicos}
-Los métodos de \textit{clustering} no jerárquicos, también denominados de particionamiento, simplemente  dividen los datos observados en un número $K$ predeterminado de grupos o \textit{clusters}, donde no hay una relación jerárquica entre la solución de $K$-\textit{clusters} y la solución de (K+1)-\textit{clusters}. Dado un valor $K$ buscamos una partición de los datos en $K$ \textit{clusters} de tal manera que los datos dentro de cada \textit{cluster} sean similares entre ellos, mientras que los datos de diferentes \textit{clusters} están bastante diferenciados.
+Los métodos de \textit{clustering} no jerárquicos, también denominados de particionamiento, simplemente  dividen los datos observados en un número $K$ predeterminado de grupos o clústeres, donde no hay una relación jerárquica entre la solución de $K$-clústeres y la solución de $(K+1)$-clústeres. Dado un valor $K$ buscamos una partición de los datos en $K$ clústeres de tal manera que los datos dentro de cada clúster sean similares entre ellos, mientras que los datos de diferentes clústeres están bastante diferenciados.
  
 Un método de \textit{clustering} no jerárquico probablemente involucraría como primer paso la enumeración total de todos los posibles agrupamientos de los datos. Entonces, usando algún criterio de optimización, el agrupamiento que es elegido como el mejor sería la partición que optimizara dicho criterio. Claramente, para un conjunto de datos grande, tal método se vuelve rápidamente inviable, requiriendo cantidades ingentes de tiempo de procesamiento y almacenamiento. Por ello, todas las técnicas de \textit{clustering} disponibles son iterativas y trabajan con una cantidad de agrupamientos muy limitada. Los métodos no jerárquicos suelen ser computacionalmente más eficientes que los jerárquicos.
 
@@ -636,66 +638,66 @@ Un método de \textit{clustering} no jerárquico probablemente involucraría com
 
 El algoritmo $K$-medias es muy popular porque es extremadamente eficiente y a menudo es usado para proyectos de \textit{clustering} de gran escala. Hacemos la observación de que el algoritmo K-medias necesita tener acceso a los datos originales.
 
-El algoritmo $K$-medias comienza o por asignación de los datos a uno de los $K$ \textit{clusters} predeterminados y luego calculando los centroides de los $K$ \textit{$cluster$} o por pre-especificación de los centroides de los $K$ \textit{clusters}. La pre-especificación de los centroides puede ser seleccionarlos aleatoriamente o pueden ser obtenidos cortando un dendrograma a una altura apropiada. Luego, de manera iterativa, el algoritmo busca minimizar la ESS (suma de las distancias euclídeas al cuadrado, por sus siglas en inglés \textit{Euclidean Sum of Squares}) por reasignación de los datos a los \textit{clusters}. El proceso se detiene cuando no hay más reasignaciones  que reduzcan el valor de la suma.
+El algoritmo $K$-medias comienza o por asignación de los datos a uno de los $K$ clústeres predeterminados y luego calculando los centroides de los $K$ \textit{$cluster$} o por pre-especificación de los centroides de los $K$ clústeres. La pre-especificación de los centroides puede ser seleccionarlos aleatoriamente o pueden ser obtenidos cortando un dendrograma a una altura apropiada. Luego, de manera iterativa, el algoritmo busca minimizar la ESS (suma de las distancias euclídeas al cuadrado, por sus siglas en inglés \textit{Euclidean Sum of Squares}) por reasignación de los datos a los clústeres. El proceso se detiene cuando no hay más reasignaciones  que reduzcan el valor de la suma.
 
-La solución (una configuración de los datos dentro de los $K$ \textit{clusters}) puede no ser única. El algoritmo solo encontrará un mínimo local de la ESS. Es recomendable ejecutar el algoritmo varias veces usando una asignación aleatoria inicial diferente de los datos en los $K$ \textit{clusters} para encontrar el mínimo más bajo de la ESS, y por tanto, la mejor solución basada en $K$ \textit{clusters}. Los pasos del algoritmo son:
+La solución (una configuración de los datos dentro de los $K$ clústeres) puede no ser única. El algoritmo solo encontrará un mínimo local de la ESS. Es recomendable ejecutar el algoritmo varias veces usando una asignación aleatoria inicial diferente de los datos en los $K$ clústeres para encontrar el mínimo más bajo de la ESS, y por tanto, la mejor solución basada en $K$ clústeres. Los pasos del algoritmo son:
 \begin{enumerate}
-\item Entrada: $\textbf{L}=\{\textbf{x}_i,\ i=1,2,...,n\}$, $K$: número de \textit{clusters}.
+\item Entrada: $\textbf{L}=\{\textbf{x}_i,\ i=1,2,...,n\}$, $K$: número de clústeres.
 
 \item Hacer uno de los siguientes:
 \begin{itemize}
-\item Formar una asignación aleatoria inicial de los datos en los $K$ \textit{clusters} y, para los $K$ \textit{clusters}, calcular su centroide, $\overline{\textbf{x}}_k,\ k=1,2,...,K$.
-\item Pre-especificar los centroides de los K \textit{clusters}, $\overline{\textbf{x}}_k,\ k=1,2,...,K$.
+\item Formar una asignación aleatoria inicial de los datos en los $K$ clústeres y, para los $K$ clústeres, calcular su centroide, $\overline{\textbf{x}}_k,\ k=1,2,...,K$.
+\item Pre-especificar los centroides de los K clústeres, $\overline{\textbf{x}}_k,\ k=1,2,...,K$.
 \end{itemize}
-\item Calcular la distancia euclídea al cuadrado para cada dato al centroide de su \textit{cluster} actual:
+\item Calcular la distancia euclídea al cuadrado para cada dato al centroide de su clúster actual:
 $$ESS=\sum_{k=1}^{K}\sum_{c(i)=k}(\textbf{x}_i - \overline{\textbf{x}}_k)^T(\textbf{x}_i - \overline{\textbf{x}}_k),$$
 
-donde $\overline{\textbf{x}}_k$ es el centroide del $k$-ésimo \textit{cluster} y $c(i)$ es el \textit{cluster} que contiene a $\textbf{x}_i$.
+donde $\overline{\textbf{x}}_k$ es el centroide del $k$-ésimo clúster y $c(i)$ es el clúster que contiene a $\textbf{x}_i$.
 
-\item Reasignamos cada dato al \textit{cluster} con el centroide más cercano de tal manera que ESS se reduce en magnitud. Actualizamos los centroides de los \textit{clusters} después de la reasignación de los datos. 
+\item Reasignamos cada dato al clúster con el centroide más cercano de tal manera que ESS se reduce en magnitud. Actualizamos los centroides de los clústeres después de la reasignación de los datos. 
 \item Repetimos los pasos 3 y 4 hasta que no se produzcan más reasignaciones.
 \end{enumerate}
 
 \subsubsection{Particionamiento Alrededor de Medoides (PAM)}
 
-Este método de \textit{clustering} es una modificación del algoritmo de \textit{clustering} $K$-medoides. Aunque es similar al \textit{clustering} de $K$-medias, este algoritmo busca los $K$ ``objetos representativos'' (o medoides), en vez de los centroides, entre los datos del conjunto, y se usa una distancia basada en la disimilitud en lugar de la distancia euclídea al cuadrado. Por ello, minimiza la suma de las disimilitudes en vez de la suma de las distancias euclídeas. Este método es más robusto a datos anómalos como valores atípicos y valores faltantes.
+Este método de \textit{clustering} es una modificación del algoritmo de \textit{clustering} $K$-medoides. Aunque es similar al \textit{clustering} de $K$-medias, este algoritmo busca los $K$ ``objetos representativos'' (o medoides), en vez de los centroides, entre los datos del conjunto, y se usa una distancia basada en la disimilitud en lugar de la distancia euclídea al cuadrado. Por ello, minimiza la suma de las disimilitudes en vez de la suma de las distancias euclídeas. Este método es más robusto frente a datos anómalos como valores atípicos y valores perdidos.
 
-Este algoritmo comienza con la matriz de proximidad $\textbf{D}=(d_{ij})$, donde $d_{ij}=d(\textbf{x}_i,\textbf{x}_j)$, ya sea dada o calculada a partir del conjunto de datos, y una configuración inicial de los datos dentro de los K \textit{clusters}. Usando \textbf{D}, nosotros encontramos ese dato (llamado objeto representativo o medoide) dentro de cada \textit{cluster} que minimiza la disimilitud total para todos los datos dentro de su \textit{cluster}. En el algoritmo de K-medoides, los centroides de los pasos 2,3 y 4 en el algoritmo de K-medias son remplazados por los medoides, y la función objetivo ESS es sustituida por $ESS_{med}$ (definido más adelante).
+Este algoritmo comienza con la matriz de proximidad $\textbf{D}=(d_{ij})$, donde $d_{ij}=d(\textbf{x}_i,\textbf{x}_j)$, ya sea dada o calculada a partir del conjunto de datos, y una configuración inicial de los datos dentro de los $K$ clústeres. Usando \textbf{D}, nosotros encontramos ese dato (llamado objeto representativo o medoide) dentro de cada clúster que minimiza la disimilitud total para todos los datos dentro de su clúster. En el algoritmo de $K$-medoides, los centroides de los pasos 2,3 y 4 en el algoritmo de $K$-medias son remplazados por los medoides, y la función objetivo ESS es sustituida por $ESS_{med}$ (definida más adelante).
 
-El algoritmo de particionamiento alrededor de medoides (PAM) es una modificación de el algoritmo de K-medoides que introduce una estrategia de intercambio por la cual el medoide de cada \textit{cluster} es reemplazado por otro dato de ese \textit{cluster}, pero solo si este intercambio reduce el valor de la función objetivo. Una desventaja para ambos algoritmos es que aunque funciona bien en pequeños conjuntos de datos, no son suficientemente eficientes para usar en \textit{clustering} de grandes conjuntos de datos. Los pasos del algoritmo PAM son:
+El algoritmo de particionamiento alrededor de medoides (PAM) es una modificación de el algoritmo de $K$-medoides que introduce una estrategia de intercambio por la cual el medoide de cada clúster es reemplazado por otro dato de ese clúster, pero solo si este intercambio reduce el valor de la función objetivo. Una desventaja para ambos algoritmos es que aunque funciona bien en pequeños conjuntos de datos, no son suficientemente eficientes para usar en \textit{clustering} de grandes conjuntos de datos. Los pasos del algoritmo PAM son:
 
 \begin{enumerate}
-\item Entrada: $\textbf{D}=(d_{ij})$, K=número de \textit{clusters}.
-\item Formar una asignación inicial en los K \textit{clusters}.
-\item Localizar el medoide de cada \textit{cluster}. El medoide del $k$-ésimo \textit{cluster} esta definido como ese dato en el $k$-ésimo \textit{cluster} que minimiza la disimilitud total a los otros datos dentro del \textit{cluster}, $k=1,2,...,K$.
+\item Entrada: $\textbf{D}=(d_{ij})$, $K$: número de clústeres.
+\item Formar una asignación inicial en los K clústeres.
+\item Localizar el medoide de cada clúster. El medoide del $k$-ésimo clúster esta definido como ese dato en el $k$-ésimo clúster que minimiza la disimilitud total a los otros datos dentro del clúster, $k=1,2,...,K$.
 
 
 \item[$4a.$] Para el \textit{clustering} de K-medoides:
 \begin{itemize}
-\item Para el $k$-ésimo \textit{cluster}, reasignamos el $i_k$ésimo dato al \textit{cluster} con su medoide más cercano para que la función objetivo, $$ESS_{med}=\sum_{k=1}^{K}\sum_{c(i)=k}d_{ii_k}$$
-sea reducida en magnitud, donde $c(i)$ es el \textit{cluster} que contiene el $i$ésimo dato.
+\item Para el $k$-ésimo clúster, reasignamos el $i_k$ésimo dato al clúster con su medoide más cercano para que la función objetivo, $$ESS_{med}=\sum_{k=1}^{K}\sum_{c(i)=k}d_{ii_k}$$
+sea reducida en magnitud, donde $c(i)$ es el clúster que contiene el $i$ésimo dato.
 \item Repetir el paso 3 y el paso de reasignación hasta que no se produzcan mas reasignaciones.
 \end{itemize}
 \item[$4b.$] Para  el \textit{clustering} de particionamiento alrededor de medoides:
 
 \begin{itemize}
-\item Buscamos un dato no medoide tal que al intercambiarlo por otro medoide se produce una reducción en $ESS_{med}$, considerando el cambio que se produce en los \textit{clusters} al cambiar de medoide (si hay varios medoides que cumplen esta condición, seleccionar el que mayor reducción produzca) y se produce el cambio.
+\item Buscamos un dato no medoide tal que al intercambiarlo por otro medoide se produce una reducción en $ESS_{med}$, considerando el cambio que se produce en los clústeres al cambiar de medoide (si hay varios medoides que cumplen esta condición, seleccionar el que mayor reducción produzca) y se produce el cambio.
 
 \item Repetir el proceso de intercambio hasta que no se produzca ninguna reducción del $ESS_{med}$.
 \end{itemize}
 \end{enumerate}
 
-\subsubsection{Análisis difuso(fanny)}
+\subsubsection{Análisis difuso (fanny)}
 
-La idea detrás del \textit{clustering} difuso es que los datos para ser agrupados pueden ser asignadas probabilidades de pertenencia a cada uno de los K \textit{clusters}. Sea $u_{ik}$ como denotamos a la fuerza de pertenencia del $i$ésimo dato al $k$ésimo \textit{cluster}. Para que el $i$ésimo dato, nosotros necesitamos que $\{u_{ik}\}$ se comporte como una probabilidad. Eso es que $u_{ik}\geq0$, para todo $i$ y $k=1,2,...,K$, y $\sum_{k=1}^{K}u_{ik}=1$ para cada $i$. Esto choca con los métodos de particionamiento de K-medias o PAM, donde cada dato es asignado a un solo \textit{cluster}.
-Dada la matriz de proximidad $D=(d_{ij})$ y un número de \textit{clusters} K, la desconocida fuerza de pertenencia, $\{u_{ik}\}$, es encontrada minimizando la función objetivo, $$\sum_{k=1}^{K}\frac{\sum_i\sum_ju_{ik}^2u_{jk}^2d_{ij}}{2\sum_lu_{lk}^2}$$ La función objetivo se minimiza bajo las restricciones de no negatividad y unidad de la suma usando un algoritmo iterativo.
+La idea detrás del \textit{clustering} difuso es que a los datos, para ser agrupados, se les asigna probabilidades de pertenencia a cada uno de los $K$ clústeres. Sea $u_{ik}$ como denotamos a la fuerza de pertenencia del $i$-ésimo dato al $k$-ésimo clúster. Para el $i$-ésimo dato, necesitamos que $\{u_{ik}\}$ se comporte como una probabilidad. Eso es que $u_{ik}\geq0$, para todo $i$ y $k=1,2,...,K$, y $\sum_{k=1}^{K}u_{ik}=1$ para cada $i$. Esto choca con los métodos de particionamiento de $K$-medias o PAM, donde cada dato es asignado a un solo clúster.
+Dada la matriz de proximidad $D=(d_{ij})$ y un número de clústeres $K$, la desconocida fuerza de pertenencia, $\{u_{ik}\}$, es encontrada minimizando la función objetivo, $$\sum_{k=1}^{K}\frac{\sum_i\sum_ju_{ik}^2u_{jk}^2d_{ij}}{2\sum_lu_{lk}^2}.$$ La función objetivo se minimiza bajo las restricciones de no negatividad y unidad de la suma usando un algoritmo iterativo.
 
 
 \section{Número de clústeres}\label{sec:num}
-En los algoritmos de \textit{clustering}, uno de los problemas es determinar el número idóneo de clústeres $ k $, el cual, es distinto al propio proceso de agrupamiento. Este procedimiento conlleva tener en cuenta varios índices. Evaluar la solución obtenida para $ k $ clústeres es similar a la práctica de determinar la dimensión del espacio en el análisis de componentes principales o el orden de los factores en análisis factorial.
+En los algoritmos de \textit{clustering}, uno de los problemas principales es determinar el número idóneo de clústeres $ k $, el cual, es distinto al propio proceso de agrupamiento. Este procedimiento conlleva tener en cuenta varios índices. Evaluar la solución obtenida para $ k $ clústeres es similar a la práctica de determinar la dimensión del espacio en el análisis de componentes principales o el orden de los factores en análisis factorial.
 La correcta elección de $ k $ suele ser ambigua ya que depende de las interpretaciones según la forma y la escala de de la distribución de los datos y la solución deseada. También hay que tener en cuenta que incluso con datos aleatorios se pueden detectar falsos clústeres. \\
 
-En cada paso de nuestro proceso se crea un nuevo clúster formado por dos observaciones, una observación y otro clúster o dos clústeres ya obtenidos. Así, el número de clústeres $ k $ decrece de $ n $ (número de observaciones) a 1. La distancia entre dos clústeres es la euclídea o la de disimilitud. %Por ejemplo, para los enlaces únicos, completos o de medias las distancias son el mínimo, máximo y la euclídea media respectivamente. Para el método de Ward, es la suma de las distancias entre clústeres al cuadrado dada en la fórmula (REFERENCIAR). 
+En cada paso del proceso de agrupamiento se crea un nuevo clúster formado por dos observaciones, una observación y otro clúster o dos clústeres ya obtenidos. Así, el número de clústeres $ k $ decrece de $ n $ (número de observaciones) a 1. La distancia entre dos clústeres es la euclídea o la de disimilitud. %Por ejemplo, para los enlaces únicos, completos o de medias las distancias son el mínimo, máximo y la euclídea media respectivamente. Para el método de Ward, es la suma de las distancias entre clústeres al cuadrado dada en la fórmula (REFERENCIAR). 
 Como $ k $ decrece de $ n $ a 1, el valor de la distancia debería aumentar ya que tendría que ser mayor cuando dos clústeres distintos se agrupan en uno solo. \\
 
 Uno de los procedimientos para determinar el número de clústeres, por ejemplo en el algoritmo $ k$-medias, es el denominado ``método del codo'' o \textit{elbow method}. Suele ser ambiguo y no muy fiable por lo que se recomienda el uso de otras técnicas. Consiste en dibujar la gráfica de las distancia a los centros de cada clúster en función del número de clústeres. En un punto, se observará que la gráfica forma una especie de codo, de ahí nombre del método, por lo que se escoge dicho punto. Así, llamamos:\\
@@ -706,16 +708,16 @@ donde $ \bar{\yy}_k $ representa el centroide del clúster $ C_k $. Para cada n�
 \[
 D_k = \sum_{i = 1} ^ {k} SSE_k,
 \]
-y lo dibujamos en una gráfica. Si usamos el ejemplo A aportado en \cite{elbowGraph}, la gráfica sería la siguiente.
+y lo dibujamos en una gráfica. Si usamos el ejemplo A aportado en \cite{elbowGraph}, la gráfica sería la encontrada en la Figura \ref{fig:elbow}.
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[scale=0.6]{pedro/elbowGraph}
 	\caption{Ejemplo del método del codo.}
-	\label{smkm}
+	\label{fig:elbow}
 \end{figure}
 
-Vemos que el cambio de de inclinación se produce cuando $ k=3 $ por lo que ese sería el número idóneo de clústeres, Hemos construido por tanto una especie de índice de separación o test de modo que si lo dibujamos en función del número de clústeres nos ayuda a identificar visualmente el $ k $ adecuado. \\
+Vemos que el cambio de de inclinación se produce cuando $ k=3 $ por lo que ese sería el número idóneo de clústeres. Hemos construido por tanto una especie de índice de separación o test de modo que si lo dibujamos en función del número de clústeres nos ayuda a identificar visualmente el $ k $ adecuado. \\
 
 Podemos construir otra serie de índices más complejos siguiendo la misma filosofía que la anterior: construir el índice de separación o una estadística de prueba y dibujarlo en una gráfica según $ k $ de tal modo que un cambio significativo en el índice nos dé una aproximación del número de clústeres adecuado. Por ejemplo, en análisis de regresión, el coeficiente de determinación, $ R^2 $, es una medida de la varianza total de la variables dependientes según las independientes. En \textit{clustering} debemos construir un índice de $ R^2 $ que varíe en base al número de clústeres. Para $ n $ clústeres la suma total de las distancias al cuadrado es $ T = \sum_{i = 1}^{n} \norm{\yy_i - \bar{\yy}}^2 $. Así, para $ k $ clústeres definimos $ R^2 $ como
 \[
@@ -723,7 +725,7 @@ R^{2}_{k} = \frac{T - \sum_k SSE_k}{T}.
 \]
 Para $ n $ clústeres $ SSE_k = 0 $ por lo que $ R^2 = 1 $. A medida que vamos realizando los agrupamientos, estos estarán más separados. Una gran disminución en $ R^2_k $ representaría un agrupamiento diferente. También podríamos tener en cuenta el cambio en $ R^2 $ al unir los clústeres $ R $ y $ S $ como $ SR^2 = R_k^2 - R^2_{k-1} $. El estadístico $ SR^2 $ representa, en función de $ T $, la proporción de $ SSE_t - (SSE_r + SSE_s) $ donde los clústeres $ C_R $ y $ C_S $ se han unido para formar el clúster $ C_T $.  Cuanto mayor sea el índice mayor será la pérdida de homogeneidad.\\
 
-El objetivo del análisis clúster es encontrar en menor número de clústeres homogéneos. Para un solo clúster, la varianza agrupada para todas las variables es la media de las varianzas de cada una de las variables, es decir, $ s^2 = \sum_{i=1}^{n} \norm{\yy_i - \bar{\yy}}^2/ p(n-1)$. También podemos calcularla para un clúster $ C_k $ con $ n_k $ observaciones de la siguiente manera:
+El objetivo del análisis clúster es encontrar el menor número de clústeres homogéneos. Para un solo clúster, la varianza agrupada para todas las variables es la media de las varianzas de cada una de las variables, es decir, $ s^2 = \sum_{i=1}^{n} \norm{\yy_i - \bar{\yy}}^2/ p(n-1)$. También podemos calcularla para un clúster $ C_k $ con $ n_k $ observaciones de la siguiente manera:
 \[
 s^2 = \sum_{i=1}^{n_k} \norm{\yy_i - \bar{\yy}_k}^2/ p(n_k-1).
 \]
@@ -753,22 +755,23 @@ y $ b(i) $ como la menor distancia media de $ i $ a todos los puntos de los clú
 \[
 b(i) = \min_{k \neq i} \frac{1}{|C_k|} \sum_{j \in C_k} d(i,j).
 \] 
-Destacamos que si $ |C_i| = 1 $ entonces $ s(i) = 0 $. Así, si muchos objetos tienen un valor alto indica que el resultado obtenido es satisfactorio por lo que se escoge el $ k $ que maximice el valor medio de $ s(i) $. Para ejemplificarlo, tomamos los resultados obtenidos en la referencia \cite{silouetteGraph} y se obtiene:
+Destacamos que si $ |C_i| = 1 $ entonces $ s(i) = 0 $. Así, si muchos objetos tienen un valor alto indica que el resultado obtenido es satisfactorio por lo que se escoge el $ k $ que maximice el valor medio de $ s(i) $. Para ejemplificarlo, tomamos los resultados obtenidos en la referencia \cite{silouetteGraph} y se obtiene la Tabla \ref{tab:sil}.
 
 \begin{table}[h!]
 	\centering
-	\begin{tabular}{cc} 
-		\hline
+	\begin{tabular}{lr} 
+		\toprule
 		k & Silhouette coeff. \\
-		\hline
+		\midrule
 		2 &  0.7049787496083262 \\			 
 		3 & 0.5882004012129721 \\	
 		4 &  0.6505186632729437 \\
 		5 &  0.5745566973301872 \\
 		6 & 0.43902711183132426 \\
-		\hline
+		\bottomrule
 	\end{tabular}
 	\caption{Ejemplo \textit{silhouette method}.}
+        \label{tab:sil}
 \end{table}
 Vemos que se obtienen los mejores resultados con 2 o 4 clústeres por lo que deberíamos decidir entre ambos según el resultado que queramos obtener. \\
 
@@ -780,12 +783,13 @@ En la fórmula anterior $ E^*_n $ denota la media de una de muestra de tamaño $
 \[
 W_k = \sum_{R = 1}^{k}\frac{1}{2 n_R}\sum_{i j \in C_R} d(i,j).
 \]
-Notamos que se puede usar para cualquier método y distancia. Según \cite{tibshirani2001estimating} el número 2 en la fórmula de $ W_k $ es para que funcione correctamente. Gráficamente se obtendría una gráfica como la siguiente:
+Notamos que se puede usar para cualquier método y distancia. Según \cite{tibshirani2001estimating} el número 2 en la fórmula de $ W_k $ es para que funcione correctamente. Visualmente se obtendría una gráfica como la mostrada en la Figura \ref{fig:gap}.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=0.2]{pedro/gapGraph}
+	\includegraphics[scale=0.4]{pedro/gapGraph}
 	\caption{Ejemplo del método de la brecha \cite{gapGraph}.}
+        \label{fig:gap}
 \end{figure}
 Así, lo ideal sería tomar $ k = 4 $.
 
@@ -818,11 +822,11 @@ El conjunto de datos contiene 50 muestras de cada una de tres especies de flor \
 A continuación, se mostrarán los resultados obtenidos por los algoritmos en este caso de estudio. Utilizaremos una tabla comparativa donde incluiremos el nombre de los algoritmos, los resultados obtenidos por las métricas utilizadas (Calinski-Harabaz y Silhouette) y los tiempos de ejecución de los mismos. Las métricas utilizadas se interpretarán de la siguiente forma:
 
 \begin{itemize}
-\item \textbf{Calinski-Harabaz}: se basa en el concepto de densidad y de como de bien están separados los \textit{clusters}. Especifica la relación entre la dispersión entre los \textit{clusters} y la dispersión dentro de los \textit{clusters}. Nos indicará si estamos usando un buen número de \textit{clusters} para un algoritmo en concreto. El número óptimo de \textit{clusters} es la solución con el valor de índice Calinski-Harabasz más alto.
-\item \textbf{Silhouette}: es una medida que indica como de similar es un objeto respecto a su propio grupo (cohesión) en comparación con otros grupos (separación). Toma valores entre -1 y +1, donde un alto valor indica que el objeto es bastante similar a su grupo y muy diferente a los de otros cluster. Si el valor es cercano a 1, la configuración de los \textit{cluster} es apropiada, si no, habrá más o menos \textit{clusters} de los necesarios.
+\item \textbf{Calinski-Harabaz}: se basa en el concepto de densidad y de como de bien están separados los clústeres. Especifica la relación entre la dispersión entre los clústeres y la dispersión dentro de los clústeres. Nos indicará si estamos usando un buen número de clústeres para un algoritmo en concreto. El número óptimo de clústeres es la solución con el valor de índice Calinski-Harabasz más alto.
+\item \textbf{Silhouette}: es una medida que indica como de similar es un objeto respecto a su propio grupo (cohesión) en comparación con otros grupos (separación). Toma valores entre -1 y +1, donde un alto valor indica que el objeto es bastante similar a su grupo y muy diferente a los de otros cluster. Si el valor es cercano a 1, la configuración de los clúster es apropiada, si no, habrá más o menos clústeres de los necesarios.
 \end{itemize}
 
-Los algoritmos elegidos han sido los siguientes: \textbf{K-Means, MeanShift, DBSCAN y Agglomerative \textit{clustering}} (clustering jerárquico). A la hora de elegir las mejores versiones de cada algoritmo, nos basaremos en el coeficiente de Calinski-Harabaz (\textbf{CH}) que como hemos explicado antes, tendrá mayor valor si estamos usando el número adecuado de \textit{clusters}.
+Los algoritmos elegidos han sido los siguientes: \textbf{K-Means, MeanShift, DBSCAN y Agglomerative \textit{clustering}} (clustering jerárquico). A la hora de elegir las mejores versiones de cada algoritmo, nos basaremos en el coeficiente de Calinski-Harabaz (\textbf{CH}) que como hemos explicado antes, tendrá mayor valor si estamos usando el número adecuado de clústeres.
 
 Mostraremos la tabla comparativa que contiene las mejores versiones de cada algoritmo ejecutado. Se hará un estudio más profundo sobre aquellos dos algoritmos que obtengan un mayor valor del coeficiente de Silhouette. En este caso, \textbf{K-Means} y \textbf{Agglomerative \textit{clustering}}.\\
 
@@ -831,7 +835,7 @@ Mostraremos la tabla comparativa que contiene las mejores versiones de cada algo
 \resizebox{15cm}{!} {
 \begin{tabular}{cccccc}
 \hline
-\textbf{Name} & \textbf{Nº \textit{clusters}} & \textbf{CH} & \textbf{SH} & \textbf{Time} & \textbf{\textit{clusters}}                                                                                                          \\ \hline
+\textbf{Name} & \textbf{Nº clústeres} & \textbf{CH} & \textbf{SH} & \textbf{Time} & \textbf{clústeres}                                                                                                          \\ \hline
 K-Means       & 3                    & 359.845074 & 0.504769    & 0.016456      & \begin{tabular}[c]{@{}c@{}}0:    61 (40.67\%)\\
 1:    50 (33.33\%) \\2:    39 (26.00\%)\end{tabular}\\ \\
 DBSCAN        & 4                   &  94.991819   & 0.306404   &  0.002353      & \begin{tabular}[c]{@{}c@{}}0:    45 (30.00\%)
@@ -853,9 +857,9 @@ MeanShift     & 3                    & 290.470683  & 0.476961    & 0.289073     
 
 \subsection{K-Means.}
 
-K-Means es un algoritmo de clasificación no supervisada (clusterización) que agrupa objetos en K grupos basándose en sus características. El agrupamiento se realiza minimizando la suma de distancias entre cada objeto y el centroide de su grupo o \textit{cluster}.\\ 
+K-Means es un algoritmo de clasificación no supervisada (clusterización) que agrupa objetos en K grupos basándose en sus características. El agrupamiento se realiza minimizando la suma de distancias entre cada objeto y el centroide de su grupo o clúster.\\ 
 
-El algoritmo K-Means resuelve un problema de optimización, siendo la función a optimizar (minimizar) la suma de las distancias cuadráticas de cada objeto al centroide de su \textit{cluster}. Es necesario especificar el valor de K previamente antes de ejecutar el algoritmo.\\
+El algoritmo K-Means resuelve un problema de optimización, siendo la función a optimizar (minimizar) la suma de las distancias cuadráticas de cada objeto al centroide de su clúster. Es necesario especificar el valor de K previamente antes de ejecutar el algoritmo.\\
 
 Para el algoritmo K-Means se ha utilizado el siguiente código en python y se ha obtenido la siguiente agrupación de las muestras:\\
 
@@ -869,7 +873,7 @@ KMeans(init='k-means++', n_clusters=3, n_init=5, random_state=12345)
 
 Se mostrarán 4 gráficas realizadas y se hará un estudio sobre los resultados obtenidos. Las gráficas obtenidas para este caso, serán \textbf{Scatter Matrix, Heatmap, KPlot y BoxPlot} que mostrarán la matriz de dispersión de las muestras, mapa de calor de los centroides para cada variable y distribución de las muestras según cada variable.\\
 
-En la Figura \ref{smkm} se representa la matriz de dispersión de las 150 muestras agrupadas en 3 clústers: donde el \textit{cluster} 0 representa las \textbf{Iris} versicolor, el \textit{cluster} 1 setosa y el \textit{cluster} 2 virginica. Un gráfico de matriz de dispersión es una herramienta de exploración de datos que permite buscar patrones y relaciones entre diferentes muestras en una distribución multivariante. En el gráfico se muestra el gráfico de dispersión para cada par de variables seleccionadas y una serie de histogramas en la diagonal mostrando la distribución de valores para cada una de las variables.\\
+En la Figura \ref{smkm} se representa la matriz de dispersión de las 150 muestras agrupadas en 3 clústers: donde el clúster 0 representa las \textbf{Iris} versicolor, el clúster 1 setosa y el clúster 2 virginica. Un gráfico de matriz de dispersión es una herramienta de exploración de datos que permite buscar patrones y relaciones entre diferentes muestras en una distribución multivariante. En el gráfico se muestra el gráfico de dispersión para cada par de variables seleccionadas y una serie de histogramas en la diagonal mostrando la distribución de valores para cada una de las variables.\\
 
 En la Figura \ref{hmkm} y \ref{kpkm} podemos ver la media y forma de las distribuciones de cada variable para cada clúster generado con el algoritmo K-Means. En el HeatMap, podemos observar la media de los centroides y podemos hacernos una idea de las características claves para clasificar cada muestra en uno de los tres tipos de flor de \textbf{Iris}.\\
 
@@ -880,14 +884,14 @@ Las muestras del clúster 1 (tipo setosa) se caracteriza por tener un pétalo co
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.63]{dani/scatmatrixK-MeansIRIS.png}
-\caption{Scatter Matrix para K-Means con 3 \textit{clusters}.}
-\label{smkm}
+\caption{Scatter Matrix para K-Means con 3 clústeres.}
+\label{}
 \end{figure}\
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.63]{dani/heatmapK-MeansIRIS.png}
-\caption{HeatMap para K-Means con 3 \textit{clusters}.}
+\caption{HeatMap para K-Means con 3 clústeres.}
 \label{hmkm}
 \end{figure}
 
@@ -896,7 +900,7 @@ Las muestras del clúster 1 (tipo setosa) se caracteriza por tener un pétalo co
 \centering
 \includegraphics[scale=0.41]{dani/kdeplotK-MeansIRIS.png}
 \includegraphics[scale=0.31]{dani/boxplotK-MeansIRIS.png}
-\caption{KPlot y BoxPlot para K-Means con 3 \textit{clusters}.}
+\caption{KPlot y BoxPlot para K-Means con 3 clústeres.}
 \label{kpkm}
 \end{figure}
 
@@ -936,7 +940,7 @@ Podemos observar que la matriz de dispersión generada por este algoritmo se ase
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.64]{dani/scatmatrixAggClusterIRIS.png}
-\caption{Scatter Matrix para Agglomerative \textit{clustering} con 3 \textit{clusters}.}
+\caption{Scatter Matrix para Agglomerative \textit{clustering} con 3 clústeres.}
 \label{smac}
 \end{figure}
 
@@ -945,7 +949,7 @@ Podemos observar que la matriz de dispersión generada por este algoritmo se ase
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.63]{dani/heatmapAggClusterIRIS.png}
-\caption{HeatMap para Agglomerative \textit{clustering} con 3 \textit{clusters}.}
+\caption{HeatMap para Agglomerative \textit{clustering} con 3 clústeres.}
 \label{hmac}
 \end{figure}
 
@@ -964,7 +968,7 @@ En nuestro caso hemos impuesto que existan 3 clústers por lo que podríamos cor
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.35]{dani/dendrogramAggClusterIRIS.png}
-\caption{Dendrograma para Agglomerative \textit{clustering} con 3 \textit{clusters}.}
+\caption{Dendrograma para Agglomerative \textit{clustering} con 3 clústeres.}
 \label{dac}
 \end{figure}
 
@@ -974,7 +978,7 @@ En nuestro caso hemos impuesto que existan 3 clústers por lo que podríamos cor
 \centering
 \includegraphics[scale=0.35]{dani/dendrogramcolor.png}
 \includegraphics[scale=0.35]{dani/dendscatAggClusterIRIS.png}
-\caption{Dendrogramas para Agglomerative \textit{clustering} con 3 \textit{clusters}.}
+\caption{Dendrogramas para Agglomerative \textit{clustering} con 3 clústeres.}
 \label{dac}
 \end{figure}
 
@@ -982,7 +986,7 @@ En nuestro caso hemos impuesto que existan 3 clústers por lo que podríamos cor
 
 \subsection{DBSCAN}
 
-Al contrario de la estrategia seguida por K-Means, DBSCAN (\textit{Density-Based Spatial \textit{clustering} of Applications with Noise}) no presupone \textit{clusters} convexos, sino que se basa en la densidad de las muestras para identificar los \textit{clusters}. Por este motivo, los \textit{clusters} identificados por DBSCAN pueden ser de cualquier forma.\\
+Al contrario de la estrategia seguida por K-Means, DBSCAN (\textit{Density-Based Spatial \textit{clustering} of Applications with Noise}) no presupone clústeres convexos, sino que se basa en la densidad de las muestras para identificar los clústeres. Por este motivo, los clústeres identificados por DBSCAN pueden ser de cualquier forma.\\
 
 Dos parámetros importantes para definir este algoritmo son: \textbf{eps}, máxima distancia entre dos muestras para poder ser consideradas pertenecientes al mismo "vecindario", y \textbf{min\_samples}, número de muestras en un vecindario para que una región pueda ser considerada densa.\\
 
@@ -994,9 +998,9 @@ Consideremos un conjunto de puntos a ser agrupados en un espacio determinado. La
 \item Un punto que no sea alcanzable desde cualquier otro se considera ruido.
 \end{itemize}
 
-Si $p$ es un punto núcleo, este forma un \textit{cluster} junto a otros puntos que sean alcanzables desde él. Cada \textit{cluster} contiene al menos un punto núcleo. Los puntos no núcleos alcanzables pueden pertenecer a un \textit{cluster} pero actúan como una barrera puesto que no es posible alcanzar más puntos desde estos.\\
+Si $p$ es un punto núcleo, este forma un clúster junto a otros puntos que sean alcanzables desde él. Cada clúster contiene al menos un punto núcleo. Los puntos no núcleos alcanzables pueden pertenecer a un clúster pero actúan como una barrera puesto que no es posible alcanzar más puntos desde estos.\\
 
-Se puede observar que la relación de ser alcanzable no es simétrica. Por definición, ningún punto puede ser alcanzable desde un punto que no sea núcleo, sin importar la distancia a la que se encuentre. Por lo tanto la noción de connectividad es necesaria para definir formalmente la extensión de un \textit{cluster} dada por DBSCAN. Dos puntos $p$ y $q$ están conectados densamente si existe un punto $o$ tal que ambos $p$ y $q$ sean directamente alcanzables desde $o$. La relación estar densamente conectado es simétrica.\\
+Se puede observar que la relación de ser alcanzable no es simétrica. Por definición, ningún punto puede ser alcanzable desde un punto que no sea núcleo, sin importar la distancia a la que se encuentre. Por lo tanto la noción de connectividad es necesaria para definir formalmente la extensión de un clúster dada por DBSCAN. Dos puntos $p$ y $q$ están conectados densamente si existe un punto $o$ tal que ambos $p$ y $q$ sean directamente alcanzables desde $o$. La relación estar densamente conectado es simétrica.\\
 
 Por tanto un clúster generado por el método DBSCAN satisface dos propiedades:
 
@@ -1023,7 +1027,7 @@ En este caso podemos ver como tenemos un cuarto clúster formado por las muestra
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.64]{dani/scatmatrixDBSCANIRIS.png}
-\caption{Scatter Matrix para DBSCAN con 4 \textit{clusters}.}
+\caption{Scatter Matrix para DBSCAN con 4 clústeres.}
 \label{smdb}
 \end{figure}
 
@@ -1032,7 +1036,7 @@ En este caso podemos ver como tenemos un cuarto clúster formado por las muestra
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.62]{dani/heatmapDBSCANIRIS.png}
-\caption{HeatMap para DBSCAN con 4 \textit{clusters}.}
+\caption{HeatMap para DBSCAN con 4 clústeres.}
 \label{hmdb}
 \end{figure}
 
@@ -1085,7 +1089,7 @@ Las gráficas obtenidas para este caso, serán la matriz de dispersión (Scatter
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.64]{dani/scatmatrixMeanShiftIRIS.png}
-\caption{Scatter Matrix para Mean Shift con 3 \textit{clusters}.}
+\caption{Scatter Matrix para Mean Shift con 3 clústeres.}
 \label{smms}
 \end{figure}
 
@@ -1094,16 +1098,16 @@ Las gráficas obtenidas para este caso, serán la matriz de dispersión (Scatter
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.62]{dani/heatmapMeanShiftIRIS.png}
-\caption{HeatMap para Mean Shift con 3 \textit{clusters}.}
+\caption{HeatMap para Mean Shift con 3 clústeres.}
 \label{hmms}
 \end{figure}
 
 \clearpage
 
 \section{Conclusiones}
-El análisis \textit{cluster} es una metodología de análisis exploratorio de datos. Trata de descubrir cómo algunos objetos se relacionan. Este tipo de análisis depende de la cantidad de ruido en los datos, la existencia de datos anómalos, las variables seleccionadas para el análisis, la medida de proximidad utilizada, las propiedades espaciales de los datos y el método de agrupamiento empleado.
+El análisis clúster es una metodología de análisis exploratorio de datos. Trata de descubrir cómo algunos objetos se relacionan. Este tipo de análisis depende de la cantidad de ruido en los datos, la existencia de datos anómalos, las variables seleccionadas para el análisis, la medida de proximidad utilizada, las propiedades espaciales de los datos y el método de agrupamiento empleado.
 
-Una ventaja de los métodos jerárquicos sobre los no jerárquicos es que uno no tiene que saber de antemano el número de \textit{clusters} (que hemos visto que no es fácil). Además los métodos jerárquicos muchas veces son llamados ``exploratorios'' mientras que los no jerárquicos se denominan ``confirmatorios''. Podemos ver ambos métodos como complementarios. Los métodos jerárquicos no solo dependen de la medida de proximidad utilizada, se ven afectados por el encadenamiento: los objetos tienen a unirse a un \textit{cluster} existente más que a iniciar uno nuevo.
+Una ventaja de los métodos jerárquicos sobre los no jerárquicos es que uno no tiene que saber de antemano el número de clústeres (que hemos visto que no es fácil). Además los métodos jerárquicos muchas veces son llamados ``exploratorios'' mientras que los no jerárquicos se denominan ``confirmatorios''. Podemos ver ambos métodos como complementarios. Los métodos jerárquicos no solo dependen de la medida de proximidad utilizada, se ven afectados por el encadenamiento: los objetos tienen a unirse a un clúster existente más que a iniciar uno nuevo.
 
 Un problema importante del \textit{clustering} es la validación de la solución. Para ello deberemos usar criterios internos, externos y métodos de replicación o validación cruzada.
 
