@@ -551,12 +551,29 @@ En los ejemplo hasta el momento, hemos utilizado nuestra impresión visual de la
 % TODO: Añadir foto con los 2?
 Un método de agrupamiento es un procedimiento de agrupación de una serie de vectores de acuerdo con un criterio. Estos criterios pueden ser, por ejemplo, la distancia o la similitud de una característica. La cercanía se define en términos de una determinada función de distancia como las vista en la Sección \ref{sec:medidas}. Aunque la medida más utilizada para calcular la simulitud entre los casos es la matriz de correlación entre los casos, también existen muchos algoritmos que se basan en la maximización de la verosimilitud.
 
-Los métodos de agrupamiento se pueden dividir en dos tipos: jerárquicos y no jerárquicos (o de particionamiento). La principal diferencia entre ambos métodos es que en los jerárquicos una vez que se asigna un elemento a un grupo, no se puede cambiar, mientras que en los no jerárquicos sí.
+Los métodos de agrupamiento se pueden dividir en dos tipos: jerárquicos y no jerárquicos (o de particionamiento). La principal diferencia entre ambos métodos es que en los jerárquicos una vez que se asigna un elemento a un grupo, no se puede cambiar, mientras que en los no jerárquicos sí. Además, en los métodos no jerárquicos se necesita que el número de clústers esté fijado a priori, en cambio en el agrupamiento jerárquico el propio método va fijando el número de clústers.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.55]{victoria/compJerarquicoNoJerarquico}
+	\caption{Comparación métodos jerárquico y no jerárquico.}
+	\label{fig:ejemplo}
+\end{figure}
+
 
 \subsection{Jerárquicos}
 El agrupamiento jerárquico es un método de análisis de grupos puntuales, que se basa en buscar una construcción de una jerarquía de grupos. Por tanto, los algoritmos jerárquicos van minimizando las distancias  o, visto de otra forma, maximizando  las similitudes. Es destacable que en este tipo de métodos no es necesario imponer a priori el número de grupos a formar, ya que devolverán una jerarquía de clústeres en la que según el nivel en el que nos quedemos tendremos un número u otro de grupos.
 
 Podemos diferenciar dos técnicas para el agrupamiento jerárquico: aglomerativas y divisivas. La diferencia es que las primeras son de un acercamiento ascendente, mientras que las segundas son de un acercamiento descendente.
+
+\vspace{5mm}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.25]{victoria/compAglomeDivisivo}
+	\caption{Comparación métodos aglomerativos y divisivos.}
+	\label{fig:ejemplo}
+\end{figure}
 
 \subsubsection{Técnicas aglomerativas}
 Los algoritmos aglomerativos son prácticamente los más usados. Consisten en formar grupos o aglomerados según su similitud, uniendo los clúster que se encuentran a una menor distancia, habrá tantos clústeres al inicio como individuos haya. Estos algoritmos siguen los pasos que se muestran a continuación:
@@ -607,7 +624,7 @@ La secuencia de clúster se representan gráficamente mediante un dendrograma, e
 	\label{fig:ejemplo}
 \end{figure}
 
-%No se si es disociativo o divisorio
+
 \subsubsection{Técnicas divisivas}
 Los algoritmos divisivos parten de un único clúster y en cada iteración van dividiendo clústeres según la disimilitud entre los componentes del mismo, bajando así en la jerarquía.
 
