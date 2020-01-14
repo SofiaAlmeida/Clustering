@@ -550,8 +550,9 @@ En los ejemplo hasta el momento, hemos utilizado nuestra impresión visual de la
 \section{Métodos de agrupamiento}\label{sec:algoritmos}
 % TODO: Introducción a métodos de agrupamiento
 % TODO: Añadir foto con los 2?
+Un método de agrupamiento es un procedimiento de agrupación de una serie de vectoires de acuerdo con un criterio. Estos criterios pueden ser por ejemplo la distancia o la similitud de una característica. La cercanía se define en términos de una determinada función de distancia como las vista en el apartado \ref{sec:medidas}. Aunque la medida más utilizada para calcular la simulitud entre los casos es la matriz de correlación entre los casos, también existen muchos algoritmos que se basan en la maximización de la verosimilitud.
 \subsection{Jerárquicos}
-El agrupamiento jerárquico es un método de análisis de grupos puntuales, que se basa en buscar una construcción de una jerarquía de grupos. Por tanto, los algoritmos jerárquicos van minimizando las distancias  o, visto de otra forma, maximizando  las similitudes. Es destacable que en este tipo de métodos no es necesario imponer a priori el número de grupos a formar, ya que devolverán una jerarquíade \textit{clusters} en la que según el nivel en el que nos quedemos tendremos un número u otro de grupos.
+El agrupamiento jerárquico es un método de análisis de grupos puntuales, que se basa en buscar una construcción de una jerarquía de grupos. Por tanto, los algoritmos jerárquicos van minimizando las distancias  o, visto de otra forma, maximizando  las similitudes. Es destacable que en este tipo de métodos no es necesario imponer a priori el número de grupos a formar, ya que devolverán una jerarquía de \textit{clusters} en la que según el nivel en el que nos quedemos tendremos un número u otro de grupos.
 
 Podemos diferenciar dos técnicas para el agrupamiento jerárquico: aglomerativas y divisivas. La diferencia es que las primeras son de un acercamiento ascendente, mientras que las segundas son de un acercamiento descendente.
 
@@ -600,7 +601,7 @@ La secuencia de \textit{cluster} se representan gráficamente mediante un dendro
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.7]{victoria/aglomerativo}
-	\caption{Ejemplo de dendrograma.}
+	\caption{Ejemplo de dendrograma aglomerativo.}
 	\label{fig:ejemplo}
 \end{figure}
 
@@ -608,12 +609,22 @@ La secuencia de \textit{cluster} se representan gráficamente mediante un dendro
 \subsubsection{Técnicas divisivas}
 Los algoritmos divisivas parten de un único \textit{cluster} y en cada iteración van dividiendo \textit{clusters} según la disimilitud entre los componentes del mismo, bajando así en la jerarquía.
 
+En cada paso del algoritmo divisivo se deben de aplicar tres opciones:
+
+\begin{itemize}
+	\item Dividir los grupos de una forma simplificada.
+	\item Dar una fórmula para evaluar cada una de las biparticiones consideradas.
+	\item Dar una fórmula para determinar los niveles de nodo de la jerarquía resultante.
+\end{itemize}
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.7]{victoria/disociativo}
-	\caption{Ejemplo de dendrograma.}
+	\caption{Ejemplo de dendrograma divisivo.}
 	\label{fig:ejemplo}
 \end{figure}
+
+
 
 
 \subsection{No jerárquicos}
