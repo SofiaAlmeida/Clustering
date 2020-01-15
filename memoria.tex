@@ -551,20 +551,20 @@ En los ejemplo hasta el momento, hemos utilizado nuestra impresión visual de la
 % TODO: Añadir foto con los 2?
 Un método de agrupamiento es un procedimiento de agrupación de una serie de vectores de acuerdo con un criterio. Estos criterios pueden ser, por ejemplo, la distancia o la similitud de una característica. La cercanía se define en términos de una determinada función de distancia como las vista en la Sección \ref{sec:medidas}. Aunque la medida más utilizada para calcular la simulitud entre los casos es la matriz de correlación entre los casos, también existen muchos algoritmos que se basan en la maximización de la verosimilitud.
 
-Los métodos de agrupamiento se pueden dividir en dos tipos: jerárquicos y no jerárquicos (o de particionamiento). La principal diferencia entre ambos métodos es que en los jerárquicos una vez que se asigna un elemento a un grupo, no se puede cambiar, mientras que en los no jerárquicos sí. Además, en los métodos no jerárquicos se necesita que el número de clústers esté fijado a priori, en cambio en el agrupamiento jerárquico el propio método va fijando el número de clústers.
+Los métodos de agrupamiento se pueden dividir en dos tipos: jerárquicos y no jerárquicos (o de particionamiento). La principal diferencia entre ambos métodos es que en los jerárquicos una vez que se asigna un elemento a un grupo, no se puede cambiar, mientras que en los no jerárquicos sí. Además, en los métodos no jerárquicos se necesita que el número de clústers esté fijado a priori, en cambio en el agrupamiento jerárquico el propio método va fijando el número de clústers. En la Figura \ref{fig:ejemplo_metodos} observamos a la izquierda la representación de un método jerárquico (las líneas horizontales indican diferentes divisiones) y a la derecha la representación del resultado de un método de particionamiento, donde cada grupo está indicado en un color diferente).
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.55]{victoria/compJerarquicoNoJerarquico}
 	\caption{Comparación métodos jerárquico y no jerárquico.}
-	\label{fig:ejemplo}
+	\label{fig:ejemplo_metodos}
 \end{figure}
 
 
 \subsection{Jerárquicos}
 El agrupamiento jerárquico es un método de análisis de grupos puntuales, que se basa en buscar una construcción de una jerarquía de grupos. Por tanto, los algoritmos jerárquicos van minimizando las distancias  o, visto de otra forma, maximizando  las similitudes. Es destacable que en este tipo de métodos no es necesario imponer a priori el número de grupos a formar, ya que devolverán una jerarquía de clústeres en la que según el nivel en el que nos quedemos tendremos un número u otro de grupos.
 
-Podemos diferenciar dos técnicas para el agrupamiento jerárquico: aglomerativas y divisivas. La diferencia es que las primeras son de un acercamiento ascendente, mientras que las segundas son de un acercamiento descendente.
+Podemos diferenciar dos técnicas para el agrupamiento jerárquico: aglomerativas y divisivas. La diferencia es que las primeras son de un acercamiento ascendente, mientras que las segundas son de un acercamiento descendente. En la Figura \ref{fig:agl_div} se simbolizan ambas técnicas.
 
 \vspace{5mm}
 
@@ -572,7 +572,7 @@ Podemos diferenciar dos técnicas para el agrupamiento jerárquico: aglomerativa
 	\centering
 	\includegraphics[scale=0.25]{victoria/compAglomeDivisivo}
 	\caption{Comparación métodos aglomerativos y divisivos.}
-	\label{fig:ejemplo}
+	\label{fig:agl_div}
 \end{figure}
 
 \subsubsection{Técnicas aglomerativas}
@@ -814,9 +814,9 @@ Así, lo ideal sería tomar $ k = 4 $.
 
 El objetivo de este apartado consiste en el estudio de técnicas de aprendizaje no supervisado para análisis relacional mediante segmentación. Usaremos distintos algoritmos de \textit{clustering} sobre el conjunto de datos de prueba y extraeremos conclusiones sobre los resultados obtenidos.\\
 
-El conjunto de datos de prueba sobre el que realizaremos el estudio es el denominado conjunto de datos iris de \textbf{Fisher} que consta de un conjunto de datos multivariante introducido por \textbf{Ronald Fisher} en su artículo de 1936 (\textit{The use of multiple measurements in taxonomic problems}) como un ejemplo de análisis discriminante lineal.\\
+El conjunto de datos de prueba sobre el que realizaremos el estudio es el denominado conjunto de datos iris de \textbf{Fisher} \cite{noauthor_uci_nodate} que consta de un conjunto de datos multivariante introducido por \textbf{Ronald Fisher} en su artículo de 1936 (\textit{The use of multiple measurements in taxonomic problems} \cite{fisher_use_1936}) como un ejemplo de análisis discriminante lineal.\\
 
-El conjunto de datos contiene 50 muestras de cada una de tres especies de flor \textbf{Iris} (setosa, virginica y versicolor). En él, se recogen las medidas de cuatro rasgos para cada muestra: el largo y ancho del sépalo y y el largo y ancho del pétalo, en centímetros. Basado en la combinación de estos cuatro rasgos, \textbf{Fisher} desarrolló un modelo discriminante lineal para distinguir entre una especie y otra.\\
+El conjunto de datos contiene 50 muestras de cada una de tres especies de flor \textbf{Iris} (setosa, virginica y versicolor). En él, se recogen las medidas de cuatro rasgos para cada muestra: el largo y ancho del sépalo y y el largo y ancho del pétalo, en centímetros. Basado en la combinación de estos cuatro rasgos, \textbf{Fisher} desarrolló un modelo discriminante lineal para distinguir entre una especie y otra. En las Figuras \ref{fig:setosa}, \ref{fig:virginica}, \ref{fig:versicolor} encontramos las tres especies de iris.\\
 
 \begin{figure}[h]
   \centering
@@ -839,20 +839,20 @@ El conjunto de datos contiene 50 muestras de cada una de tres especies de flor \
 A continuación, se mostrarán los resultados obtenidos por los algoritmos en este caso de estudio. Utilizaremos una tabla comparativa donde incluiremos el nombre de los algoritmos, los resultados obtenidos por las métricas utilizadas (Calinski-Harabaz y Silhouette) y los tiempos de ejecución de los mismos. Las métricas utilizadas se interpretarán de la siguiente forma:
 
 \begin{itemize}
-\item \textbf{Calinski-Harabaz}: se basa en el concepto de densidad y de como de bien están separados los clústeres. Especifica la relación entre la dispersión entre los clústeres y la dispersión dentro de los clústeres. Nos indicará si estamos usando un buen número de clústeres para un algoritmo en concreto. El número óptimo de clústeres es la solución con el valor de índice Calinski-Harabasz más alto.
-\item \textbf{Silhouette}: es una medida que indica como de similar es un objeto respecto a su propio grupo (cohesión) en comparación con otros grupos (separación). Toma valores entre -1 y +1, donde un alto valor indica que el objeto es bastante similar a su grupo y muy diferente a los de otros cluster. Si el valor es cercano a 1, la configuración de los clúster es apropiada, si no, habrá más o menos clústeres de los necesarios.
+\item \textbf{Calinski-Harabaz}: se basa en el concepto de densidad y de cómo de bien están separados los clústeres. Especifica la relación entre la dispersión entre distintos clústeres y la dispersión dentro de un mismo clúster. Nos indicará si estamos usando un buen número de clústeres para un algoritmo en concreto. El número óptimo de clústeres es la solución con el valor de índice Calinski-Harabasz más alto.
+\item \textbf{Silhouette}: es una medida que indica cómo de similar es un objeto respecto a su propio grupo (cohesión) en comparación con otros grupos (separación). Toma valores entre -1 y +1, donde un alto valor indica que el objeto es bastante similar a su grupo y muy diferente a los de otros clúster. Si el valor es cercano a 1, la configuración de los clúster es apropiada, si no, habrá más o menos clústeres de los necesarios.
 \end{itemize}
 
-Los algoritmos elegidos han sido los siguientes: \textbf{K-Means, MeanShift, DBSCAN y Agglomerative \textit{clustering}} (clustering jerárquico). A la hora de elegir las mejores versiones de cada algoritmo, nos basaremos en el coeficiente de Calinski-Harabaz (\textbf{CH}) que como hemos explicado antes, tendrá mayor valor si estamos usando el número adecuado de clústeres.
+Los algoritmos elegidos han sido los siguientes: \textbf{K-Means, MeanShift, DBSCAN y Agglomerative \textit{clustering}} (\textit{clustering} jerárquico). A la hora de elegir las mejores versiones de cada algoritmo, nos basaremos en el coeficiente de Calinski-Harabaz (\textbf{CH}) que como hemos explicado antes, tendrá mayor valor si estamos usando el número adecuado de clústeres.
 
-Mostraremos la tabla comparativa que contiene las mejores versiones de cada algoritmo ejecutado. Se hará un estudio más profundo sobre aquellos dos algoritmos que obtengan un mayor valor del coeficiente de Silhouette. En este caso, \textbf{K-Means} y \textbf{Agglomerative \textit{clustering}}.\\
+Mostramos en la Tabla \ref{tab:comparativa} una comparativa que contiene las mejores versiones de cada algoritmo ejecutado. Se hará un estudio más profundo sobre aquellos dos algoritmos que obtengan un mayor valor del coeficiente de Silhouette. En este caso, \textbf{K-Means} y \textbf{Agglomerative \textit{clustering}}.\\
 
-\begin{table}[h]
+\begin{table}[H]
 \centering
 \resizebox{15cm}{!} {
-\begin{tabular}{cccccc}
-\hline
-\textbf{Name} & \textbf{Nº clústeres} & \textbf{CH} & \textbf{SH} & \textbf{Time} & \textbf{clústeres}                                                                                                          \\ \hline
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Nombre} & \textbf{Nº clústeres} & \textbf{CH} & \textbf{SH} & \textbf{Tiempo ($s$)} & \textbf{Clústeres}                                                                                                          \\ \midrule
 K-Means       & 3                    & 359.845074 & 0.504769    & 0.016456      & \begin{tabular}[c]{@{}c@{}}0:    61 (40.67\%)\\
 1:    50 (33.33\%) \\2:    39 (26.00\%)\end{tabular}\\ \\
 DBSCAN        & 4                   &  94.991819   & 0.306404   &  0.002353      & \begin{tabular}[c]{@{}c@{}}0:    45 (30.00\%)
@@ -864,15 +864,16 @@ AggCluster    & 3                    & 349.254185 & 0.504800    & 0.019058      
 \\2:    33 (22.00\%)\end{tabular}                       \\ \\
 MeanShift     & 3                    & 290.470683  & 0.476961    & 0.289073      & \begin{tabular}[c]{@{}c@{}}0:    81 (54.00\%)
 \\1:    50 (33.33\%)
-\\2:    19 (12.67\%)\end{tabular}                                             \\ \hline
+\\2:    19 (12.67\%)\end{tabular}                                             \\ \bottomrule
 \end{tabular}
 }
 \caption{Tabla comparativa algoritmos.}
+\label{tab:comparativa}
 \end{table}
 
 \clearpage
 
-\subsection{K-Means.}
+\subsection{K-Means}
 
 K-Means es un algoritmo de clasificación no supervisada (clusterización) que agrupa objetos en K grupos basándose en sus características. El agrupamiento se realiza minimizando la suma de distancias entre cada objeto y el centroide de su grupo o clúster.\\ 
 
@@ -880,7 +881,7 @@ El algoritmo K-Means resuelve un problema de optimización, siendo la función a
 
 Para el algoritmo K-Means se ha utilizado el siguiente código en python y se ha obtenido la siguiente agrupación de las muestras:\\
 
-\begin{lstlisting}
+\begin{lstlisting}[language=Python]
 KMeans(init='k-means++', n_clusters=3, n_init=5, random_state=12345)
 
 0:    61 (40.67%)
@@ -890,7 +891,7 @@ KMeans(init='k-means++', n_clusters=3, n_init=5, random_state=12345)
 
 Se mostrarán 4 gráficas realizadas y se hará un estudio sobre los resultados obtenidos. Las gráficas obtenidas para este caso, serán \textbf{Scatter Matrix, Heatmap, KPlot y BoxPlot} que mostrarán la matriz de dispersión de las muestras, mapa de calor de los centroides para cada variable y distribución de las muestras según cada variable.\\
 
-En la Figura \ref{smkm} se representa la matriz de dispersión de las 150 muestras agrupadas en 3 clústers: donde el clúster 0 representa las \textbf{Iris} versicolor, el clúster 1 setosa y el clúster 2 virginica. Un gráfico de matriz de dispersión es una herramienta de exploración de datos que permite buscar patrones y relaciones entre diferentes muestras en una distribución multivariante. En el gráfico se muestra el gráfico de dispersión para cada par de variables seleccionadas y una serie de histogramas en la diagonal mostrando la distribución de valores para cada una de las variables.\\
+En la Figura \ref{smkm} se representa la matriz de dispersión de las 150 muestras agrupadas en 3 clústeres: donde el clúster 0 representa las \textbf{Iris} versicolor, el clúster 1 setosa y el clúster 2 virginica. Un gráfico de matriz de dispersión es una herramienta de exploración de datos que permite buscar patrones y relaciones entre diferentes muestras en una distribución multivariante. En el gráfico se muestra el gráfico de dispersión para cada par de variables seleccionadas y una serie de histogramas en la diagonal mostrando la distribución de valores para cada una de las variables.\\
 
 En la Figura \ref{hmkm} y \ref{kpkm} podemos ver la media y forma de las distribuciones de cada variable para cada clúster generado con el algoritmo K-Means. En el HeatMap, podemos observar la media de los centroides y podemos hacernos una idea de las características claves para clasificar cada muestra en uno de los tres tipos de flor de \textbf{Iris}.\\
 
@@ -902,7 +903,7 @@ Las muestras del clúster 1 (tipo setosa) se caracteriza por tener un pétalo co
 \centering
 \includegraphics[scale=0.63]{dani/scatmatrixK-MeansIRIS.png}
 \caption{Scatter Matrix para K-Means con 3 clústeres.}
-\label{}
+\label{smkm}
 \end{figure}\
 
 \begin{figure}[h]
