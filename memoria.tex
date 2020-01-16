@@ -69,8 +69,6 @@
 \svgpath{{./fig/}}
 \usepackage[usenames,dvipsnames]{color} % Coloring code
 
-
-
 %%% Pseudocódigo
 \usepackage{algorithmicx}
 \usepackage[ruled]{algorithm}
@@ -198,7 +196,7 @@ Si tenemos una serie de observaciones sin clasificar, el objetivo del \textit{cl
 Utilizando el lenguaje matemático, podemos definir el problema como sigue:
 
 \begin{quote}
-  Dadas \textbf{$x_1$}$,\cdots, $\textbf{$x_n$} medidas de $p$ variables en $n$ objetos considerados \textit{heterogéneos}. El objetivo del análisis cluster es agrupar estos objetos en $k$ clases \textit{homogéneas}, donde $k$ es también desconocido (aunque habitualmente se asume que es mucho menor que $n$).
+  Dadas \textbf{$x_1$}$,\cdots, $\textbf{$x_n$} medidas de $p$ variables en $n$ objetos considerados \textit{heterogéneos}. El objetivo del análisis clúster es agrupar estos objetos en $k$ clases \textit{homogéneas}, donde $k$ es también desconocido (aunque habitualmente se asume que es mucho menor que $n$).
 \end{quote}
 
 Decimos que un grupo es \textit{homogéneo} si sus miembros están cerca unos de otros pero los miembros de otros grupos son muy diferentes a estos. Esto lleva a definir dos métricas entre los puntos para indicar el grado de alejamiento y el de asociación o similitud. Se pueden tomar distintas distancias, creando aproximaciones diferentes al problema (trataremos este tema en más profundidad en la Sección \ref{sec:medidas}).
@@ -221,7 +219,7 @@ Para llevar a cabo un análisis clúster hay que realizar principalmente dos pas
 \item Elegir un algoritmo para construir los grupos. Hay dos grupos principales: de particionamiento y jerárquicos (que a su vez se dividen entre divisivos y aglomerativos). En la Sección \ref{sec:algoritmos} explicaremos la diferencia entre ambos grupos y veremos algunos ejemplos.
 \end{enumerate}
 
-Además, en la Sección \ref{sec:num} trataremos el problema de decidir el número de clústeres y veremos algunos métodos utilizados para determinarlo. Por último, hemos implementado un ejemplo de agrupamiento tomando los datos de las flores de iris de Fisher, el análisis se encuentra en la Sección \ref{sec:practica}. %TODO: REFERENCIAR
+Además, en la Sección \ref{sec:num} trataremos el problema de decidir el número de clústeres y veremos algunos métodos utilizados para determinarlo. Por último, hemos implementado un ejemplo de agrupamiento tomando los datos de las flores de iris de Fisher, el análisis se encuentra en la Sección \ref{sec:practica}.
 
 \section{Medidas de similitud}\label{sec:medidas}
 
@@ -547,8 +545,6 @@ Los resultados en la Tabla \ref{tab:lengConc} confirman la impresión visual ini
 En los ejemplo hasta el momento, hemos utilizado nuestra impresión visual de las medidas de similitud o distancia para formar grupos. En la Sección \ref{sec:algoritmos} discutiremos formas menos subjetivas para crear los clústeres, distintos algoritmos para crear los grupos. 
 
 \section{Métodos de agrupamiento}\label{sec:algoritmos}
-% TODO: Introducción a métodos de agrupamiento
-% TODO: Añadir foto con los 2?
 Un método de agrupamiento es un procedimiento de agrupación de una serie de vectores de acuerdo con un criterio. Estos criterios pueden ser, por ejemplo, la distancia o la similitud de una característica. La cercanía se define en términos de una determinada función de distancia como las vista en la Sección \ref{sec:medidas}. Aunque la medida más utilizada para calcular la simulitud entre los casos es la matriz de correlación entre los casos, también existen muchos algoritmos que se basan en la maximización de la verosimilitud.
 
 Los métodos de agrupamiento se pueden dividir en dos tipos: jerárquicos y no jerárquicos (o de particionamiento). La principal diferencia entre ambos métodos es que en los jerárquicos una vez que se asigna un elemento a un grupo, no se puede cambiar, mientras que en los no jerárquicos sí. Además, en los métodos no jerárquicos se necesita que el número de clústers esté fijado a priori, en cambio en el agrupamiento jerárquico el propio método va fijando el número de clústers. En la Figura \ref{fig:ejemplo_metodos} observamos a la izquierda la representación de un método jerárquico (las líneas horizontales indican diferentes divisiones) y a la derecha la representación del resultado de un método de particionamiento, donde cada grupo está indicado en un color diferente).
