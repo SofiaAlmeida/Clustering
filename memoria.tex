@@ -234,7 +234,7 @@ Además, en la Sección \ref{sec:num} trataremos el problema de decidir el núme
 
 \section{Medidas de similitud}\label{sec:medidas}
 
-La mayoría de los esfuerzos para producir una estructura de grupo más simple a partir de un conjunto complejo de datos requiere una medida de ``cercanía'' o  ``similitud''. Habitualmente la subjetividad juega un papel importante en la elección de una medida de similitud, Algunas consideraciones importantes incluyen la naturaleza de las variables (discreta, continua, binaria), las escalas de las medidas (nominal, ordinal, intervalo) y conocimiento específico sobre el problema. En cualquier caso, los valores de las variables consideradas serán normalizados, para evitar que unas variables tengan más peso que otras a la hora de realizar el agrupamiento.
+La mayoría de los esfuerzos para producir una estructura de grupo más simple a partir de un conjunto complejo de datos requiere una medida de ``cercanía'' o  ``similitud''. Habitualmente la subjetividad juega un papel importante en la elección de una medida de similitud. Algunas consideraciones importantes incluyen la naturaleza de las variables (discreta, continua, binaria), las escalas de las medidas (nominal, ordinal, intervalo) y conocimiento específico sobre el problema. En cualquier caso, los valores de las variables consideradas serán normalizados, para evitar que unas variables tengan más peso que otras a la hora de realizar el agrupamiento.
 
 Cuando los ítems (unidades o casos) son agrupados, la proximidad se suele indicar mediante alguna medida de la distancia. En contraste, las variables se suelen agrupar según los coeficientes de correlación o medidas de asociación.
 
@@ -254,13 +254,13 @@ Otra medida de la distancia es la métrica de Minkowski, que viene dada por:
 
 $$ d(x,y)=\left  [\sum_{i=1}^{p}{|x_i-y_i|^m} \right ]^{1/m}.$$
 
-Para $m=1$, $d(x,y)$ mide la distancia Manhattan entre dos puntos en $p$ dimensiones. Para $m=2$,$d(x,y)$ se convierta en la distancia euclídea. En general, variar $m$ cambia el peso dado a diferencias mayores y menores.\\
+Para $m=1$, $d(x,y)$ mide la distancia Manhattan entre dos puntos en $p$ dimensiones. Para $m=2$,  $d(x,y)$ se convierta en la distancia euclídea. En general, variar $m$ cambia el peso dado a diferencias mayores y menores.\\
 
 Adicionalmente, dos medidas populares de distancia o ``disimilitud'' son las dadas por la métrica de Canberra y el coeficiente de Czekanowski. Ambas medidas están definidas únicamente para variables no negativas.\\
 
-La métrica de Canberra se define como: \[d(x,y)=\sum_{i=1}^{p}{\frac{|x_i-y_i|}{(x_i+y_i)}}.\]\\
+La métrica de Canberra se define como: \[d(x,y)=\sum_{i=1}^{p}{\frac{|x_i-y_i|}{(x_i+y_i)}}\]\\
 
-El coeficiente de Czekanowski es: \[d(x,y)=1-\frac{2\sum_{i=1}^{p}{min(x_i,y_i)}}{\sum_{i=1}^{p}{(x_i+y_i}}.\]
+El coeficiente de Czekanowski es: \[d(x,y)=1-\frac{2\sum_{i=1}^{p}{min(x_i,y_i)}}{\sum_{i=1}^{p}{(x_i+y_i)}}\]
 
 Es aconsejable que cuando sea posible se utilicen distancias ``verdaderas'' para \textit{clustering}, esto es, distancias que verifiquen las propiedades de la definición matemática de distancia:
 \begin{itemize}
@@ -295,7 +295,7 @@ En la Tabla \ref{tab:binarizacion} vemos un ejemplo (\ej{ej:binarizacion}) en el
 Sea $x_{ij}$ la puntuación (0 ó 1) de la $j$-ésima variable binaria en el $i$-ésimo ítem y sea $x_{kj}$ la puntuación de la $j$-ésima variable binaria en el $k$-ésimo ítem, con $j=1,2,...,p$. Entonces,
 
 $$(x_{ij}-x_{kj})^2 = \left \{ \begin{matrix} 0 & \mbox{si } x_{ij}=x_{kj}
-\\ 3n+1 & \mbox{si }x_{ij}\neq x_{kj}\end{matrix}\right.   $$
+\\ 1 & \mbox{si }x_{ij}\neq x_{kj}\end{matrix}\right.   $$
 
 y la distancia euclídea al cuadrado, $\sum_{j=1}^p{(x_{ij}-x_{kj})^2}$, proporcionan una forma de contar el número de disparidades. Una distancia grande corresponde a muchas disparidades, es decir, ítems desemejantes. En el Ejemplo \ref{ej:binarizacion}, el cuadrado de las distancia entre los ítems $i$ y $k$ sería
 
@@ -314,7 +314,7 @@ Para introducir dichos esquemas, vamos a organizar las frecuencias de las pareja
 \multicolumn{2}{l}{\multirow{2}{*}{}} & \multicolumn{3}{c}{Ítem $k$} & \multicolumn{2}{c}{} \\\cmidrule{3-5}
 \multicolumn{2}{l}{}                  & 1        &       & 0       & \multicolumn{2}{c}{{Total}}                        \\
 \midrule
-{Ítem $i$}       & 1      & $a$        &       & $b$       & \multicolumn{2}{c}{$ab$}                     \\
+{Ítem $i$}       & 1      & $a$        &       & $b$       & \multicolumn{2}{c}{$a+b$}                     \\
                               & 0      & $c$        &       & $d$       & \multicolumn{2}{c}{$c+d$}                     \\ \midrule
 \multicolumn{2}{l}{Total}            & $a+c$      &       & $b+d$     & \multicolumn{2}{c}{$p=a+b+c+d$}\\
 \bottomrule
@@ -322,7 +322,7 @@ Para introducir dichos esquemas, vamos a organizar las frecuencias de las pareja
 }
 \end{table}
 
-En la Tabla \ref{tab:contingencia}, $a$ representa la frecuencia de parejas 1-1, $b$ es la frecuencia de parejas 1-0 y así sucesivamente. Dadas las anteriores cinco parejas, $a=2$ y $b=c=d=1$.\\
+En esta tabla, $a$ representa la frecuencia de parejas 1-1,  $b$ es la frecuencia de parejas 1-0 y así sucesivamente. Dadas las cinco parejas de la tabla \ref{tab:binarizacion}, $a=2$ y $b=c=d=1$.\\
 
 La Tabla \ref{tab:similitud} lista coeficientes de similitud comunes definidos en términos de frecuencias de la Tabla \ref{tab:contingencia}.
 
@@ -350,9 +350,10 @@ La Tabla \ref{tab:similitud} lista coeficientes de similitud comunes definidos e
 
 Los coeficientes 1, 2 y 3 de la Tabla \ref{tab:similitud} están monotónicamente relacionados. Supongamos que el coeficiente 1 se calcula para dos tablas de contingencia: Tabla I y Tabla II. Entonces, si $(a_I+d_I)/p \geq (a_{II}+d_{II})/p$, tenemos que $2(a_I+d_I)/[2(a_I+d_I)+b_I+c_I] \geq 2(a_{II}+d_{II})/[2(a_{II}+d_{II})+b_{II}+c_{II}]$ y el coeficiente 3 será al menos tan grande para la Tabla I como lo es para la Tabla II. Los coeficientes 5, 6 y 7 también mantienen sus órdenes relativos.\\
 
-La monotonicidad es importante, ya que algunos procedimientos de \textit{clustering} no se ven afectados si la definición de similitud se modifica de manera que los órdenes relativos de similitud no cambian. Los procedimientos jerárquicos de asociación simple y asociación completa que se verán en la Sección \ref{sec:algoritmos} no se ven afectados Para estos métodos, cualquier elección entre los coeficientes 1, 2 y 3 de la Tabla \ref{tab:similitud} producirá las mismas agrupaciones. Análogamente, cualquier elección entre los coefcientes 5, 6 y 7 también resultará en agrupaciones idénticas.\\ % ¿Referenciar la sección de jerárquicos?
+La monotonicidad es importante, ya que algunos procedimientos de \textit{clustering} no se ven afectados si la definición de similitud se modifica de manera que los órdenes relativos de similitud no cambian. Los procedimientos jerárquicos de asociación simple y asociación completa que se verán en la Sección \ref{sec:algoritmos} no se ven afectados Para estos métodos, cualquier elección entre los coeficientes 1, 2 y 3 de la Tabla \ref{tab:similitud} producirá las mismas agrupaciones. Análogamente, cualquier elección entre los coeficientes 5, 6 y 7 también resultará en agrupaciones idénticas.\\ % ¿Referenciar la sección de jerárquicos?
 
-Veamos un ejemplo (\ej{ej:coef_similitud}) de cálculo de coeficientes de similitud. Supongamos cinco individuos con las características mostradas en la Tabla \ref{tab:ej-similitud}.
+Veamos un ejemplo de cálculo de los valores de un coeficiente de similitud: \\
+(\ej{ej:coef_similitud}) Supongamos cinco individuos con las características mostradas en la Tabla \ref{tab:ej-similitud}.
 
 \begin{table}[h]
   \centering
@@ -382,14 +383,14 @@ $$X_2 = \left \{ \begin{matrix} 1 & \mbox{si Peso}  \geq 150
 $$X_3 = \left \{ \begin{matrix} 1 & \mbox{si Ojos marrones} 
 \\ 0 & \mbox{si otro color de ojos}\end{matrix}\right.   $$
 
-$$X_4 = \left \{ \begin{matrix} 1 & \mbox{si Pelo rubio} 
-\\ 0 & \mbox{si otro color de pelo } \end{matrix}\right.   $$
+$$X_4 = \left \{ \begin{matrix} 1 & \mbox{si tiene pelo rubio} 
+\\ 0 & \mbox{si tiene otro color de pelo } \end{matrix}\right.   $$
 
-$$X_5 = \left \{ \begin{matrix} 1 & \mbox{si Diestro} 
-\\ 0 & \mbox{si Zurdo } \end{matrix}\right.   $$
+$$X_5 = \left \{ \begin{matrix} 1 & \mbox{si es diestro} 
+\\ 0 & \mbox{si es zurdo } \end{matrix}\right.   $$
 
-$$X_6 = \left \{ \begin{matrix} 1 & \mbox{si Masculino} 
-\\ 0 & \mbox{si Femenino}  \end{matrix}\right.   .$$
+$$X_6 = \left \{ \begin{matrix} 1 & \mbox{si es masculino} 
+\\ 0 & \mbox{si es femenino}  \end{matrix}\right.   .$$
 
 Las puntuaciones de los individuos 1 y 2 en las $p=6$ variables binarias son las encontradas en la Tabla \ref{tab:puntuaciones}.
 
@@ -433,23 +434,6 @@ $$\frac{a+d}{p}=\frac{1+0}{6}=\frac{1}{6}. $$
 
 Continuando con el coeficiente de similitud 1, calculamos los demás números de similitud para cada pareja de individuos. Mostramos los resultados en la matriz simétrica 5 x 5.
 
-
-\[ 
-\begin{blockarray}{cccccc}
-	& 1 & 2 & 3 & 4 & 5 \\
-	\begin{block}{c[ccccc]}
-		\\
-		1 & 1 &  &  &  \\
-		2 & 1/6 & 1 &  &  \\
-		3 & 4/6 & 3/6 & 1 & & \\
-		4 & 4/6 & 3/6 & 2/6 & 1 &\\
-		5 & 0 & 5/6 & 2/6 & 2/6 &  1\\
-		\\
-	\end{block}
-\end{blockarray}  
-\] 
-
-
 \begin{table}[H]
 \centering
 \resizebox{7.5cm}{!} {
@@ -460,7 +444,7 @@ Continuando con el coeficiente de similitud 1, calculamos los demás números de
                            & \multicolumn{1}{l|}{2} & 1/6 & 1   &     &     & \multicolumn{1}{l|}{}  \\
                            & \multicolumn{1}{l|}{3} & 4/6 & 3/6 & 1   &     & \multicolumn{1}{l|}{}  \\
                            & \multicolumn{1}{l|}{4} & 4/6 & 3/6 & 2/6 & 1   & \multicolumn{1}{l|}{}  \\
-                           & \multicolumn{1}{l|}{5} & 0   & 5/6 & 2/6 & 2/6 & \multicolumn{1}{l|}{1} \\ \cline{3-3} \cline{7-7} 
+                           & \multicolumn{1}{l|}{5} & \textbf{0}   & \textbf{5/6} & 2/6 & 2/6 & \multicolumn{1}{l|}{1} \\ \cline{3-3} \cline{7-7} 
 \end{tabular}
 }
 \end{table}
@@ -474,7 +458,7 @@ $$ s_{ik} = \frac{1}{1+d_{ik}},$$
 
 donde $0<s_{ik}\leq 1$ es la similitud entre los ítems $i$ y $k$ y $d_{ik}$ es la distancia correspondiente.\\
 Sin embargo, no siempre podemos construir distancias ``verdaderas'', que cumplan las propiedades para \textit{clustering}, a partir de similitudes. Sólo se pueden construir si la matriz de similitudes es definida no negativa.\\
-Si la matriz de similitudes fuera definida no negativa y la máxima similitud es cada de manera que $s_{ii}=1$,
+Si la matriz de similitudes fuera definida no negativa y la máxima similitud es escalada de manera que $s_{ii}=1$,
 
 $$ d_{ik}=\sqrt{2(1-s_{ik})}$$
 
@@ -482,7 +466,7 @@ cumple las propiedades de una distancia.
 
 \subsection{Medidas de similitud y asociación para parejas de variables}
 
-Hasta el momento, hemos discutido medidas de similitud para los ítems. En algunas aplicaciones, son las variables, en lugar de los ítems, las que deben ser agrupadas. Las medidas de similitud para variables suelen tomar la forma de coeficientes de correlaciones muestrales. Además, en algunas aplicaciones de \textit{clustering}, las correlaciones negativas son reemlazadas por sus valores absolutos.\\
+Hasta el momento, hemos discutido medidas de similitud para los ítems. En algunas aplicaciones, son las variables, en lugar de los ítems, las que deben ser agrupadas. Las medidas de similitud para variables suelen tomar la forma de coeficientes de correlaciones muestrales. Además, en algunas aplicaciones de \textit{clustering}, las correlaciones negativas son reemplazadas por sus valores absolutos.\\
 Cuando las variables son binarias, los datos se pueden organizar en una tabla de contingencia. Sin embargo, esta vez las variables, en lugar de los ítems, definen las categorías. Para cada par de variables hay $n$ ítems categorizados en la tabla. Con la codificación usual en 0 y 1, la tabla de contingencia es como se ve en la Tabla \ref{tab:contingencia_var}. Por ejemplo, la variable $i$ vale $1$ para $a$ ítems y la variable $k$ vale $0$ para $b$ de los $n$ ítems.\\
 
 \begin{table}[h]
@@ -514,7 +498,8 @@ Dada la Tabla \ref{tab:contingencia_var}, se pueden desarrollar medidas de asoci
 
 Para resumir esta sección, notamos que hay muchas medidas de similitud entre pares de objetos. Parece que la mayoría de profesionales usan distancias o los coeficientes de la Tabla \ref{tab:similitud} para el clúster de ítems y correlaciones para el clúster de variables. Sin embargo, en ocasiones, las entradas a los algoritmos de \textit{clustering} pueden ser frecuencias simples.\\
 
-\ej{ej:leng}: Midiendo las similitudes de 11 lenguajes. Los significados de las palabras cambian a lo largo de la historia. Sin embargo, el significado de los números 1,2,3,... representa una excepción llamativa. Así, una primera comparación de lenguajes puede estar basada en exclusiva en los números naturales. La Tabla \ref{tab:leng}  nos da los 10 primeros números en inglés, polaco, húngaro y otros ocho lenguajes europeos modernos. Solamente consideramos lenguajes que utilizan el alfabeto romano y omitimos acentos y signos de puntuación.
+\ej{ej:leng}: \textbf{Midiendo las similitudes de 11 lenguajes}.\\
+Los significados de las palabras cambian a lo largo de la historia. Sin embargo, el significado de los números 1,2,3,... representa una excepción llamativa. Así, una primera comparación de lenguajes puede estar basada en exclusiva en los números naturales. La Tabla \ref{tab:leng}  nos da los 10 primeros números en inglés, polaco, húngaro y otros ocho lenguajes europeos modernos. Solamente consideramos lenguajes que utilizan el alfabeto romano y omitimos acentos y signos de puntuación.
 
 Una observación rápida de la escritura de los números sugiere que los cinco primeros lenguajes (inglés, noruego, danés, holandés y alemán) son muy parecidos. El español, francés e italiano se parecen todavía más. El húngaro y finés parecen no estar relacionados con los demás lenguajes. El polaco tiene algunas características de los lenguajes de los subgrupos más grandes.
 
@@ -542,6 +527,10 @@ ten                                                  & ti                       
 }
 \end{table}
 
+Por propósitos ilustrativos, comparamos los lenguajes mirando la primera letra de cada número. Las palabras para el mismo número son concordantes si tienen la misma primera letra y discordantes en caso contrario. De esta forma de la Tabla \ref{tab:leng} obtenemos la Tabla \ref{tab:lengConc}.
+
+\clearpage
+
 %Tabla 12.3 para referencias
 \begin{table}[h]
 \caption{Ejemplo \ref{ej:leng}. Concordancia de la primera letra para 10 números en 11 lenguajes.}
@@ -566,8 +555,8 @@ Fi     & 1      & 1      & 1      & 1      & 1     & 1     & 1     & 1     & 1  
 \end{tabular}
 }
 \end{table}
-
-Por propósitos ilustrativos, comparamos los lenguajes mirando la primera letra de cada número. Las palabras para el mismo número son concordantes si tienen la misma primera letra y discordantes en caso contrario. De esta forma de la Tabla \ref{tab:leng} obtenemos la Tabla \ref{tab:lengConc}. Podemos observar que el inglés y el noruego comparten la misma primera letra para 8 de las 10 parejas de números. El resto de frecuencias se ha calculado de la misma forma.\\
+ 
+Podemos observar que el inglés y el noruego comparten la misma primera letra para 8 de las 10 parejas de números. El resto de frecuencias se ha calculado de la misma forma.\\
 Los resultados en la Tabla \ref{tab:lengConc} confirman la impresión visual inicial de la Tabla \ref{tab:leng}. Esto es, que el inglés, noruego, danés, holandés y alemán parecen formar un grupo. El francés, español, italiano y polaco forman otro, mientras que el húngaro y el finés no forman parte de ninguno.\\
 
 En los ejemplo hasta el momento, hemos utilizado nuestra impresión visual de las medidas de similitud o distancia para formar grupos. En la Sección \ref{sec:algoritmos} discutiremos formas menos subjetivas para crear los clústeres, distintos algoritmos para crear los grupos. 
