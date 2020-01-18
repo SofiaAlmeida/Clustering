@@ -37,6 +37,13 @@
 \usepackage[protrusion=true,expansion=true]{microtype}
 \usepackage{mathpazo}
 \usepackage{multirow}
+\usepackage{titlesec}
+
+\setcounter{secnumdepth}{4}
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
 
 % Indentación de párrafos para Palatino
 \setlength{\parindent}{0pt}
@@ -644,7 +651,8 @@ La secuencia de clúster se representan gráficamente mediante un dendrograma, e
 
 A continuación se muestran algunos métodos aglomerativos
 
-\textbf{1. Single Link Method}\\
+\paragraph{Single Link Method}
+
 Para entender mejor este método se presentará un ejemplo usando \textit{Single Link Method}. Este método es una combinación de los objetos de los clústers teniendo en cuenta las disimilitudes entre los clústers. Para realizar este ejemplo introducimos algunos términos de notación, $r$ representa a cualquier elemento en el clúster $R$, $r \in R$, y $s$ será cualquier elemento del clúster $S$, $s \in S$. Calculamos la distancia entre $R$ y $S$ mediante la  fórmula \ref{eq:distAgloEjm}
 
 \begin{equation}\label{eq:distAgloEjm}
@@ -734,7 +742,8 @@ Así el dendograma quedaría de la siguiente forma \ref{fig:agloEjem}
 	\label{fig:agloEjem}
 \end{figure}
 
-\textbf{2. DBSCAN}\\
+\paragraph{DBSCAN}
+
 Al contrario de la estrategia seguida por K-Means, DBSCAN (\textit{Density-Based Spatial \textit{clustering} of Applications with Noise}) no presupone clústeres convexos, sino que se basa en la densidad de las muestras para identificar los clústeres. Por este motivo, los clústeres identificados por DBSCAN pueden ser de cualquier forma.\\
 
 Dos parámetros importantes para definir este algoritmo son: \textbf{eps}, máxima distancia entre dos muestras para poder ser consideradas pertenecientes al mismo "vecindario", y \textbf{min\_samples}, número de muestras en un vecindario para que una región pueda ser considerada densa.\\
@@ -758,7 +767,8 @@ Por tanto un clúster generado por el método DBSCAN satisface dos propiedades:
 \item Si un punto $A$ es densamente alcanzable desde cualquier otro punto $B$ del clúster, entonces $A$ también forma parte del clúster.
 \end{itemize}
 
-\textbf{3. Mean Shift}\\
+\paragraph{Mean Shift}
+
 Mean Shift es una técnica de análisis de espacio de características no paramétrica para localizar los máximos de una función de densidad. Es un método iterativo que parte de una estimación inicial $x$. Dada una función núcleo $K(x_i-x)$. Esta función determina el peso de los puntos cercanos para la reestimación de la media. Normalmente se usa un núcleo gaussiano en la distancia de la estimación actual, $K(x_i-x)=e^{-c||x_i-x||^2}$. La media ponderada de la densidad en la ventana determinada por K es:
 
 $$m(x)=\dfrac{\sum_{x_i\in N(x)}K(x_i-x)x_i}{\sum_{x_i\in N(x)}K(x_i-x)}$$
@@ -786,10 +796,8 @@ donde $x_i$ son las muestras de entrada y $k$ la función núcleo y h es el úni
 
 Usando esta aproximación por fuerza bruta hace que el problema sea computacionalmente inviable conforme aumentamos las dimensiones del problema sobre el espacio de búsqueda total. Por tanto, Mean Shift utiliza la técnica del reinicio de gradiente descendiente múltiple, la cual empieza desde un máximo local $y_k$ y calcula su aproximación $f(x)$ y avanza en esa dirección.
 
-
-
-
 \subsubsection{Técnicas divisivas}
+
 Los algoritmos divisivos parten de un único clúster y en cada iteración van dividiendo clústeres según la disimilitud entre los componentes del mismo, bajando así en la jerarquía.
 
 En cada paso del algoritmo divisivo se deben de aplicar tres opciones:
@@ -1001,6 +1009,8 @@ El conjunto de datos contiene 50 muestras de cada una de tres especies de flor \
   \end{minipage}
 \end{figure}
 
+\clearpage
+
 A continuación, se mostrarán los resultados obtenidos por los algoritmos en este caso de estudio. Utilizaremos una tabla comparativa donde incluiremos el nombre de los algoritmos, los resultados obtenidos por las métricas utilizadas (Calinski-Harabaz y Silhouette) y los tiempos de ejecución de los mismos. Las métricas utilizadas se interpretarán de la siguiente forma:
 
 \begin{itemize}
@@ -1160,8 +1170,6 @@ En nuestro caso hemos impuesto que existan 3 clústers por lo que podríamos cor
 
 \subsection{DBSCAN}
 
-
-
 Para DBSCAN, se ha utilizado el siguiente código en python y se ha obtenido la siguiente agrupación de las muestras, donde el clúster -1 representa las muestras formadas por ruido:\\
 
 \begin{lstlisting}
@@ -1171,15 +1179,13 @@ DBSCAN(eps=0.12, min_samples=5)
 1:    39 (26.00%)
 -1:    36 (24.00%)
 2:    30 (20.00%)
-\end{lstlisting}\
+\end{lstlisting}
 
-Las gráficas obtenidas para este caso, serán la matriz de dispersión (Scatter Matrix) y mapa de calor (HeatMap).\\
-
-En este caso podemos ver como tenemos un cuarto clúster formado por las muestras que han sido consideradas "ruido" por el algoritmo DBSCAN. Este clúster se identifica con el número -1 y contiene las muestras no alcanzables para el algoritmo con los parámetros que hemos especificado.
+Las gráficas obtenidas para este caso, serán la matriz de dispersión (Scatter Matrix) y mapa de calor (HeatMap). En este caso podemos ver como tenemos un cuarto clúster formado por las muestras que han sido consideradas "ruido" por el algoritmo DBSCAN. Este clúster se identifica con el número -1 y contiene las muestras no alcanzables para el algoritmo con los parámetros que hemos especificado.
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.64]{dani/scatmatrixDBSCANIRIS.png}
+\includegraphics[scale=0.62]{dani/scatmatrixDBSCANIRIS.png}
 \caption{Scatter Matrix para DBSCAN con 4 clústeres.}
 \label{smdb}
 \end{figure}
@@ -1207,13 +1213,13 @@ MeanShift(bandwidth=estimate_bandwidth(X_normal, quantile=0.67,
 0:    81 (54.00%)
 1:    50 (33.33%)
 2:    19 (12.67%)
-\end{lstlisting}\
+\end{lstlisting}
 
-Las gráficas obtenidas para este caso, serán la matriz de dispersión (Scatter Matrix) y mapa de calor (HeatMap).\\
+Las gráficas obtenidas para este caso, serán la matriz de dispersión (Scatter Matrix) y mapa de calor (HeatMap).
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.64]{dani/scatmatrixMeanShiftIRIS.png}
+\includegraphics[scale=0.62]{dani/scatmatrixMeanShiftIRIS.png}
 \caption{Scatter Matrix para Mean Shift con 3 clústeres.}
 \label{smms}
 \end{figure}
