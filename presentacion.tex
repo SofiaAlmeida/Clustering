@@ -31,6 +31,9 @@
 \newcommand{\norm}[1]{\left\lVert#1\right\rVert}
 \newcommand{\yy}{\textbf{y}}
 
+%%% Código
+\usepackage{listings}
+
 %%% Tablas
 \usepackage{tabularx}
 \usepackage{float}
@@ -186,7 +189,7 @@ Matemáticamente se consigue introduciendo una variable binaria, que toma el val
 Sea $x_{ij}$ la puntuación de la $j$-ésima variable binaria en el $i$-ésimo ítem y $x_{kj}$ la de la $j$-ésima en el $k$-ésimo ítem, con $j=1,\dots,p$. Entonces:
 
 $$(x_{ij}-x_{kj})^2 = \left \{ \begin{matrix} 0 & \mbox{si } x_{ij}=x_{kj}
-\\ 3n+1 & \mbox{si }x_{ij}\neq x_{kj}\end{matrix}\right.   $$
+\\ 1 & \mbox{si }x_{ij}\neq x_{kj}\end{matrix}\right.   $$
 
 y $\sum_{j=1}^p{(x_{ij}-x_{kj})^2}$ proporciona una forma de contar el número de disparidades. Una distancia grande corresponde a muchas disparidades, es decir, ítems desemejantes.\break 
 
@@ -207,7 +210,7 @@ Existen diversos esquemas para definir los coeficientes de similitud. Organizand
 \multicolumn{2}{l}{\multirow{}{}{}} & \multicolumn{3}{c}{Ítem $k$} & \multicolumn{2}{c}{} \\\cmidrule{3-5}
 \multicolumn{2}{l}{}                  & 1        &       & 0       & \multicolumn{2}{c}{{Total}}                        \\
 \midrule
-{Ítem $i$}       & 1      & $a$        &       & $b$       & \multicolumn{2}{c}{$ab$}                     \\
+{Ítem $i$}       & 1      & $a$        &       & $b$       & \multicolumn{2}{c}{$a+b$}                     \\
                               & 0      & $c$        &       & $d$       & \multicolumn{2}{c}{$c+d$}                     \\ \midrule
 \multicolumn{2}{l}{Total}            & $a+c$      &       & $b+d$     & \multicolumn{2}{c}{$p=a+b+c+d$}\\
 \bottomrule
@@ -549,6 +552,305 @@ Fi     & 1      & 1      & 1      & 1      & 1     & 1     & 1     & 1     & 1  
 		\includegraphics[scale=0.32]{pedro/gapGraph}
 		\caption{Ejemplo del método de la brecha.}
 	\end{figure}
+\end{frame}
+
+%%% Parte Práctica
+
+\begin{frame}{\textit{Caso de estudio : Flor de Iris}}
+
+Estudiaremos el conjunto de datos iris de \textbf{Fisher}.\break
+
+Contiene 50 muestras de cada una de tres especies de flor \textbf{Iris}. Para cada muestra, se recogen las medidas de: largo y ancho del sépalo y y largo y ancho del pétalo, en centímetros.
+
+\begin{figure}[h]
+  \centering
+  \begin{minipage}[h]{0.28\textwidth}
+    \includegraphics[width=\textwidth]{dani/setosa.jpg}
+    \caption{Iris Setosa.}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[h]{0.28\textwidth}
+    \includegraphics[width=\textwidth]{dani/virginica.jpg}
+    \caption{Iris virginica.}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[h]{0.29\textwidth}
+    \includegraphics[width=\textwidth]{dani/versicolor.jpg}
+    \caption{Iris versicolor.}
+  \end{minipage}
+\end{figure}
+\end{frame}
+
+\begin{frame}{\textit{Métricas utilizadas}}
+
+Se utilizarán las siguientes métricas para medir la bondad de los algoritmos:\break
+\begin{itemize}
+\item \textbf{Calinski-Harabaz}: Nos indica si estamos usando un buen número de clústeres para un algoritmo en concreto. El número óptimo de clústeres tendrá la solución con el valor de Calinski-Harabasz más alto.
+\item \textbf{Silhouette}: Cuanto mayor sea su valor, más similar será un objeto respecto a su grupo y más diferente a los de otros clúster. Toma valores entre -1 y +1. Si el valor es cercano a 1, la configuración de los clúster es apropiada, si no, habrá más o menos clústeres de los necesarios.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{\textit{Tabla comparativa de los algoritmos}}
+
+Las mejores configuraciones son las que hayan obtenido un mayor valor del coeficiente de Silhouette.
+
+\begin{table}[H]
+\centering
+\resizebox{9cm}{!} {
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Nombre} & \textbf{Nº clústeres} & \textbf{CH} & \textbf{SH} & \textbf{Tiempo ($s$)} & \textbf{Clústeres}                                                                                                          \\ \midrule
+K-Means       & 3                    & 359.845074 & 0.504769    & 0.016456      & \begin{tabular}[c]{@{}c@{}}0:    61 (40.67\%)\\
+1:    50 (33.33\%) \\2:    39 (26.00\%)\end{tabular}\\ \\
+DBSCAN        & 4                   &  94.991819   & 0.306404   &  0.002353      & \begin{tabular}[c]{@{}c@{}}0:    45 (30.00\%)
+\\1:    39 (26.00\%)
+\\-1:    36 (24.00\%)
+\\2:    30 (20.00\%)\end{tabular} \\ \\
+AggCluster    & 3                    & 349.254185 & 0.504800    & 0.019058      & \begin{tabular}[c]{@{}c@{}}0:    67 (44.67\%)
+\\1:    50 (33.33\%)
+\\2:    33 (22.00\%)\end{tabular}                       \\ \\
+MeanShift     & 3                    & 290.470683  & 0.476961    & 0.289073      & \begin{tabular}[c]{@{}c@{}}0:    81 (54.00\%)
+\\1:    50 (33.33\%)
+\\2:    19 (12.67\%)\end{tabular}                                             \\ \bottomrule
+\end{tabular}
+}
+\end{table}
+\end{frame}
+
+\begin{frame}{Gráficas}
+Para cada algoritmo, se mostrarán algunas gráficas que nos ayudarán a comprender como funciona el agrupamiento para el caso de estudio.\break
+
+Las gráficas utilizadas serán \textbf{Scatter Matrix, Heatmap, KPlot y BoxPlot} que mostrarán la matriz de dispersión de las muestras, mapa de calor de los centroides para cada variable y distribución de las muestras según cada variable.\break
+
+Para el caso del algoritmo \textbf{Agglomerative Clustering} mostraremos como se forman los distintos clústers a partir del Dendrograma generado.
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{K-Means}
+Para el algoritmo K-Means se ha utilizado el siguiente código en python y se ha obtenido la siguiente agrupación de las muestras:\break
+\begin{lstlisting}
+KMeans(init='k-means++', n_clusters=3, 
+	n_init=5, random_state=12345)
+
+cluster 0: 61 (40.67%)
+cluster 1: 50 (33.33%)
+cluster 2: 39 (26.00%)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.34]{dani/scatmatrixK-MeansIRIS.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.29]{dani/heatmapK-MeansIRIS.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.29]{dani/kdeplotK-MeansIRIS.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.24]{dani/boxplotK-MeansIRIS.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Agrupamiento Jerárquico}
+Para el algoritmo Aglomerativo Jerárquico, se ha utilizado el siguiente código en python y se ha obtenido la siguiente agrupación de las muestras:\break
+\begin{lstlisting}
+AgglomerativeClustering(n_clusters=3, 
+	linkage="ward", affinity='euclidean')
+
+cluster 0: 67 (44.67%)
+cluster 1: 50 (33.33%)
+cluster 2: 33 (22.00%)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.34]{dani/scatmatrixAggClusterIRIS.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.29]{dani/heatmapAggClusterIRIS.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{\textit{Dendrogramas}}
+Un \textbf{dendrograma} es un diagrama de árbol que muestra los grupos que se forman al crear clústers de observaciones en cada paso y sus niveles de similitud.\break
+
+La decisión acerca de la agrupación final también se conoce como cortar el dendrograma. Cortar el dendrograma es similar a trazar una línea a lo largo del dendrograma para especificar la agrupación final.
+\end{frame}
+
+\begin{frame}
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.24]{dani/dendrogramAggClusterIRIS.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\begin{figure}[h]
+\centering
+\textbf{0}: 67 (44.67\%), \textbf{1}: 50 (33.33\%), \textbf{2}: 33 (22.00\%)
+\includegraphics[scale=0.23]{dani/dendrogramcolor.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{DBSCAN}
+\begin{itemize}
+\item Se basa en la densidad de las muestras para identificar los clústeres.
+\item Los clústers pueden tener cualquier forma.
+\item Dos parámetros para definir este algoritmo son: \textbf{eps} y \textbf{min\_samples}.
+\end{itemize}
+\begin{figure}[h]
+\centering
+\includegraphics[scale=1.2]{dani/DBSCAN.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{DBSCAN}
+La técnica de agrupación DBSCAN clasifica los puntos como puntos núcleo, puntos (densamente-)alcanzables, o ruido de la siguiente forma:
+
+\begin{itemize}
+\item Un punto $p$ pertenece al núcleo si al menos \textit{min\_samples} puntos están a una distancia $\epsilon$ de él y esos puntos son directamente alcanzables desde $p$.
+\item Un punto $q$ es alcanzable desde $p$ si existe una secuencia de puntos $p_1\dots p_n$ donde $p_1=p$ y $p_n=q$ y cada punto $p_{i+1}$ es directamente alcanzable desde $p_i$.
+\item Un punto que no sea alcanzable desde cualquier otro se considera ruido.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{DBSCAN}
+Un clúster generado por DBSCAN satisface dos propiedades:
+
+\begin{itemize}
+\item Todos los puntos de un mismo clúster están densamente conectados entre sí.
+\item Si un punto $A$ es alcanzable desde cualquier otro punto $B$ del clúster, entonces $A$ también forma parte del clúster.
+\end{itemize}
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.37]{dani/DBSCAN2.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{DBSCAN}
+Para DBSCAN, se ha utilizado el siguiente código en python y se ha obtenido la siguiente agrupación de las muestras, donde el clúster -1 representa las muestras formadas por ruido:\break
+\begin{lstlisting}
+DBSCAN(eps=0.12, min_samples=5)
+
+cluster 0:  45 (30.00%)
+cluster 1:  39 (26.00%)
+ruido  -1:  36 (24.00%)
+cluster 2:  30 (20.00%)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.34]{dani/scatmatrixDBSCANIRIS.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.29]{dani/heatmapDBSCANIRIS.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Mean Shift}
+Es una técnica de análisis de espacio de características no paramétrica para localizar los máximos de una función de densidad. 
+\begin{itemize}
+\item Método iterativo que parte de una estimación inicial $x$.
+\item Define una función núcleo $K(x_i-x)$ que determina los pesos de los puntos cercanos para la reestimación media.
+\end{itemize}\
+
+La media ponderada de la densidad en $K$ es:
+
+$$m(x)=\dfrac{\sum_{x_i\in N(x)}K(x_i-x)x_i}{\sum_{x_i\in N(x)}K(x_i-x)}$$
+
+donde $N(x)$ es el vecindario de x, un conjunto de puntos donde $K(x_i)\neq0$.\\
+\end{frame}
+
+\begin{frame}{Mean Shift}
+La diferencia $m(x)-x$ se denomina Mean Shift.\break
+
+El algoritmo establece $m(x)\rightarrow x$ y repite la estimación hasta que $m(x)$ converja.\break
+
+No existe ninguna prueba de la convergencia del algoritmo en espacios de alta dimensión y el caso unidimensional tiene aplicaciones limitadas en el mundo real.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.45]{dani/MS.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Mean Shift}
+Sea un conjunto de datos finito $S$ embebido en el espacio euclídeo n-dimensional $X$. Sea $K$ un núcleo plano con función característica:
+
+$$K(x)=\left\{
+1 \ si \ ||x||\leq \lambda \atop
+0 \ si \ ||x||> \lambda
+\right.$$
+
+En cada iteración del algoritmo, se establece $m(x)\rightarrow x$ para todo $s\in S$ a la vez.\break 
+
+En un conjunto pequeño, estimaremos la función de densidad como:
+
+$$f(x)=\sum_i K(x-x_i)=\sum_i k\dfrac{||x-x_i||^2}{h^2}$$
+
+donde $x_i$ son las muestras de entrada y $k$ la función núcleo y h es el \textit{bandwidth}. 
+\end{frame}
+
+\begin{frame}{Mean Shift}
+Una vez calculado $f(x)$ buscamos sus máximos locales utilizando el ascenso de gradiente o alguna otra técnica de optimización.\break
+
+En problemas con grandes dimensiones, se usa la técnica del reinicio de gradiente descendiente múltiple, la cual empieza desde un máximo local $y_k$ y calcula su aproximación $f(x)$ avanzando en esa dirección.
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Mean Shift}
+Para Mean Shift, se ha utilizado el siguiente código en python y se ha obtenido la siguiente agrupación de las muestras:\break
+\begin{lstlisting}
+MeanShift(bandwidth=estimate_bandwidth(X_normal, 
+	quantile=0.67, n_samples=400))
+
+cluster 0: 81 (54.00%)
+cluster 1: 50 (33.33%)
+cluster 2: 19 (12.67%)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.34]{dani/scatmatrixMeanShiftIRIS.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.29]{dani/heatmapMeanShiftIRIS.png}
+\end{figure}
 \end{frame}
 
 \begin{frame}[fragile, allowframebreaks]
