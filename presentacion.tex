@@ -225,7 +225,7 @@ Existen diversos esquemas para definir los coeficientes de similitud. Organizand
 \begin{table}[H]
   \centering
   \caption{Coeficientes de similitud para ítems \textit{clustering}.}
-\resizebox{9cm}{!} {
+\resizebox{10cm}{!} {
 \begin{tabular}{ll}
 \toprule               
 \multicolumn{1}{l}{Coeficiente} & \multicolumn{1}{l}{Fundamento}\\
@@ -234,6 +234,22 @@ Existen diversos esquemas para definir los coeficientes de similitud. Organizand
 2 $\quad\frac{2(a+d)}{2(a+d)+b+c}$                            & Las parejas 1-1 y 0-0 ponderan el doble.                                                                                                        \\\\
 3 $\quad\frac{a+d}{a+d+2(b+c)}$                             & Las parejas que no coinciden ponderan el doble.                                                                                                 \\\\
 4  $\quad\frac{a}{p}$                             & No hay parejas 0-0 en el numerador.                                                                                                    \\         \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+\end{frame}
+
+\begin{frame}{}
+\begin{table}[H]
+  \centering
+  \caption{Coeficientes de similitud para ítems \textit{clustering}.}
+\resizebox{10cm}{!} {
+\begin{tabular}{ll}
+\toprule               
+\multicolumn{1}{l}{Coeficiente} & \multicolumn{1}{l}{Fundamento}\\
+\midrule
 5 $\quad\frac{a}{a+b+c}$                             & \begin{tabular}[c]{@{}l@{}}No hay parejas 0-0 en el numerador ni el denominador\\ (Las parejas 0-0 son irrelevantes).\end{tabular}              \\\\
 6 $\quad\frac{2a}{2a+b+c}$                             & \begin{tabular}[c]{@{}l@{}}No hay parejas 0-0 en el numerador ni el denominador.\\ Las parejas 1-1 ponderan el doble.\end{tabular}              \\\\
 7 $\quad\frac{a}{a+2(b+c)}$                             & \begin{tabular}[c]{@{}l@{}}No hay parejas 0-0 en el numerador ni el denominador.\\ Las parejas que no coinciden ponderan el doble.\end{tabular} \\\\
@@ -242,18 +258,12 @@ Existen diversos esquemas para definir los coeficientes de similitud. Organizand
 \end{tabular}
 }
 \end{table}
-
-\end{frame}
-
-\begin{frame}{\textit{Monotonicidad}}
-La monotonicidad es una característica que afecta a algunos procedimientos de \textit{clustering} haciendo que sean invariantes al cambio de definición de similitud.\break 
-
-Un ejemplo de ello son los procedimientos jerárquicos de asociación simple y completa. Para estos métodos, cualquier elección entre los coeficientes de la Tabla anterior producirá las mismas agrupaciones.
 \end{frame}
 
 \begin{frame}{\textit{Ejemplo de cálculo de coeficientes de similitud}}
 Veamos un ejemplo de cálculo de coeficientes de similitud.\break
-Definimos 5 individuos con las características mostradas:
+
+Definiremos 5 individuos con diferentes características y 6 variables binarias $X_1,X_2,X_3,X_4,X_5,X_6$.
 \begin{table}[h]
   \centering
   \label{tab:ej-similitud}
@@ -272,7 +282,6 @@ Individuo 5 & 76 & 210 & Marrón & Moreno & Izquierda & Masculino
 \end{frame}
 
 \begin{frame}{}
-Definimos seis variables binarias $X_1,X_2,X_3,X_4,X_5,X_6$:
 $$X_1 = \left \{ \begin{matrix} 1 & \mbox{si Altura}  \geq 72 
 \\ 0 & \mbox{si Altura}  < 72 \end{matrix}\right.$$
 $$X_2 = \left \{ \begin{matrix} 1 & \mbox{si Peso}  \geq 150 
@@ -290,7 +299,7 @@ $$X_6 = \left \{ \begin{matrix} 1 & \mbox{si Masculino}
 \end{frame}
 
 \begin{frame}{}
-Las puntuaciones de los individuos 1 y 2 en las $p=6$ variables binarias se muestran a continuación:
+Las puntuaciones de los individuos 1 y 2 en las $p=6$ variables binarias se muestran a continuación:\break
 
 \begin{table}[h]
   \centering
@@ -321,19 +330,19 @@ Individuo 1      & 1      & 1        &  2       & \multicolumn{2}{c}{3}         
 \bottomrule
 \end{tabular}
 }
-\end{table}
-Empleando el coeficiente de similitud 1, que pondera por igual las parejas que coinciden, calculamos:
+\end{table}\
+
+Empleando el primer coeficiente de similitud de la tabla, calculamos:
 
 $$\frac{a+d}{p}=\frac{1+0}{6}=\frac{1}{6}. $$
 \end{frame}
 
 \begin{frame}{}
-Continuando con el coeficiente de similitud 1, calculamos los demás números de similitud para cada pareja de individuos. Mostramos los resultados en la matriz simétrica 5 x 5.
-
+Calcularemos los demás números de similitud para cada pareja de individuos. Mostramos los resultados en la matriz simétrica 5 x 5.
 
 \begin{table}[H]
 \centering
-\resizebox{7.5cm}{!} {
+\resizebox{9cm}{!} {
 \begin{tabular}{lllllll}
 \multicolumn{2}{l}{\multirow{}{}{}}               & \multicolumn{5}{c}{Individuo}                  \\
 \multicolumn{2}{l}{}                                & 1   & 2   & 3   & 4   & 5                      \\ \cline{3-3} \cline{7-7} 
@@ -344,20 +353,20 @@ Continuando con el coeficiente de similitud 1, calculamos los demás números de
                            & \multicolumn{1}{l|}{5} & 0   & 5/6 & 2/6 & 2/6 & \multicolumn{1}{l|}{1} \\ \cline{3-3} \cline{7-7} 
 \end{tabular}
 }
-\end{table}
+\end{table}\
 
-Basándonos en las magnitudes del coeficiente de similitud, debemos concluir que los individuos 2 y 5 son los más similares mientras que los individuos 1 y 5 son los menos similiares.
+Los individuos 2 y 5 son los más similares mientras que los individuos 1 y 5 son los menos similiares.
 \end{frame}
 
 \begin{frame}{Construcción de similitudes a partir de distancias}
 
-Fijando:
+Fijamos:
 
 $$ s_{ik} = \frac{1}{1+d_{ik}},$$ 
 
 donde $0<s_{ik}\leq 1$ es la similitud entre los ítems $i$ y $k$, entonces $d_{ik}$ es la distancia correspondiente.\break
 
-Pero no siempre podemos construir distancias ``verdaderas'', a partir de similitudes. Sólo se pueden construir si la matriz de similitudes es definida no negativa y la máxima similitud cumple $s_{ii}=1$.\break
+No siempre podemos construir distancias ``verdaderas'', a partir de similitudes. Sólo si la matriz de similitudes es definida no negativa y la máxima similitud cumple $s_{ii}=1$.\break
 
 Entonces $ d_{ik}=\sqrt{2(1-s_{ik})}$, cumple las propiedades de una distancia.
 \end{frame}
@@ -385,7 +394,7 @@ Cuando las variables son binarias, los datos se pueden organizar en una tabla de
 \begin{frame}{}
 La fórmula del coeficiente de correlación producto-momento aplicada a las variables binarias de la tabla de contingencia nos da:
 
-$$r = \frac{ad-bc}{[(a+b)(c+d)(a+c)(b+d)]^{1/2}}.$$
+$$r = \frac{ad-bc}{[(a+b)(c+d)(a+c)(b+d)]^{1/2}}.$$\
 
 Podemos tomar $r$ como la medida de similitud entre las dos variables.\break
 
@@ -397,7 +406,7 @@ Medimos las similitudes de 11 lenguajes en base a los primeros 10 números natur
 
 \begin{table}[h]
 \centering
-\resizebox{11cm}{!} {
+\resizebox{11.3cm}{!} {
   \begin{tabular}{lllllllllll}
     \toprule
 \begin{tabular}[c]{@{}l@{}}Inglés\\ (E)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Noruego\\ (N)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Danés\\ (Da)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Holandés\\ (Du)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Alemán\\ (G)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Francés\\ (Fr)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Español\\ (Sp)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Italiano\\ (I)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Polaco\\ (P)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Húngaro\\ (H)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Finés\\ (Fi)\end{tabular} \\ \midrule
@@ -417,7 +426,7 @@ ten                                                  & ti                       
 \end{frame}
 
 \begin{frame}{}
-Los resultados confirman que el inglés, noruego, danés, holandés y alemán parecen formar un grupo. El francés, español, italiano y polaco forman otro, mientras que el húngaro y el finés no forman parte de ninguno.
+Vemos que inglés, noruego, danés, holandés y alemán parecen formar un grupo. El francés, español, italiano y polaco forman otro, mientras que el húngaro y el finés no forman parte de ninguno.
 \begin{table}[h]
 \centering
 \makebox[\textwidth][c]{
