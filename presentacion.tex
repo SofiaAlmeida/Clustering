@@ -846,7 +846,7 @@ $$\sum_{k=1}^{K}\frac{\sum_i\sum_ju_{ik}^2u_{jk}^2d_{ij}}{2\sum_lu_{lk}^2}$$
 
 
 \section{Número de clústeres}
-\begin{frame}{Número de clústeres}
+\begin{frame}{Consideraciones generales}
 	\begin{itemize}
 		\item En los algoritmos de \textit{clustering}, uno de los problemas es determinar el número idóneo de clústeres $ k $. 
 		\item Es un proceso ambiguo. Depende de las interpretaciones según la forma y la escala de de la distribución de los datos y la solución deseada.
@@ -854,7 +854,7 @@ $$\sum_{k=1}^{K}\frac{\sum_i\sum_ju_{ik}^2u_{jk}^2d_{ij}}{2\sum_lu_{lk}^2}$$
 	\end{itemize}
 \end{frame}
 
-\begin{frame}{Número de clústeres-Método del codo}
+\begin{frame}{Método del codo}
 	Consiste en dibujar la gráfica de las distancia a los centros de cada clúster en función del número de clústeres. Definimos:
 	\[
 	SSE_k = \sum_{i = 1}^{n_k} = \norm{\yy_i - \bar{\yy}_k}^2,
@@ -865,16 +865,16 @@ $$\sum_{k=1}^{K}\frac{\sum_i\sum_ju_{ik}^2u_{jk}^2d_{ij}}{2\sum_lu_{lk}^2}$$
 	\]
 \end{frame}
 
-\begin{frame}{Número de clústeres-Método del codo}
+\begin{frame}{Método del codo}
 	\begin{figure}[h]
 		\centering
 		\includegraphics[scale=0.5]{pedro/elbowGraph}
-		\caption{Ejemplo del método del codo.}
+		\caption{Ejemplo del método del codo \cite{elbowGraph}.}
 		\label{smkm}
 	\end{figure}
 \end{frame}
 
-\begin{frame}{Número de clústeres-Estadístico $ R^2 $}
+\begin{frame}{Estadístico $ R^2 $}
 	Para $ n $ clústeres la suma total de las distancias al cuadrado es $ T = \sum_{i = 1}^{n} \norm{\yy_i - \bar{\yy}}^2 $. Así, para $ k $ clústeres definimos $ R^2 $ como
 	\[
 	R^{2}_{k} = \frac{T - \sum_k SSE_k}{T}.
@@ -883,7 +883,7 @@ $$\sum_{k=1}^{K}\frac{\sum_i\sum_ju_{ik}^2u_{jk}^2d_{ij}}{2\sum_lu_{lk}^2}$$
 	También podríamos tener en cuenta el cambio en $ R^2 $ al unir los clústeres $ R $ y $ S $ como $ SR^2 = R_k^2 - R^2_{k-1} $. El estadístico $ SR^2 $ representa, en función de $ T $, la proporción de $ SSE_t - (SSE_r + SSE_s) $ donde los clústeres $ C_R $ y $ C_S $ se han unido para formar el clúster $ C_T $.  Cuanto mayor sea el índice mayor será la pérdida de homogeneidad.
 \end{frame}
 
-\begin{frame}{Número de clústeres-Varianza agrupada}
+\begin{frame}{Varianza agrupada}
 	Para un solo clúster \[ s^2 = \sum_{i=1}^{n} \norm{\yy_i - \bar{\yy}}^2/ p(n-1).\]
 	Para el clúster $ C_k $
 	\[
@@ -892,7 +892,7 @@ $$\sum_{k=1}^{K}\frac{\sum_i\sum_ju_{ik}^2u_{jk}^2d_{ij}}{2\sum_lu_{lk}^2}$$
 	Valores grandes de la varianza agrupada indica que los clústeres no son homogéneos. Por lo tanto, si tiende a cero para algún $  k < n $ indica la formación de un clúster homogéneo.
 \end{frame}
 
-\begin{frame}{Número de clústeres-Pseudo estadísticos}
+\begin{frame}{Pseudo estadísticos}
 	El pseudo estadístico $ F $ se define como
 	\[
 	F^*_k = \frac{(T-\sum_k SSE_k) / (k-1)}{\sum_k SSE_k / (n-k)}.
@@ -903,7 +903,7 @@ $$\sum_{k=1}^{K}\frac{\sum_i\sum_ju_{ik}^2u_{jk}^2d_{ij}}{2\sum_lu_{lk}^2}$$
 	\]
 \end{frame}
 
-\begin{frame}{Número de clústeres-\textit{Silhouette method}}
+\begin{frame}{\textit{Silhouette method}}
 	Definimos el índice:
 	\[
 	s(i) = \frac{b(i)-a(i)}{\max\{b(i), a(i)\}}, \hspace{2mm} \forall i = 1, \dots, n
@@ -918,7 +918,7 @@ $$\sum_{k=1}^{K}\frac{\sum_i\sum_ju_{ik}^2u_{jk}^2d_{ij}}{2\sum_lu_{lk}^2}$$
 	Se escoge el $ k $ que maximice el valor medio de $ s(i) $.
 \end{frame}
 
-\begin{frame}{Número de clústeres-\textit{Silhouette method}}
+\begin{frame}{\textit{Silhouette method}}
 	\begin{table}[h!]
 		\centering
 		\begin{tabular}{cc} 
@@ -932,12 +932,12 @@ $$\sum_{k=1}^{K}\frac{\sum_i\sum_ju_{ik}^2u_{jk}^2d_{ij}}{2\sum_lu_{lk}^2}$$
 			6 & 0.43902711183132426 \\
 			\hline
 		\end{tabular}
-		\caption{Ejemplo \textit{silhouette method}.}
+		\caption{Ejemplo \textit{silhouette method} \cite{silouetteGraph}.}
 	\end{table}
 	Vemos que se obtienen los mejores resultados con 2 o 4 clústeres.
 \end{frame}
 
-\begin{frame}{Número de clústeres-\textit{Gap method}}
+\begin{frame}{\textit{Gap method}}
 	El $ k $ elegido será aquel que maximice el valor de:
 	\[
 	Gap(k) = E^*_n\{ \log(W_k)\} - \log(W_k).
@@ -948,11 +948,11 @@ $$\sum_{k=1}^{K}\frac{\sum_i\sum_ju_{ik}^2u_{jk}^2d_{ij}}{2\sum_lu_{lk}^2}$$
 	\]
 \end{frame}
 
-\begin{frame}{Número de clústeres-\textit{Gap method}}
+\begin{frame}{\textit{Gap method}}
 	\begin{figure}[H]
 		\centering
 		\includegraphics[scale=0.32]{pedro/gapGraph}
-		\caption{Ejemplo del método de la brecha.}
+		\caption{Ejemplo del método de la brecha \cite{gapGraph}.}
 	\end{figure}
 \end{frame}
 
