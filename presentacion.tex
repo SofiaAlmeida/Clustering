@@ -226,7 +226,8 @@ Existen diversos esquemas para definir los coeficientes de similitud. Organizand
   \centering
 \resizebox{7cm}{!} {
   \begin{tabular}{llrrrrr}
-\multicolumn{2}{l}{\multirow{}{}{}} & \multicolumn{3}{c}{Ítem $k$} & \multicolumn{2}{c}{} \\\cmidrule{3-5}
+    \toprule
+\multicolumn{2}{l}{\multirow{}{}{}}& \multicolumn{3}{c}{Ítem $k$} & \multicolumn{2}{c}{} \\\cmidrule{3-5}
 \multicolumn{2}{l}{}                  & 1        &       & 0       & \multicolumn{2}{c}{{Total}}                        \\
 \midrule
 {Ítem $i$}       & 1      & $a$        &       & $b$       & \multicolumn{2}{c}{$a+b$}                     \\
@@ -669,7 +670,7 @@ Fi     & 1      & 1      & 1      & 1      & 1     & 1     & 1     & 1     & 1  
 \end{frame}
 
 \begin{frame}{DBSCAN}
-La técnica de agrupación DBSCAN clasifica los puntos como puntos núcleo, puntos (densamente-)alcanzables, o ruido de la siguiente forma:
+La técnica de agrupación DBSCAN clasifica los puntos como:
 
 \begin{itemize}
 \item Un punto $p$ pertenece al núcleo si al menos \textit{min\_samples} puntos están a una distancia $\epsilon$ de él y esos puntos son directamente alcanzables desde $p$.
@@ -692,7 +693,6 @@ Un clúster generado por DBSCAN satisface dos propiedades:
 \end{frame}
 
 \begin{frame}{Mean Shift}
-Es una técnica de análisis de espacio de características no paramétrica para localizar los máximos de una función de densidad. 
 \begin{itemize}
 \item Método iterativo que parte de una estimación inicial $x$.
 \item Define una función núcleo $K(x_i-x)$ que determina los pesos de los puntos cercanos para la reestimación media.
@@ -706,11 +706,13 @@ donde $N(x)$ es el vecindario de x, un conjunto de puntos donde $K(x_i)\neq0$.\\
 \end{frame}
 
 \begin{frame}{Mean Shift}
-La diferencia $m(x)-x$ se denomina Mean Shift.\break
+\begin{itemize}
+\item La diferencia $m(x)-x$ se denomina Mean Shift.\break
 
-El algoritmo establece $m(x)\rightarrow x$ y repite la estimación hasta que $m(x)$ converja.\break
+\item El algoritmo establece $m(x)\rightarrow x$ y repite la estimación hasta que $m(x)$ converja.\break
 
-No existe ninguna prueba de la convergencia del algoritmo en espacios de alta dimensión y el caso unidimensional tiene aplicaciones limitadas en el mundo real.
+\item No existe ninguna prueba de la convergencia del algoritmo en espacios de alta dimensión.
+\end{itemize}
 
 \begin{figure}[h]
 \centering
@@ -733,12 +735,6 @@ En un conjunto pequeño, estimaremos la función de densidad como:
 $$f(x)=\sum_i K(x-x_i)=\sum_i k\dfrac{||x-x_i||^2}{h^2}$$
 
 donde $x_i$ son las muestras de entrada y $k$ la función núcleo y h es el \textit{bandwidth}. 
-\end{frame}
-
-\begin{frame}{Mean Shift}
-Una vez calculado $f(x)$ buscamos sus máximos locales utilizando el ascenso de gradiente o alguna otra técnica de optimización.\break
-
-En problemas con grandes dimensiones, se usa la técnica del reinicio de gradiente descendiente múltiple, la cual empieza desde un máximo local $y_k$ y calcula su aproximación $f(x)$ avanzando en esa dirección.
 \end{frame}
 
 \section{Métodos de agrupamiento\\ Particionamiento}
@@ -989,18 +985,16 @@ Contiene 50 muestras de cada una de tres especies de flor \textbf{Iris}. Para ca
 
 Se utilizarán las siguientes métricas para medir la bondad de los algoritmos:\break
 \begin{itemize}
-\item \textbf{Calinski-Harabaz}: Nos indica si estamos usando un buen número de clústeres para un algoritmo en concreto. El número óptimo de clústeres tendrá la solución con el valor de Calinski-Harabasz más alto.
-\item \textbf{Silhouette}: Cuanto mayor sea su valor, más similar será un objeto respecto a su grupo y más diferente a los de otros clúster. Toma valores entre -1 y +1. Si el valor es cercano a 1, la configuración de los clúster es apropiada, si no, habrá más o menos clústeres de los necesarios.
+\item \textbf{Calinski-Harabaz}: Nos indica si estamos usando un buen número de clústeres para un algoritmo en concreto.\break
+\item \textbf{Silhouette}: Cuanto mayor sea su valor, más similar será un objeto respecto a su grupo y más diferente a los de otros clúster. Toma valores entre -1 y +1.
 \end{itemize}
 \end{frame}
 
 \begin{frame}{\textit{Tabla comparativa de los algoritmos}}
 
-Las mejores configuraciones son las que hayan obtenido un mayor valor del coeficiente de Silhouette.
-
 \begin{table}[H]
 \centering
-\resizebox{9cm}{!} {
+\resizebox{10.5cm}{!} {
 \begin{tabular}{lrrrrr}
 \toprule
 \textbf{Nombre} & \textbf{Nº clústeres} & \textbf{CH} & \textbf{SH} & \textbf{Tiempo ($s$)} & \textbf{Clústeres}                                                                                                          \\ \midrule
@@ -1024,14 +1018,19 @@ MeanShift     & 3                    & 290.470683  & 0.476961    & 0.289073     
 \begin{frame}{Gráficas}
 Para cada algoritmo, se mostrarán algunas gráficas que nos ayudarán a comprender como funciona el agrupamiento para el caso de estudio.\break
 
-Las gráficas utilizadas serán \textbf{Scatter Matrix, Heatmap, KPlot y BoxPlot} que mostrarán la matriz de dispersión de las muestras, mapa de calor de los centroides para cada variable y distribución de las muestras según cada variable.\break
+Las gráficas usadas son: 
+\begin{itemize}
+\item \textbf{Scatter Matrix.}
+\item \textbf{Heatmap.}
+\item \textbf{KPlot y BoxPlot.}
+\end{itemize}\
 
-Para el caso del algoritmo \textbf{Agglomerative Clustering} mostraremos como se forman los distintos clústers a partir del Dendrograma generado.
+Para el caso del algoritmo \textbf{Agglomerative Clustering} mostraremos como se forman los distintos clústers a partir del \textbf{Dendrograma} generado.
 \end{frame}
 
 \begin{frame}[fragile]
 \frametitle{K-Means}
-Para el algoritmo K-Means se ha utilizado el siguiente código en python y se ha obtenido la siguiente agrupación de las muestras:\break
+Para el algoritmo \textbf{K-Means} se ha utilizado el siguiente código en python y se ha obtenido la siguiente agrupación de las muestras:\break
 \begin{lstlisting}
 KMeans(init='k-means++', n_clusters=3, 
 	n_init=5, random_state=12345)
@@ -1072,7 +1071,7 @@ cluster 2: 39 (26.00%)
 
 \begin{frame}[fragile]
 \frametitle{Agrupamiento Jerárquico}
-Para el algoritmo Aglomerativo Jerárquico, se ha utilizado el siguiente código en python y se ha obtenido la siguiente agrupación de las muestras:\break
+Para el algoritmo \textbf{Agglomerative Clustering}, se ha utilizado el siguiente código en python y se ha obtenido la siguiente agrupación de las muestras:\break
 \begin{lstlisting}
 AgglomerativeClustering(n_clusters=3, 
 	linkage="ward", affinity='euclidean')
@@ -1100,7 +1099,7 @@ cluster 2: 33 (22.00%)
 \begin{frame}{\textit{Dendrogramas}}
 Un \textbf{dendrograma} es un diagrama de árbol que muestra los grupos que se forman al crear clústers de observaciones en cada paso y sus niveles de similitud.\break
 
-La decisión acerca de la agrupación final también se conoce como cortar el dendrograma. Cortar el dendrograma es similar a trazar una línea a lo largo del dendrograma para especificar la agrupación final.
+La decisión acerca de la agrupación final también se conoce como \textit{cortar el dendrograma}. Cortar el dendrograma es similar a trazar una línea a lo largo del dendrograma para especificar la agrupación final.
 \end{frame}
 
 \begin{frame}
@@ -1121,7 +1120,7 @@ La decisión acerca de la agrupación final también se conoce como cortar el de
 
 \begin{frame}[fragile]
 \frametitle{DBSCAN}
-Para DBSCAN, se ha utilizado el siguiente código en python y se ha obtenido la siguiente agrupación de las muestras, donde el clúster -1 representa las muestras formadas por ruido:\break
+Para \textbf{DBSCAN}, se ha utilizado el siguiente código en python y se ha obtenido la siguiente agrupación de las muestras, donde el clúster -1 representa las muestras formadas por ruido:\break
 \begin{lstlisting}
 DBSCAN(eps=0.12, min_samples=5)
 
@@ -1149,7 +1148,7 @@ cluster 2:  30 (20.00%)
 
 \begin{frame}[fragile]
 \frametitle{Mean Shift}
-Para Mean Shift, se ha utilizado el siguiente código en python y se ha obtenido la siguiente agrupación de las muestras:\break
+Para \textbf{Mean Shift}, se ha utilizado el siguiente código en python y se ha obtenido la siguiente agrupación de las muestras:\break
 \begin{lstlisting}
 MeanShift(bandwidth=estimate_bandwidth(X_normal, 
 	quantile=0.67, n_samples=400))
