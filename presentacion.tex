@@ -691,33 +691,6 @@ Un clúster generado por DBSCAN satisface dos propiedades:
 \end{figure}
 \end{frame}
 
-\begin{frame}[fragile]
-\frametitle{DBSCAN}
-Para DBSCAN, se ha utilizado el siguiente código en python y se ha obtenido la siguiente agrupación de las muestras, donde el clúster -1 representa las muestras formadas por ruido:\break
-\begin{lstlisting}
-DBSCAN(eps=0.12, min_samples=5)
-
-cluster 0:  45 (30.00%)
-cluster 1:  39 (26.00%)
-ruido  -1:  36 (24.00%)
-cluster 2:  30 (20.00%)
-\end{lstlisting}
-\end{frame}
-
-\begin{frame}
-\begin{figure}[h]
-\centering
-\includegraphics[scale=0.34]{dani/scatmatrixDBSCANIRIS.png}
-\end{figure}
-\end{frame}
-
-\begin{frame}
-\begin{figure}[h]
-\centering
-\includegraphics[scale=0.29]{dani/heatmapDBSCANIRIS.png}
-\end{figure}
-\end{frame}
-
 \begin{frame}{Mean Shift}
 Es una técnica de análisis de espacio de características no paramétrica para localizar los máximos de una función de densidad. 
 \begin{itemize}
@@ -766,33 +739,6 @@ donde $x_i$ son las muestras de entrada y $k$ la función núcleo y h es el \tex
 Una vez calculado $f(x)$ buscamos sus máximos locales utilizando el ascenso de gradiente o alguna otra técnica de optimización.\break
 
 En problemas con grandes dimensiones, se usa la técnica del reinicio de gradiente descendiente múltiple, la cual empieza desde un máximo local $y_k$ y calcula su aproximación $f(x)$ avanzando en esa dirección.
-\end{frame}
-
-\begin{frame}[fragile]
-\frametitle{Mean Shift}
-Para Mean Shift, se ha utilizado el siguiente código en python y se ha obtenido la siguiente agrupación de las muestras:\break
-\begin{lstlisting}
-MeanShift(bandwidth=estimate_bandwidth(X_normal, 
-	quantile=0.67, n_samples=400))
-
-cluster 0: 81 (54.00%)
-cluster 1: 50 (33.33%)
-cluster 2: 19 (12.67%)
-\end{lstlisting}
-\end{frame}
-
-\begin{frame}
-\begin{figure}[h]
-\centering
-\includegraphics[scale=0.34]{dani/scatmatrixMeanShiftIRIS.png}
-\end{figure}
-\end{frame}
-
-\begin{frame}
-\begin{figure}[h]
-\centering
-\includegraphics[scale=0.29]{dani/heatmapMeanShiftIRIS.png}
-\end{figure}
 \end{frame}
 
 \section{Métodos de agrupamiento\\ Particionamiento}
@@ -1012,7 +958,9 @@ $$\sum_{k=1}^{K}\frac{\sum_i\sum_ju_{ik}^2u_{jk}^2d_{ij}}{2\sum_lu_{lk}^2}$$
 
 %%% Parte Práctica
 
-\begin{frame}{\textit{Caso de estudio : Flor de Iris}}
+\section{Caso Práctico: Clustering en Python}
+
+\begin{frame}{\textit{Flor de Iris}}
 
 Estudiaremos el conjunto de datos iris de \textbf{Fisher}.\break
 
@@ -1170,6 +1118,61 @@ La decisión acerca de la agrupación final también se conoce como cortar el de
 \end{figure}
 \end{frame}
 
+
+\begin{frame}[fragile]
+\frametitle{DBSCAN}
+Para DBSCAN, se ha utilizado el siguiente código en python y se ha obtenido la siguiente agrupación de las muestras, donde el clúster -1 representa las muestras formadas por ruido:\break
+\begin{lstlisting}
+DBSCAN(eps=0.12, min_samples=5)
+
+cluster 0:  45 (30.00%)
+cluster 1:  39 (26.00%)
+ruido  -1:  36 (24.00%)
+cluster 2:  30 (20.00%)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.34]{dani/scatmatrixDBSCANIRIS.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.29]{dani/heatmapDBSCANIRIS.png}
+\end{figure}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Mean Shift}
+Para Mean Shift, se ha utilizado el siguiente código en python y se ha obtenido la siguiente agrupación de las muestras:\break
+\begin{lstlisting}
+MeanShift(bandwidth=estimate_bandwidth(X_normal, 
+	quantile=0.67, n_samples=400))
+
+cluster 0: 81 (54.00%)
+cluster 1: 50 (33.33%)
+cluster 2: 19 (12.67%)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.34]{dani/scatmatrixMeanShiftIRIS.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.29]{dani/heatmapMeanShiftIRIS.png}
+\end{figure}
+\end{frame}
 
 
 \begin{frame}[fragile, allowframebreaks]
