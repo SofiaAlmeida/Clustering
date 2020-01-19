@@ -798,6 +798,106 @@ cluster 2: 19 (12.67%)
 \section{Métodos de agrupamiento\\ Particionamiento}
 
 
+\begin{frame}{\textit{Particionamiento}}
+  \begin{itemize}
+  \item Objetivo: dividir los datos en grupos.
+  \item No hay dependencia jerárquica entre soluciones.
+  \item Se explora un número limitado de agrupaciones.
+  \item Se busca maximizar la similitud en los clústeres.
+  \end{itemize}
+
+\end{frame}
+
+
+
+\begin{frame}{\textit{K-medias}}
+\begin{enumerate}
+\item Entrada: $\textbf{L}=\{\textbf{x}_i,i=1,2,...,n\}$, K=número de clústeres.
+
+\item Hacer uno de los siguientes:
+\begin{itemize}
+\item Formar una asignación aleatoria inicial de los datos en los K clústeres y, para los K clústeres, calcular su centroide, $\overline{\textbf{x}}_k, k=1,2,...,K$.
+\item Pre-especificar los centroides de los K clústeres, $\overline{\textbf{x}}_k, k=1,2,...,K$.
+\end{itemize}
+\item Calcular la distancia euclídea al cuadrado para cada dato al centroide de su clúster actual:
+$$ESS=\sum_{k=1}^{K}\sum_{c(i)=k}(\textbf{x}_i - \overline{\textbf{x}}_k)^T(\textbf{x}_i - \overline{\textbf{x}}_k)$$
+
+donde $\overline{\textbf{x}}_k$ es el centroide del $k$-ésimo clúster y $c(i)$ es el clúster que contiene $\textbf{x}_i$.
+
+\end{enumerate}
+\end{frame}
+
+
+\begin{frame}{\textit{K-medias}}
+\begin{enumerate}
+
+\item[$4.$] Reasignamos cada dato al clúster con el centroide más cercano de tal manera que ESS se reduce en magnitud. Actualizamos los centroides de los clústeres después de la reasignación de los datos. 
+\item[$5.$] Repetimos los pasos 3 y 4 hasta que no se produzcan más reasignaciones.
+\end{enumerate}
+
+\end{frame}
+
+
+
+\begin{frame}{\textit{K-medoides y PAM}}
+\begin{enumerate}
+\item Entrada: $\textbf{D}=(d_{ij})$, K=número de clústeres.
+\item Formar una asignación inicial en los K clústeres.
+\item Localizar el medoide de cada clúster. El medoide del $k$-ésimo clúster esta definido como ese dato en el $k$-ésimo clúster que minimiza la disimilitud total a los otros datos dentro del clúster, $k=1,2,...,K$.
+
+
+
+\end{enumerate}
+
+\end{frame}
+
+
+
+
+\begin{frame}{\textit{K-medoides y PAM}}
+\begin{enumerate}
+
+\item[$4a.$] K-medoides:
+\begin{itemize}
+\item Para el $k$-ésimo clúster, reasignamos el $i_k$ésimo dato al clúster con su medoide más cercano para que la función objetivo, $$ESS_{med}=\sum_{k=1}^{K}\sum_{c(i)=k}d_{ii_k}$$
+sea reducida en magnitud, donde $c(i)$ es el clúster que contiene el $i$-ésimo dato.
+\item Repetir el paso 3 y el paso de reasignación hasta que no se produzcan mas reasignaciones.
+\end{itemize}
+
+\end{enumerate}
+
+\end{frame}
+
+
+\begin{frame}{\textit{K-medoides y PAM}}
+\begin{enumerate}
+
+\item[$4b.$] Particionamiento Alrededor de Medoides:
+
+\begin{itemize}
+\item Buscamos un dato no medoide tal que al intercambiarlo por otro medoide se produce una reducción en $ESS_{med}$, considerando el cambio que se produce en los clusters al cambiar de medoide (si hay varios medoides que cumplen esta condición, seleccionar el que mayor reducción produzca) y se produce el cambio.
+
+\item Repetir el proceso de intercambio hasta que no se produzca ninguna reducción del $ESS_{med}$.
+\end{itemize}
+\end{enumerate}
+
+\end{frame}
+
+\begin{frame}{\textit{Análisis difuso}}
+
+A los datos se les asigna la probabilidad de pertenercer a cada uno de los clústeres. Notamos como $u_{ik}$ la fuerza de pertenencia del i-ésimo dato al k-ésimo clúster.
+\newline
+\newline
+Para que $u_{ik}$ se comporte como una probabilidad se tiene que cumplir que $\sum_{k=1}^Ku_{ik}=1$ y $u_{ik}\geq0$
+\newline
+\newline
+Dada $D=d_{ij}$ matriz de proximidades, $u_{ik}$ se encuentra minimizando, bajo las restricciones de no negatividad y unidad de la suma usando un algoritmo iterativo., la función objetivo
+$$\sum_{k=1}^{K}\frac{\sum_i\sum_ju_{ik}^2u_{jk}^2d_{ij}}{2\sum_lu_{lk}^2}$$
+
+
+
+\end{frame}
+
 
 \section{Número de clústeres}
 \begin{frame}{Número de clústeres}
@@ -823,7 +923,7 @@ cluster 2: 19 (12.67%)
 	\begin{figure}[h]
 		\centering
 		\includegraphics[scale=0.5]{pedro/elbowGraph}
-		\caption{Ejemplo del método del codo \cite{elbowGraph}.}
+		\caption{Ejemplo del método del codo.}
 		\label{smkm}
 	\end{figure}
 \end{frame}
@@ -906,7 +1006,7 @@ cluster 2: 19 (12.67%)
 	\begin{figure}[H]
 		\centering
 		\includegraphics[scale=0.32]{pedro/gapGraph}
-		\caption{Ejemplo del método de la brecha \cite{gapGraph}.}
+		\caption{Ejemplo del método de la brecha.}
 	\end{figure}
 \end{frame}
 
