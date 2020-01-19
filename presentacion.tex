@@ -6,6 +6,8 @@
 \usepackage[spanish]{babel}
 \usepackage{graphics,tikz}
 \graphicspath{{./fig/}}
+\usepackage{caption}
+\usepackage{subcaption}
 %%% FUENTES
 
 \usepackage[T1]{fontenc}
@@ -30,6 +32,7 @@
 \usepackage{tipa}
 \newcommand{\norm}[1]{\left\lVert#1\right\rVert}
 \newcommand{\yy}{\textbf{y}}
+\usepackage{blkarray}
 
 %%% Código
 \usepackage{listings}
@@ -69,6 +72,22 @@
 \setbeamercolor{bibliography entry author}{fg=text}
 \setbeamertemplate{itemize subitem}[triangle]
 \usebeamercolor[fg]{normal text}
+
+%%% SECTIONS
+\setbeamercolor{mycolor}{fg=white,bg=accent}
+
+\AtBeginSection[]{
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{mycolor}%
+    \usebeamerfont{title}\insertsectionhead\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+
+
 
 %%% INFORMACIÓN DEL DOCUMENTO
 
@@ -143,7 +162,7 @@ Los valores de las variables consideradas deberán ser normalizados.
 
 \begin{frame}{\textit{Distancias de similitud para pares de ítems}}
 
-La distancia estadística entre dos observaciones $p$-dimensionales $x' = [x_1,\dots,x_p]$ e $y'=[y_1,\dots,y_p]$ es:
+La distancia estadística entre dos observaciones $p$-dimensionales $x^T = [x_1,\dots,x_p]$ e $y^T=[y_1,\dots,y_p]$ es:
 
 $$d(x,y)=\sqrt{(x-y)^TA(x-y)} $$
 
@@ -275,7 +294,8 @@ Individuo 1 & 68                       & 140                    & Verde         
 Individuo 2 & 73 & 185 & Marrón & Moreno & Derecha & Masculino                  \\
 Individuo 3 & 67 & 165 & Azul & Rubio & Derecha & Masculino                  \\
 Individuo 4 & 64 & 120 & Marrón & Moreno                            & Derecha & Femenino \\
-Individuo 5 & 76 & 210 & Marrón & Moreno & Izquierda & Masculino                 
+Individuo 5 & 76 & 210 & Marrón & Moreno & Izquierda & Masculino\\                 
+\bottomrule
 \end{tabular}
 }
 \end{table}
@@ -450,9 +470,199 @@ Fi     & 1      & 1      & 1      & 1      & 1     & 1     & 1     & 1     & 1  
 \end{table}
 \end{frame}
 
+\section{Métodos de agrupamiento}
+\begin{frame}{Métodos de agrupamiento}
+	\centering
+	\textbf{Definición} procedimiento de agruapación de una serie de vectores de acuerdo con un criterio (distancia o similitud).\\
+\end{frame}
+
+\begin{frame}{Métodos de agrupamiento}
+	\textbf{Tipos}
+	\begin{itemize}
+		\item Jerárquicos
+		\item No jerárquicos o particionamiento
+	\end{itemize}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.3]{victoria/compJerarquicoNoJerarquico}
+		\caption{Comparación métodos jerárquico y no jerárquico.}
+		\label{fig:ejemplo_metodos}
+	\end{figure}
+
+\end{frame}
+
+\section{Métodos de agrupamiento\\ Jerárquicos}
+\begin{frame}{Métodos Jerárquicos}
+	\centering
+	\textbf{Definición} método de análisis de grupos puntuales, que se basa en buscar una construcción de una jerarquía de grupos. Se minimizan las distancias y no es necesario conocer el número de grupos que se van a formar.\\
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.15]{victoria/compAglomeDivisivo}
+		\caption{Comparación métodos aglomerativos y divisivos.}
+		\label{fig:agl_div}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Comparación de técnicas aglomerativas y divisivas}
+
+	\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{.4\textwidth}
+		  \centering
+	  \includegraphics[width=\textwidth]{victoria/aglomerativo}
+	  \caption{Ejemplo de dendrograma aglomerativo.}
+	  \label{fig:aglomerativo}
+	\end{subfigure}
+	\begin{subfigure}[b]{.4\textwidth}
+	  \centering
+	  \includegraphics[width=\textwidth]{victoria/disociativo}
+	  \caption{Ejemplo de dendrograma divisivo.}
+	  \label{fig:divisivo}
+	\end{subfigure}
+	\caption{Comparación de dendrogramas aglomerativos y divisivo}
+	\label{fig:compDendro}
+	\end{figure}
+
+\end{frame}
+
+\begin{frame}{Ejemplo \textit{Single Link Method}}
+
+	\textbf{Distancia entre dos clústers}
+
+	\begin{equation}\label{eq:distAgloEjm}
+		d(R, S) = min \{d_{rs}\ :\ r \in R, \ s \in S\}
+	\end{equation}
+
+
+\end{frame}
+
+\begin{frame}{Ejemplo \textit{Single Link Method}}
+
+	\textbf{Matriz de distancias}
+	\[ \mathcal{D} =
+	\left[ \begin{array}{c}
+	d_{rs}
+	\end{array} \right] =
+	\begin{blockarray}{cccccc}
+		& 1 & 2 & 3 & 4 & 5 \\
+		\begin{block}{c[ccccc]}
+			\\
+			1 & 0 & 2 & 4 & 7 & 9 \\
+			2 & 2 & 0 & 8 & 9 & 8 \\
+			3 & 4 & 8 & 0 & 3 & 7 \\
+			4 & 7 & 9 & 3 & 0 & 5 \\
+			5 & 9 & 8 & 7 & 5 & 0 \\
+			\\
+		\end{block}
+	\end{blockarray}  
+	\] 
+
+\end{frame}
+
+\begin{frame}{Ejemplo \textit{Single Link Method}}
+
+	\textbf{Matriz de distancias}
+	\[ \mathcal{D} =
+	\left[ \begin{array}{c}
+	d_{rs}
+	\end{array} \right] =
+	\begin{blockarray}{cccccc}
+		& 1 & 2 & 3 & 4 & 5 \\
+		\begin{block}{c[ccccc]}
+			\\
+			1 & 0 & \textbf{2} & 4 & 7 & 9 \\
+			2 & \textbf{2} & 0 & 8 & 9 & 8 \\
+			3 & 4 & 8 & 0 & 3 & 7 \\
+			4 & 7 & 9 & 3 & 0 & 5 \\
+			5 & 9 & 8 & 7 & 5 & 0 \\
+			\\
+		\end{block}
+	\end{blockarray}  
+	\] 
+
+ Tomamos los clúster \textit{1} y \textit{2} y formamos el nuevo clúster \textit{(12)}
+\end{frame}
+
+\begin{frame}{Ejemplo \textit{Single Link Method}}
+
+	Cálculo de las nuevas distancias
+	\begin{center}
+	$d_{(12)(3)}$ = min\{$d_{13}$, $d_{23}$\} = min \{4, 8\} = 4\\
+	$d_{(12)(4)}$ = min\{$d_{14}$, $d_{24}$\} = min \{7, 9\} = 7\\
+	$d_{(12)(5)}$ = min\{$d_{15}$, $d_{25}$\} = min \{9, 8\} = 8\\
+	\end{center}
+\end{frame}
+
+\begin{frame}{Ejemplo \textit{Single Link Method}}
+
+	\textbf{Matriz de distancias}
+	\[ \mathcal{D}_1  =
+	\begin{blockarray}{ccccc}
+		& (12) & 3 & 4 & 5 \\
+		\begin{block}{c[cccc]}
+			\\
+			(12) & 0 & 4 & 7 & 8 \\
+			3 & 4 & 0 & \textbf{3} & 7 \\
+			4 & 7 & \textbf{3} & 0 & 5 \\
+			5 & 8 & 7 & 5 & 0 \\
+			\\
+		\end{block}
+	\end{blockarray}  
+	\]
+	Tomamos los clúster \textit{3} y \textit{4} y formamos el nuevo clúster \textit{(34)}
+\end{frame}
+
+\begin{frame}{Ejemplo \textit{Single Link Method}}
+
+	Cálculo de las nuevas distancias\\
+	\begin{center}
+		$d_{(34)(12)}$ = min\{$d_{(3)(12)}$, $d_{(4)(12)}$\} = min \{4, 7\} = 4\\
+		$d_{(34)(5)}$ = min\{$d_{(3)(5)}$, $d_{(4)(5)}$\} = min \{7, 5\} = 5\\
+	\end{center}
+\end{frame}
+
+\begin{frame}{Ejemplo \textit{Single Link Method}}
+	\textbf{Matriz de distancias}
+	\[ \mathcal{D}_2  =
+	\begin{blockarray}{cccc}
+		& (12) & (34) & 5 \\
+		\begin{block}{c[ccc]}
+			\\
+			(12) & 0 & \textbf{4} & 8 \\
+			(34) & \textbf{4} & 0 & 5 \\
+			5 & 8 & 5 & 0 \\
+			\\
+		\end{block}
+	\end{blockarray}  
+	\] 
+	Tomamos los clúster \textit{(12)} y \textit{(34)} y formamos el nuevo clúster \textit{(1234)}
+\end{frame}
+
+\begin{frame}{Ejemplo \textit{Single Link Method}}
+
+	Cálculo de la nueva distancia
+	\begin{center}
+	$d_{(12)(34)5}$ = min\{$d_{(12)(5)}$, $d_{(34)(5)}$\} = min \{8, 5\} = 5
+	\end{center}
+	Finalmente se obtiene el clúster \textit{(12345)}
+\end{frame}
+
+\begin{frame}{Ejemplo \textit{Single Link Method}}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.56]{victoria/agloEjem}
+		\caption{Dendrograma ejemplo \textit{Single Link}.}
+		\label{fig:agloEjem}
+	\end{figure}
+\end{frame}
+
+
+
+\section{Métodos de agrupamiento\\ Particionamiento}
+
+
 
 \section{Número de clústeres}
-
 \begin{frame}{Número de clústeres}
 	\begin{itemize}
 		\item En los algoritmos de \textit{clustering}, uno de los problemas es determinar el número idóneo de clústeres $ k $. 
