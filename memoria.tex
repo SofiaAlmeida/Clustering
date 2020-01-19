@@ -882,7 +882,7 @@ Como $ k $ decrece de $ n $ a 1, el valor de la distancia debería aumentar ya q
 
 Uno de los procedimientos para determinar el número de clústeres, por ejemplo en el algoritmo $ k$-medias, es el denominado ``método del codo'' o \textit{elbow method}. Suele ser ambiguo y no muy fiable por lo que se recomienda el uso de otras técnicas. Consiste en dibujar la gráfica de las distancia a los centros de cada clúster en función del número de clústeres. En un punto, se observará que la gráfica forma una especie de codo, de ahí nombre del método, por lo que se escoge dicho punto. Así, llamamos:\\
 \[
-SSE_k = \sum_{i = 1}^{n_k} = \norm{\yy_i - \bar{\yy}_k}^2,
+SSE_k = \sum_{i = 1}^{n_k} \norm{\yy_i - \bar{\yy}_k}^2,
 \]
 donde $ \bar{\yy}_k $ representa el centroide del clúster $ C_k $. Para cada número de clústeres $ k $ calculamos 
 \[
