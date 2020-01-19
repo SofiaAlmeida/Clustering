@@ -223,19 +223,13 @@ La distancia usada valora por igual las parejas 1-1 y 0-0. En algunos casos no e
 Existen diversos esquemas para definir los coeficientes de similitud. Organizando las frecuencias de las parejas que coinciden y las que no para los ítems $i$ y $k$ en forma de tabla de contingencia:
 
 \begin{table}[H]
-  \centering
-\resizebox{7cm}{!} {
-  \begin{tabular}{llrrrrr}
-    \toprule
-\multicolumn{2}{l}{\multirow{}{}{}}& \multicolumn{3}{c}{Ítem $k$} & \multicolumn{2}{c}{} \\\cmidrule{3-5}
-\multicolumn{2}{l}{}                  & 1        &       & 0       & \multicolumn{2}{c}{{Total}}                        \\
-\midrule
-{Ítem $i$}       & 1      & $a$        &       & $b$       & \multicolumn{2}{c}{$a+b$}                     \\
-                              & 0      & $c$        &       & $d$       & \multicolumn{2}{c}{$c+d$}                     \\ \midrule
-\multicolumn{2}{l}{Total}            & $a+c$      &       & $b+d$     & \multicolumn{2}{c}{$p=a+b+c+d$}\\
-\bottomrule
+\begin{tabular}{ll|clc|c|l}
+\multicolumn{2}{l|}{\multirow{}} & \multicolumn{3}{c|}{Item k} & \multicolumn{2}{c|}{\multirow{Total}} \\
+\multicolumn{2}{l|}{} & 1 & & 0 & \multicolumn{2}{c|}{} \\ \hline
+\multirow{Item i} & 1 & a & & b & \multicolumn{2}{c|}{a+b} \\
+& 0 & c & & d & \multicolumn{2}{c|}{c+d} \\ \hline
+\multicolumn{2}{l|}{Total} & a+c & & b+d & \multicolumn{2}{c|}{p=a+b+c+d}
 \end{tabular}
-}
 \end{table}
 
 \end{frame}
