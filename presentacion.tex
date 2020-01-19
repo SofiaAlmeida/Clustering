@@ -656,7 +656,144 @@ Fi     & 1      & 1      & 1      & 1      & 1     & 1     & 1     & 1     & 1  
 	\end{figure}
 \end{frame}
 
+\begin{frame}{DBSCAN}
+\begin{itemize}
+\item Se basa en la densidad de las muestras para identificar los clústeres.
+\item Los clústers pueden tener cualquier forma.
+\item Dos parámetros para definir este algoritmo son: \textbf{eps} y \textbf{min\_samples}.
+\end{itemize}
+\begin{figure}[h]
+\centering
+\includegraphics[scale=1.2]{dani/DBSCAN.png}
+\end{figure}
+\end{frame}
 
+\begin{frame}{DBSCAN}
+La técnica de agrupación DBSCAN clasifica los puntos como puntos núcleo, puntos (densamente-)alcanzables, o ruido de la siguiente forma:
+
+\begin{itemize}
+\item Un punto $p$ pertenece al núcleo si al menos \textit{min\_samples} puntos están a una distancia $\epsilon$ de él y esos puntos son directamente alcanzables desde $p$.
+\item Un punto $q$ es alcanzable desde $p$ si existe una secuencia de puntos $p_1\dots p_n$ donde $p_1=p$ y $p_n=q$ y cada punto $p_{i+1}$ es directamente alcanzable desde $p_i$.
+\item Un punto que no sea alcanzable desde cualquier otro se considera ruido.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{DBSCAN}
+Un clúster generado por DBSCAN satisface dos propiedades:
+
+\begin{itemize}
+\item Todos los puntos de un mismo clúster están densamente conectados entre sí.
+\item Si un punto $A$ es alcanzable desde cualquier otro punto $B$ del clúster, entonces $A$ también forma parte del clúster.
+\end{itemize}
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.37]{dani/DBSCAN2.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{DBSCAN}
+Para DBSCAN, se ha utilizado el siguiente código en python y se ha obtenido la siguiente agrupación de las muestras, donde el clúster -1 representa las muestras formadas por ruido:\break
+\begin{lstlisting}
+DBSCAN(eps=0.12, min_samples=5)
+
+cluster 0:  45 (30.00%)
+cluster 1:  39 (26.00%)
+ruido  -1:  36 (24.00%)
+cluster 2:  30 (20.00%)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.34]{dani/scatmatrixDBSCANIRIS.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.29]{dani/heatmapDBSCANIRIS.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Mean Shift}
+Es una técnica de análisis de espacio de características no paramétrica para localizar los máximos de una función de densidad. 
+\begin{itemize}
+\item Método iterativo que parte de una estimación inicial $x$.
+\item Define una función núcleo $K(x_i-x)$ que determina los pesos de los puntos cercanos para la reestimación media.
+\end{itemize}\
+
+La media ponderada de la densidad en $K$ es:
+
+$$m(x)=\dfrac{\sum_{x_i\in N(x)}K(x_i-x)x_i}{\sum_{x_i\in N(x)}K(x_i-x)}$$
+
+donde $N(x)$ es el vecindario de x, un conjunto de puntos donde $K(x_i)\neq0$.\\
+\end{frame}
+
+\begin{frame}{Mean Shift}
+La diferencia $m(x)-x$ se denomina Mean Shift.\break
+
+El algoritmo establece $m(x)\rightarrow x$ y repite la estimación hasta que $m(x)$ converja.\break
+
+No existe ninguna prueba de la convergencia del algoritmo en espacios de alta dimensión y el caso unidimensional tiene aplicaciones limitadas en el mundo real.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.45]{dani/MS.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Mean Shift}
+Sea un conjunto de datos finito $S$ embebido en el espacio euclídeo n-dimensional $X$. Sea $K$ un núcleo plano con función característica:
+
+$$K(x)=\left\{
+1 \ si \ ||x||\leq \lambda \atop
+0 \ si \ ||x||> \lambda
+\right.$$
+
+En cada iteración del algoritmo, se establece $m(x)\rightarrow x$ para todo $s\in S$ a la vez.\break 
+
+En un conjunto pequeño, estimaremos la función de densidad como:
+
+$$f(x)=\sum_i K(x-x_i)=\sum_i k\dfrac{||x-x_i||^2}{h^2}$$
+
+donde $x_i$ son las muestras de entrada y $k$ la función núcleo y h es el \textit{bandwidth}. 
+\end{frame}
+
+\begin{frame}{Mean Shift}
+Una vez calculado $f(x)$ buscamos sus máximos locales utilizando el ascenso de gradiente o alguna otra técnica de optimización.\break
+
+En problemas con grandes dimensiones, se usa la técnica del reinicio de gradiente descendiente múltiple, la cual empieza desde un máximo local $y_k$ y calcula su aproximación $f(x)$ avanzando en esa dirección.
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Mean Shift}
+Para Mean Shift, se ha utilizado el siguiente código en python y se ha obtenido la siguiente agrupación de las muestras:\break
+\begin{lstlisting}
+MeanShift(bandwidth=estimate_bandwidth(X_normal, 
+	quantile=0.67, n_samples=400))
+
+cluster 0: 81 (54.00%)
+cluster 1: 50 (33.33%)
+cluster 2: 19 (12.67%)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.34]{dani/scatmatrixMeanShiftIRIS.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.29]{dani/heatmapMeanShiftIRIS.png}
+\end{figure}
+\end{frame}
 
 \section{Métodos de agrupamiento\\ Particionamiento}
 
@@ -933,144 +1070,7 @@ La decisión acerca de la agrupación final también se conoce como cortar el de
 \end{figure}
 \end{frame}
 
-\begin{frame}{DBSCAN}
-\begin{itemize}
-\item Se basa en la densidad de las muestras para identificar los clústeres.
-\item Los clústers pueden tener cualquier forma.
-\item Dos parámetros para definir este algoritmo son: \textbf{eps} y \textbf{min\_samples}.
-\end{itemize}
-\begin{figure}[h]
-\centering
-\includegraphics[scale=1.2]{dani/DBSCAN.png}
-\end{figure}
-\end{frame}
 
-\begin{frame}{DBSCAN}
-La técnica de agrupación DBSCAN clasifica los puntos como puntos núcleo, puntos (densamente-)alcanzables, o ruido de la siguiente forma:
-
-\begin{itemize}
-\item Un punto $p$ pertenece al núcleo si al menos \textit{min\_samples} puntos están a una distancia $\epsilon$ de él y esos puntos son directamente alcanzables desde $p$.
-\item Un punto $q$ es alcanzable desde $p$ si existe una secuencia de puntos $p_1\dots p_n$ donde $p_1=p$ y $p_n=q$ y cada punto $p_{i+1}$ es directamente alcanzable desde $p_i$.
-\item Un punto que no sea alcanzable desde cualquier otro se considera ruido.
-\end{itemize}
-\end{frame}
-
-\begin{frame}{DBSCAN}
-Un clúster generado por DBSCAN satisface dos propiedades:
-
-\begin{itemize}
-\item Todos los puntos de un mismo clúster están densamente conectados entre sí.
-\item Si un punto $A$ es alcanzable desde cualquier otro punto $B$ del clúster, entonces $A$ también forma parte del clúster.
-\end{itemize}
-\begin{figure}[h]
-\centering
-\includegraphics[scale=0.37]{dani/DBSCAN2.png}
-\end{figure}
-\end{frame}
-
-\begin{frame}[fragile]
-\frametitle{DBSCAN}
-Para DBSCAN, se ha utilizado el siguiente código en python y se ha obtenido la siguiente agrupación de las muestras, donde el clúster -1 representa las muestras formadas por ruido:\break
-\begin{lstlisting}
-DBSCAN(eps=0.12, min_samples=5)
-
-cluster 0:  45 (30.00%)
-cluster 1:  39 (26.00%)
-ruido  -1:  36 (24.00%)
-cluster 2:  30 (20.00%)
-\end{lstlisting}
-\end{frame}
-
-\begin{frame}
-\begin{figure}[h]
-\centering
-\includegraphics[scale=0.34]{dani/scatmatrixDBSCANIRIS.png}
-\end{figure}
-\end{frame}
-
-\begin{frame}
-\begin{figure}[h]
-\centering
-\includegraphics[scale=0.29]{dani/heatmapDBSCANIRIS.png}
-\end{figure}
-\end{frame}
-
-\begin{frame}{Mean Shift}
-Es una técnica de análisis de espacio de características no paramétrica para localizar los máximos de una función de densidad. 
-\begin{itemize}
-\item Método iterativo que parte de una estimación inicial $x$.
-\item Define una función núcleo $K(x_i-x)$ que determina los pesos de los puntos cercanos para la reestimación media.
-\end{itemize}\
-
-La media ponderada de la densidad en $K$ es:
-
-$$m(x)=\dfrac{\sum_{x_i\in N(x)}K(x_i-x)x_i}{\sum_{x_i\in N(x)}K(x_i-x)}$$
-
-donde $N(x)$ es el vecindario de x, un conjunto de puntos donde $K(x_i)\neq0$.\\
-\end{frame}
-
-\begin{frame}{Mean Shift}
-La diferencia $m(x)-x$ se denomina Mean Shift.\break
-
-El algoritmo establece $m(x)\rightarrow x$ y repite la estimación hasta que $m(x)$ converja.\break
-
-No existe ninguna prueba de la convergencia del algoritmo en espacios de alta dimensión y el caso unidimensional tiene aplicaciones limitadas en el mundo real.
-
-\begin{figure}[h]
-\centering
-\includegraphics[scale=0.45]{dani/MS.png}
-\end{figure}
-\end{frame}
-
-\begin{frame}{Mean Shift}
-Sea un conjunto de datos finito $S$ embebido en el espacio euclídeo n-dimensional $X$. Sea $K$ un núcleo plano con función característica:
-
-$$K(x)=\left\{
-1 \ si \ ||x||\leq \lambda \atop
-0 \ si \ ||x||> \lambda
-\right.$$
-
-En cada iteración del algoritmo, se establece $m(x)\rightarrow x$ para todo $s\in S$ a la vez.\break 
-
-En un conjunto pequeño, estimaremos la función de densidad como:
-
-$$f(x)=\sum_i K(x-x_i)=\sum_i k\dfrac{||x-x_i||^2}{h^2}$$
-
-donde $x_i$ son las muestras de entrada y $k$ la función núcleo y h es el \textit{bandwidth}. 
-\end{frame}
-
-\begin{frame}{Mean Shift}
-Una vez calculado $f(x)$ buscamos sus máximos locales utilizando el ascenso de gradiente o alguna otra técnica de optimización.\break
-
-En problemas con grandes dimensiones, se usa la técnica del reinicio de gradiente descendiente múltiple, la cual empieza desde un máximo local $y_k$ y calcula su aproximación $f(x)$ avanzando en esa dirección.
-\end{frame}
-
-\begin{frame}[fragile]
-\frametitle{Mean Shift}
-Para Mean Shift, se ha utilizado el siguiente código en python y se ha obtenido la siguiente agrupación de las muestras:\break
-\begin{lstlisting}
-MeanShift(bandwidth=estimate_bandwidth(X_normal, 
-	quantile=0.67, n_samples=400))
-
-cluster 0: 81 (54.00%)
-cluster 1: 50 (33.33%)
-cluster 2: 19 (12.67%)
-\end{lstlisting}
-\end{frame}
-
-\begin{frame}
-\begin{figure}[h]
-\centering
-\includegraphics[scale=0.34]{dani/scatmatrixMeanShiftIRIS.png}
-\end{figure}
-\end{frame}
-
-\begin{frame}
-\begin{figure}[h]
-\centering
-\includegraphics[scale=0.29]{dani/heatmapMeanShiftIRIS.png}
-\end{figure}
-\end{frame}
 
 \begin{frame}[fragile, allowframebreaks]
   \frametitle{Referencias}
