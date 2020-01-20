@@ -145,11 +145,9 @@
 
 \section{Medidas de similitud}
 
-\begin{frame}{\textit{Medidas de similitud}}
+\begin{frame}{Medidas de similitud}
 
-Realizar un agrupamiento simple a partir de un conjunto complejo de datos requiere una medida de ``similitud''.\break
-
-Para elegir esta medida es necesario tomar consideraciones iniciales como:
+Consideraciones iniciales como:\break
 
 \begin{itemize}
 \item Naturaleza de las variables (discreta, continua, binaria).
@@ -160,19 +158,20 @@ Para elegir esta medida es necesario tomar consideraciones iniciales como:
 Los valores de las variables consideradas deberán ser normalizados.
 \end{frame}
 
-\begin{frame}{\textit{Distancias de similitud para pares de ítems}}
+\begin{frame}{Distancias de similitud para pares de ítems}
 
 La distancia estadística entre dos observaciones $p$-dimensionales $x^T = [x_1,\dots,x_p]$ e $y^T=[y_1,\dots,y_p]$ es:
 
 $$d(x,y)=\sqrt{(x-y)^TA(x-y)} $$
 
-Donde $A=S^{-1}$ y $S$ contiene las varianzas y covarianzas de la muestra.
-$S$ no es conocida antes de aplicar clustering, por lo que se suele usar la distancia euclídea:
-
-$$d(x,y) = \sqrt{(x_1-y_1)^2+\dots+(x_p-y_p)^2}=\sqrt{(x-y)^T(x-y)}.$$
+Donde: \break
+\begin{itemize}
+\item $A=S^{-1}$. 
+\item $S$ contiene las varianzas y covarianzas de la muestra.
+\end{itemize}
 \end{frame}
 
-\begin{frame}{\textit{Otras medidas y coeficientes de similitud}}
+\begin{frame}{Otras medidas y coeficientes de similitud}
 
 \begin{itemize}
 \item Métrica de Minkowski:
@@ -184,43 +183,29 @@ $$d(x,y)=1-\frac{2\sum_{i=1}^{p}{min(x_i,y_i)}}{\sum_{i=1}^{p}{(x_i+y_i}}$$
 \end{itemize}
 \end{frame}
 
-\begin{frame}{\textit{Binarización de variables}}
+\begin{frame}{Propiedades distancia ''verdadera''}
+\begin{itemize}
+\item $d(P,Q)=d(Q,P)$.
+\item $d(P,Q)>0\ si\ P\neq Q$.
+\item $d(P,Q)=0\ si\ P=Q$.
+\item $d(P,Q)\leq d(P,R)+d(R,Q)$.
+\end{itemize}\
 
-Si los ítems no pueden ser representados por medidas $p$-dimensionales significativas, las parejas de ítems se suelen comparar según la presencia o ausencia de ciertas características.\break
+con $P$ y $Q$ dos puntos y $R$ su punto intermedio.\break
 
-Matemáticamente se consigue introduciendo una variable binaria, que toma el valor 1 si la característica está presente y el valor 0 si no. 
-
-\begin{table}[h]
-\centering
-  \begin{tabular}{lrrrrr}
-    \toprule
-  Variables    & 1    & 2    & 3   & 4   & 5   \\
-  \midrule
-Ítem $i$ & 1    & 0    & 0   & 1   & 1   \\
-Ítem $k$ & 1    & 1    & 0   & 1   & 0\\
-\bottomrule
-\end{tabular}
-\end{table}
+La mayoría de algoritmos de clustering aceptan distancias que no satisfagan la desigualdad triangular.
 \end{frame}
 
-\begin{frame}{}
+\begin{frame}{Binarización de variables}
 
-Sea $x_{ij}$ la puntuación de la $j$-ésima variable binaria en el $i$-ésimo ítem y $x_{kj}$ la de la $j$-ésima en el $k$-ésimo ítem, con $j=1,\dots,p$. Entonces:
+Si los ítems no pueden ser representados por medidas $p$-dimensionales significativas, las parejas de ítems se suelen comparar según la \textbf{presencia o ausencia} de ciertas características.\break
 
-$$(x_{ij}-x_{kj})^2 = \left \{ \begin{matrix} 0 & \mbox{si } x_{ij}=x_{kj}
-\\ 1 & \mbox{si }x_{ij}\neq x_{kj}\end{matrix}\right.   $$
-
-y $\sum_{j=1}^p{(x_{ij}-x_{kj})^2}$ proporciona una forma de contar el número de disparidades. Una distancia grande corresponde a muchas disparidades, es decir, ítems desemejantes.\break 
-
-En el Ejemplo anterior:
-
-$$\sum_{j=1}^5{(x_{ij}-x_{kj})^2}=(1-1)^2+(0-1)^2+(0-0)^2+(1-1)^2+(1-0)^2=2.$$
+Matemáticamente se consigue introduciendo una variable binaria, que toma el valor \textbf{1} si la característica \textbf{está presente} y el valor \textbf{0} si \textbf{no}. 
 \end{frame}
 
-\begin{frame}{\textit{Problemas de la distancia usada}}
-La distancia usada valora por igual las parejas 1-1 y 0-0. En algunos casos no es cierto.\break 
+\begin{frame}{Frecuencias de las parejas}
 
-Existen diversos esquemas para definir los coeficientes de similitud. Organizando las frecuencias de las parejas que coinciden y las que no para los ítems $i$ y $k$ en forma de tabla de contingencia:
+Organizamos las frecuencias en la siguiente \textbf{tabla de contingencia}:\break
 
 \begin{table}[H]
 \begin{tabular}{ll|clc|c|l}
@@ -234,12 +219,11 @@ Existen diversos esquemas para definir los coeficientes de similitud. Organizand
 
 \end{frame}
 
-\begin{frame}{}
+\begin{frame}{Coeficientes de similitud para ítems \textit{clustering}}
 
 \begin{table}[H]
   \centering
-  \caption{Coeficientes de similitud para ítems \textit{clustering}.}
-\resizebox{10cm}{!} {
+\resizebox{11cm}{!} {
 \begin{tabular}{ll}
 \toprule               
 \multicolumn{1}{l}{Coeficiente} & \multicolumn{1}{l}{Fundamento}\\
@@ -255,11 +239,10 @@ Existen diversos esquemas para definir los coeficientes de similitud. Organizand
 
 \end{frame}
 
-\begin{frame}{}
+\begin{frame}{Coeficientes de similitud para ítems \textit{clustering}}
 \begin{table}[H]
   \centering
-  \caption{Coeficientes de similitud para ítems \textit{clustering}.}
-\resizebox{10cm}{!} {
+\resizebox{11cm}{!} {
 \begin{tabular}{ll}
 \toprule               
 \multicolumn{1}{l}{Coeficiente} & \multicolumn{1}{l}{Fundamento}\\
@@ -274,122 +257,22 @@ Existen diversos esquemas para definir los coeficientes de similitud. Organizand
 \end{table}
 \end{frame}
 
-\begin{frame}{\textit{Ejemplo de cálculo de coeficientes de similitud}}
-Veamos un ejemplo de cálculo de coeficientes de similitud.\break
+\begin{frame}{Construcción de similitudes y distancias}
+\begin{itemize}
+\item Siempre se pueden construir similitudes a partir de distancias.\break
 
-Definiremos 5 individuos con diferentes características y 6 variables binarias $X_1,X_2,X_3,X_4,X_5,X_6$.
-\begin{table}[h]
-  \centering
-  \label{tab:ej-similitud}
-\resizebox{11cm}{!} {
-  \begin{tabular}{lrrrrrr}
-    \toprule
-            & Altura (in) & Peso (lb) & Color de ojos & Color de pelo & Mano predominante & Género \\ \midrule
-Individuo 1 & 68                       & 140                    & Verde                             & Rubio                             & Derecha                               & Femenino\\
-Individuo 2 & 73 & 185 & Marrón & Moreno & Derecha & Masculino                  \\
-Individuo 3 & 67 & 165 & Azul & Rubio & Derecha & Masculino                  \\
-Individuo 4 & 64 & 120 & Marrón & Moreno                            & Derecha & Femenino \\
-Individuo 5 & 76 & 210 & Marrón & Moreno & Izquierda & Masculino\\                 
-\bottomrule
-\end{tabular}
-}
-\end{table}
+Fijando $ s_{ik} = \frac{1}{1+d_{ik}}$ donde $0<s_{ik}\leq 1$ es la similitud entre los ítems $i$ y $k$, entonces $d_{ik}$ es la distancia correspondiente.\break
+
+\item Las distancias se pueden construir a partir de similitudes si la matriz de similitudes es definida no negativa y la máxima similitud cumple $s_{ii}=1$.\break
+
+Entonces $ d_{ik}=\sqrt{2\cdot(1-s_{ik})}$, cumple las propiedades de una distancia.
+\end{itemize}
 \end{frame}
 
-\begin{frame}{}
-$$X_1 = \left \{ \begin{matrix} 1 & \mbox{si Altura}  \geq 72 
-\\ 0 & \mbox{si Altura}  < 72 \end{matrix}\right.$$
-$$X_2 = \left \{ \begin{matrix} 1 & \mbox{si Peso}  \geq 150 
-\\ 0 & \mbox{si Peso}  < 150 \end{matrix}\right.   $$
-$$X_3 = \left \{ \begin{matrix} 1 & \mbox{si Ojos marrones} 
-\\ 0 & \mbox{si otro color de ojos}\end{matrix}\right.   $$
-$$X_4 = \left \{ \begin{matrix} 1 & \mbox{si Pelo rubio} 
-\\ 0 & \mbox{si otro color de pelo } \end{matrix}\right.   $$
+\begin{frame}{Medidas de similitud para pares de variables}
+Las medidas de similitud para variables suelen tomar la forma de coeficientes de correlaciones muestrales.\break
 
-$$X_5 = \left \{ \begin{matrix} 1 & \mbox{si Diestro} 
-\\ 0 & \mbox{si Zurdo } \end{matrix}\right.   $$
-
-$$X_6 = \left \{ \begin{matrix} 1 & \mbox{si Masculino} 
-\\ 0 & \mbox{si Femenino}  \end{matrix}\right.   .$$
-\end{frame}
-
-\begin{frame}{}
-Las puntuaciones de los individuos 1 y 2 en las $p=6$ variables binarias se muestran a continuación:\break
-
-\begin{table}[h]
-  \centering
-\resizebox{8cm}{!} {
-  \begin{tabular}{lrrrrrr}
-    \toprule
-            & \multicolumn{1}{l}{$X_1$} & \multicolumn{1}{l}{$X_2$} & \multicolumn{1}{l}{$X_3$} & \multicolumn{1}{l}{$X_4$} & \multicolumn{1}{l}{$X_5$} & \multicolumn{1}{l}{$X_6$} \\ \midrule
-Individuo 1 & 0                        & 0                        & 0                        & 1                        & 1                        & 1                        \\
-Individuo 2 & 1                        & 1                        & 1                        & 0                        & 1                        & 0\\
-\bottomrule
-\end{tabular}
-}
-\end{table}
-\end{frame}
-
-\begin{frame}
-El número de parejas que coinciden y las que no se indican a continuación en la tablas de contingencias:
-\begin{table}[h]
-  \centering
-  \label{tab:contingencias-ej}
-\resizebox{6.5cm}{!} {
-  \begin{tabular}{lrrrrr}
-\multicolumn{2}{l}{\multirow{}{}{}} & \multicolumn{2}{c}{Individuo 2} & \\\cmidrule{3-4}
-\multicolumn{2}{l}{}                  & 1        &   0       & \multicolumn{2}{c}{Total}                        \\ \midrule
-Individuo 1      & 1      & 1        &  2       & \multicolumn{2}{c}{3}                     \\
-                              & 0      & 3        &    0       & \multicolumn{2}{c}{3}                     \\ \midrule
-\multicolumn{2}{l}{Total}            & 4     & 2     & \multicolumn{2}{c}{6}\\
-\bottomrule
-\end{tabular}
-}
-\end{table}\
-
-Empleando el primer coeficiente de similitud de la tabla, calculamos:
-
-$$\frac{a+d}{p}=\frac{1+0}{6}=\frac{1}{6}. $$
-\end{frame}
-
-\begin{frame}{}
-Calcularemos los demás números de similitud para cada pareja de individuos. Mostramos los resultados en la matriz simétrica 5 x 5.
-
-\begin{table}[H]
-\centering
-\resizebox{9cm}{!} {
-\begin{tabular}{lllllll}
-\multicolumn{2}{l}{\multirow{}{}{}}               & \multicolumn{5}{c}{Individuo}                  \\
-\multicolumn{2}{l}{}                                & 1   & 2   & 3   & 4   & 5                      \\ \cline{3-3} \cline{7-7} 
-\multirow{}{}{Individuo} & \multicolumn{1}{l|}{1} & 1   &     &     &     & \multicolumn{1}{l|}{}  \\
-                           & \multicolumn{1}{l|}{2} & 1/6 & 1   &     &     & \multicolumn{1}{l|}{}  \\
-                           & \multicolumn{1}{l|}{3} & 4/6 & 3/6 & 1   &     & \multicolumn{1}{l|}{}  \\
-                           & \multicolumn{1}{l|}{4} & 4/6 & 3/6 & 2/6 & 1   & \multicolumn{1}{l|}{}  \\
-                           & \multicolumn{1}{l|}{5} & 0   & 5/6 & 2/6 & 2/6 & \multicolumn{1}{l|}{1} \\ \cline{3-3} \cline{7-7} 
-\end{tabular}
-}
-\end{table}\
-
-Los individuos 2 y 5 son los más similares mientras que los individuos 1 y 5 son los menos similiares.
-\end{frame}
-
-\begin{frame}{Construcción de similitudes a partir de distancias}
-
-Fijamos:
-
-$$ s_{ik} = \frac{1}{1+d_{ik}},$$ 
-
-donde $0<s_{ik}\leq 1$ es la similitud entre los ítems $i$ y $k$, entonces $d_{ik}$ es la distancia correspondiente.\break
-
-No siempre podemos construir distancias ``verdaderas'', a partir de similitudes. Sólo si la matriz de similitudes es definida no negativa y la máxima similitud cumple $s_{ii}=1$.\break
-
-Entonces $ d_{ik}=\sqrt{2(1-s_{ik})}$, cumple las propiedades de una distancia.
-\end{frame}
-
-\begin{frame}{\textit{Medidas de similitud para pares de variables}}
-Para algunas aplicaciones, son las variables, en lugar de los ítems, las que deben ser agrupadas. Las medidas de similitud para variables suelen tomar la forma de coeficientes de correlaciones muestrales.\break
-
-Cuando las variables son binarias, los datos se pueden organizar en una tabla de contingencia que tiene la siguiente forma:
+Cuando las variables son binarias, los datos se pueden organizar en una \textbf{tabla de contingencia} que tiene la siguiente forma:
 
 \begin{table}[h]
   \centering
@@ -406,14 +289,12 @@ Cuando las variables son binarias, los datos se pueden organizar en una tabla de
 \end{table}
 \end{frame}
 
-\begin{frame}{}
-La fórmula del coeficiente de correlación producto-momento aplicada a las variables binarias de la tabla de contingencia nos da:
+\begin{frame}{Medidas de similitud para pares de variables}
+La fórmula del coeficiente de correlación producto-momento aplicada a las variables binarias de la tabla de contingencia nos da:\break
 
 $$r = \frac{ad-bc}{[(a+b)(c+d)(a+c)(b+d)]^{1/2}}.$$\
 
-Podemos tomar $r$ como la medida de similitud entre las dos variables.\break
-
-Se cumple la relación ($r^2=\chi^2/n$) para evaluar la independencia de dos variables categóricas. Para un $n$ fijo, una similitud (o correlación) grande es consistente con la presencia de dependencia.
+$r$ se puede tomar como la medida de similitud entre las dos variables.
 \end{frame}
 
 \begin{frame}{Ejemplo idiomas}
@@ -441,7 +322,6 @@ ten                                                  & ti                       
 \end{frame}
 
 \begin{frame}{}
-Vemos que inglés, noruego, danés, holandés y alemán parecen formar un grupo. El francés, español, italiano y polaco forman otro, mientras que el húngaro y el finés no forman parte de ninguno.
 \begin{table}[h]
 \centering
 \makebox[\textwidth][c]{
@@ -462,7 +342,9 @@ H      & 1      & 2      & 2      & 2      & 1     & 0     & 0     & 0     & 0  
 Fi     & 1      & 1      & 1      & 1      & 1     & 1     & 1     & 1     & 1     & 2     & 10    \\ \bottomrule
 \end{tabular}
 }
-\end{table}
+\end{table}\
+
+Vemos que inglés, noruego, danés, holandés y alemán parecen formar un grupo. El francés, español, italiano y polaco forman otro, mientras que el húngaro y el finés no forman parte de ninguno.
 \end{frame}
 
 \section{Métodos de agrupamiento}
@@ -489,7 +371,7 @@ Fi     & 1      & 1      & 1      & 1      & 1     & 1     & 1     & 1     & 1  
 \section{Métodos de agrupamiento\\ Jerárquicos}
 \begin{frame}{Métodos Jerárquicos}
 	\centering
-	\textbf{Definición} método de análisis de grupos puntuales, que se basa en buscar una construcción de una jerarquía de grupos. Se minimizan las distancias y no es necesario conocer el número de grupos que se van a formar.\\
+	\textbf{Definición}: método de análisis de grupos puntuales, que se basa en buscar una construcción de una jerarquía de grupos. Se minimizan las distancias y no es necesario conocer el número de grupos que se van a formar.\\
 	\begin{figure}[H]
 		\centering
 		\includegraphics[scale=0.15]{victoria/compAglomeDivisivo}
@@ -734,7 +616,7 @@ donde $x_i$ son las muestras de entrada y $k$ la función núcleo y h es el \tex
 \section{Métodos de agrupamiento\\ Particionamiento}
 
 
-\begin{frame}{\textit{Particionamiento}}
+\begin{frame}{Particionamiento}
   \begin{itemize}
   \item Objetivo: dividir los datos en grupos.
   \item No hay dependencia jerárquica entre soluciones.
@@ -780,9 +662,6 @@ donde $\overline{\textbf{x}}_k$ es el centroide del $k$-ésimo clúster y $c(i)$
 \item Entrada: $\textbf{D}=(d_{ij})$, K=número de clústeres.
 \item Formar una asignación inicial en los K clústeres.
 \item Localizar el medoide de cada clúster. El medoide del $k$-ésimo clúster esta definido como ese dato en el $k$-ésimo clúster que minimiza la disimilitud total a los otros datos dentro del clúster, $k=1,2,...,K$.
-
-
-
 \end{enumerate}
 
 \end{frame}
@@ -819,7 +698,7 @@ sea reducida en magnitud, donde $c(i)$ es el clúster que contiene el $i$-ésimo
 
 \end{frame}
 
-\begin{frame}{\textit{Análisis difuso}}
+\begin{frame}{Análisis difuso}
 
 A los datos se les asigna la probabilidad de pertenercer a cada uno de los clústeres. Notamos como $u_{ik}$ la fuerza de pertenencia del i-ésimo dato al k-ésimo clúster.
 \newline
@@ -829,9 +708,6 @@ Para que $u_{ik}$ se comporte como una probabilidad se tiene que cumplir que $\s
 \newline
 Dada $D=d_{ij}$ matriz de proximidades, $u_{ik}$ se encuentra minimizando, bajo las restricciones de no negatividad y unidad de la suma usando un algoritmo iterativo., la función objetivo
 $$\sum_{k=1}^{K}\frac{\sum_i\sum_ju_{ik}^2u_{jk}^2d_{ij}}{2\sum_lu_{lk}^2}$$
-
-
-
 \end{frame}
 
 
@@ -946,11 +822,20 @@ $$\sum_{k=1}^{K}\frac{\sum_i\sum_ju_{ik}^2u_{jk}^2d_{ij}}{2\sum_lu_{lk}^2}$$
 	\end{figure}
 \end{frame}
 
+\begin{frame}{Conclusiones}
+\begin{itemize}
+\item Busca relaciones entre objetos.
+\item Depende del conjunto de datos, variables seleccionadas, medida de proximidad y método de agrupamiento.
+\item Métodos jerárquicos: exploratorios, métodos no jerárquicos: confirmatorios.
+\item Problema: validación de la solución.
+\end{itemize}
+\end{frame}
+
 %%% Parte Práctica
 
 \section{Caso Práctico: Clustering en Python}
 
-\begin{frame}{\textit{Flor de Iris}}
+\begin{frame}{Flor de Iris}
 
 Estudiaremos el conjunto de datos iris de \textbf{Fisher}.\break
 
@@ -975,7 +860,7 @@ Contiene 50 muestras de cada una de tres especies de flor \textbf{Iris}. Para ca
 \end{figure}
 \end{frame}
 
-\begin{frame}{\textit{Métricas utilizadas}}
+\begin{frame}{Métricas utilizadas}
 
 Se utilizarán las siguientes métricas para medir la bondad de los algoritmos:\break
 \begin{itemize}
@@ -984,7 +869,7 @@ Se utilizarán las siguientes métricas para medir la bondad de los algoritmos:\
 \end{itemize}
 \end{frame}
 
-\begin{frame}{\textit{Tabla comparativa de los algoritmos}}
+\begin{frame}{Tabla comparativa de los algoritmos}
 
 \begin{table}[H]
 \centering
@@ -1090,7 +975,7 @@ cluster 2: 33 (22.00%)
 \end{figure}
 \end{frame}
 
-\begin{frame}{\textit{Dendrogramas}}
+\begin{frame}{Dendrogramas}
 Un \textbf{dendrograma} es un diagrama de árbol que muestra los grupos que se forman al crear clústers de observaciones en cada paso y sus niveles de similitud.\break
 
 La decisión acerca de la agrupación final también se conoce como \textit{cortar el dendrograma}. Cortar el dendrograma es similar a trazar una línea a lo largo del dendrograma para especificar la agrupación final.
