@@ -46,6 +46,7 @@
 \newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 \newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 \newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\usepackage{multirow}
 
 %%% AJUSTES DE BEAMER
 
@@ -132,9 +133,9 @@
 \end{frame}
 
 \begin{frame}{\textit{Clustering}}
-  Para realizar un análisis clúster hay que:
+  Para realizar un análisis clúster hay que:\break
   \begin{itemize}
-  \item Elegir una medida de similitud.
+  \item Elegir una medida de similitud.\break
   \item Elegir un algoritmo para construir los grupos.
     \begin{itemize}
     \item Particionamiento.
@@ -162,7 +163,7 @@ Los valores de las variables consideradas deberán ser normalizados.
 
 La distancia estadística entre dos observaciones $p$-dimensionales $x^T = [x_1,\dots,x_p]$ e $y^T=[y_1,\dots,y_p]$ es:
 
-$$d(x,y)=\sqrt{(x-y)^TA(x-y)} $$
+$$d(x,y)=\sqrt{(x-y)^TA(x-y)}. $$
 
 Donde: \break
 \begin{itemize}
@@ -175,46 +176,52 @@ Donde: \break
 
 \begin{itemize}
 \item Métrica de Minkowski:
-$$ d(x,y)=\left  [\sum_{i=1}^{p}{|x_i-y_i|^m} \right ]^{1/m}$$
+$$ d(x,y)=\left  [\sum_{i=1}^{p}{|x_i-y_i|^m} \right ]^{1/m}.$$
 \item Métrica de Canberra (variables no negativas):
-$$d(x,y)=\sum_{i=1}^{p}{\frac{|x_i-y_i|}{(x_i+y_i)}}$$
+$$d(x,y)=\sum_{i=1}^{p}{\frac{|x_i-y_i|}{(x_i+y_i)}}.$$
 \item Coeficiente de Czekanowski (variables no negativas):
-$$d(x,y)=1-\frac{2\sum_{i=1}^{p}{min(x_i,y_i)}}{\sum_{i=1}^{p}{(x_i+y_i}}$$
+$$d(x,y)=1-\frac{2\sum_{i=1}^{p}{min(x_i,y_i)}}{\sum_{i=1}^{p}{(x_i+y_i}}.$$
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Propiedades distancia ''verdadera''}
-\begin{itemize}
-\item $d(P,Q)=d(Q,P)$.
-\item $d(P,Q)>0\ si\ P\neq Q$.
-\item $d(P,Q)=0\ si\ P=Q$.
-\item $d(P,Q)\leq d(P,R)+d(R,Q)$.
-\end{itemize}\
+%% \begin{frame}{Propiedades distancia ''verdadera''}
+%% \begin{itemize}
+%% \item $d(P,Q)=d(Q,P)$.
+%% \item $d(P,Q)>0\ si\ P\neq Q$.
+%% \item $d(P,Q)=0\ si\ P=Q$.
+%% \item $d(P,Q)\leq d(P,R)+d(R,Q)$.
+%% \end{itemize}\
 
-con $P$ y $Q$ dos puntos y $R$ su punto intermedio.\break
+%% con $P$ y $Q$ dos puntos y $R$ su punto intermedio.\break
 
-La mayoría de algoritmos de clustering aceptan distancias que no satisfagan la desigualdad triangular.
-\end{frame}
+%% La mayoría de algoritmos de clustering aceptan distancias que no satisfagan la desigualdad triangular.
+%% \end{frame}
 
-\begin{frame}{Binarización de variables}
+%% \begin{frame}{Binarización de variables}
 
-Si los ítems no pueden ser representados por medidas $p$-dimensionales significativas, las parejas de ítems se suelen comparar según la \textbf{presencia o ausencia} de ciertas características.\break
+%% Si los ítems no pueden ser representados por medidas $p$-dimensionales significativas, las parejas de ítems se suelen comparar según la \textbf{presencia o ausencia} de ciertas características.\break
 
-Matemáticamente se consigue introduciendo una variable binaria, que toma el valor \textbf{1} si la característica \textbf{está presente} y el valor \textbf{0} si \textbf{no}. 
-\end{frame}
+%% Matemáticamente se consigue introduciendo una variable binaria, que toma el valor \textbf{1} si la característica \textbf{está presente} y el valor \textbf{0} si \textbf{no}. 
+%% \end{frame}
 
 \begin{frame}{Frecuencias de las parejas}
 
 Organizamos las frecuencias en la siguiente \textbf{tabla de contingencia}:\break
 
-\begin{table}[H]
-\begin{tabular}{ll|clc|c|l}
-\multicolumn{2}{l|}{\multirow{}} & \multicolumn{3}{c|}{Item k} & \multicolumn{2}{c|}{\multirow{Total}} \\
-\multicolumn{2}{l|}{} & 1 & & 0 & \multicolumn{2}{c|}{} \\ \hline
-\multirow{Item i} & 1 & a & & b & \multicolumn{2}{c|}{a+b} \\
-& 0 & c & & d & \multicolumn{2}{c|}{c+d} \\ \hline
-\multicolumn{2}{l|}{Total} & a+c & & b+d & \multicolumn{2}{c|}{p=a+b+c+d}
+\begin{table}[h]
+  \centering
+  \label{tab:contingencia_var}
+\resizebox{8cm}{!} {
+\begin{tabular}{llrrrr}
+\toprule
+\multicolumn{2}{l}{\multirow{2}{*}{}} & \multicolumn{2}{c}{Ítem $k$} & \multicolumn{2}{c}{\multirow{2}{*}{Total}} \\\cmidrule{3-4}
+\multicolumn{2}{l}{}                  & 1             & 0       & \multicolumn{2}{c}{}                        \\ \hline
+\multirow{2}{*}{Ítem $i$}       & 1     & $a$          & $b$       & \multicolumn{2}{c}{$a+b$}                     \\
+                              & 0      & c            & $d$       & \multicolumn{2}{c}{$c+d$}                     \\ \hline
+\multicolumn{2}{l}{Total}            & $a+c$          & $b+d$     & \multicolumn{2}{c}{$p=a+b+c+d$}\\
+\bottomrule            
 \end{tabular}
+}
 \end{table}
 
 \end{frame}
@@ -273,14 +280,15 @@ Entonces $ d_{ik}=\sqrt{2\cdot(1-s_{ik})}$, cumple las propiedades de una distan
 Las medidas de similitud para variables suelen tomar la forma de coeficientes de correlaciones muestrales.\break
 
 Cuando las variables son binarias, los datos se pueden organizar en una \textbf{tabla de contingencia} que tiene la siguiente forma:
-
 \begin{table}[h]
   \centering
+  \label{tab:contingencia_var}
 \resizebox{7.5cm}{!} {
 \begin{tabular}{llrrrr}
-\multicolumn{2}{l}{\multirow{}{}{}} & \multicolumn{2}{c}{Variable $k$} & \multicolumn{2}{c}{\multirow{}{}{Total}} \\\cmidrule{3-4}
+\toprule
+\multicolumn{2}{l}{\multirow{2}{*}{}} & \multicolumn{2}{c}{Variable $k$} & \multicolumn{2}{c}{\multirow{2}{*}{Total}} \\\cmidrule{3-4}
 \multicolumn{2}{l}{}                  & 1             & 0       & \multicolumn{2}{c}{}                        \\ \hline
-\multirow{}{}{Variable $i$}       & 1      & $a$          & $b$       & \multicolumn{2}{c}{$a+b$}                     \\
+\multirow{2}{*}{Variable $i$}       & 1      & $a$          & $b$       & \multicolumn{2}{c}{$a+b$}                     \\
                               & 0      & c            & $d$       & \multicolumn{2}{c}{$c+d$}                     \\ \hline
 \multicolumn{2}{l}{Total}            & $a+c$          & $b+d$     & \multicolumn{2}{c}{$n=a+b+c+d$}\\
 \bottomrule            
@@ -349,19 +357,20 @@ Vemos que inglés, noruego, danés, holandés y alemán parecen formar un grupo.
 
 \section{Métodos de agrupamiento}
 \begin{frame}{Métodos de agrupamiento}
-	\centering
-	\textbf{Definición} procedimiento de agruapación de una serie de vectores de acuerdo con un criterio (distancia o similitud).\\
+  \textbf{Definición:} procedimiento de agrupación de una serie de vectores de acuerdo con un criterio (distancia o similitud).\break
+  
+\textbf{Tipos:}
+	\begin{itemize}
+		\item Jerárquicos.
+		\item No jerárquicos o particionamiento.
+	\end{itemize}
 \end{frame}
 
 \begin{frame}{Métodos de agrupamiento}
-	\textbf{Tipos}
-	\begin{itemize}
-		\item Jerárquicos
-		\item No jerárquicos o particionamiento
-	\end{itemize}
+	
 	\begin{figure}[H]
 		\centering
-		\includegraphics[scale=0.3]{victoria/compJerarquicoNoJerarquico}
+		\includegraphics[scale=0.5]{victoria/compJerarquicoNoJerarquico}
 		\caption{Comparación métodos jerárquico y no jerárquico.}
 		\label{fig:ejemplo_metodos}
 	\end{figure}
@@ -370,11 +379,9 @@ Vemos que inglés, noruego, danés, holandés y alemán parecen formar un grupo.
 
 \section{Métodos de agrupamiento\\ Jerárquicos}
 \begin{frame}{Métodos Jerárquicos}
-	\centering
-	\textbf{Definición}: método de análisis de grupos puntuales, que se basa en buscar una construcción de una jerarquía de grupos. Se minimizan las distancias y no es necesario conocer el número de grupos que se van a formar.\\
 	\begin{figure}[H]
 		\centering
-		\includegraphics[scale=0.15]{victoria/compAglomeDivisivo}
+		\includegraphics[scale=0.23]{victoria/compAglomeDivisivo}
 		\caption{Comparación métodos aglomerativos y divisivos.}
 		\label{fig:agl_div}
 	\end{figure}
@@ -384,19 +391,18 @@ Vemos que inglés, noruego, danés, holandés y alemán parecen formar un grupo.
 
 	\begin{figure}[H]
 	\centering
-	\begin{subfigure}[b]{.4\textwidth}
+	\begin{subfigure}[b]{.47\textwidth}
 		  \centering
 	  \includegraphics[width=\textwidth]{victoria/aglomerativo}
-	  \caption{Ejemplo de dendrograma aglomerativo.}
+	  \caption{Dendrograma aglomerativo.}
 	  \label{fig:aglomerativo}
 	\end{subfigure}
-	\begin{subfigure}[b]{.4\textwidth}
+	\begin{subfigure}[b]{.47\textwidth}
 	  \centering
 	  \includegraphics[width=\textwidth]{victoria/disociativo}
-	  \caption{Ejemplo de dendrograma divisivo.}
+	  \caption{Dendrograma divisivo.}
 	  \label{fig:divisivo}
 	\end{subfigure}
-	\caption{Comparación de dendrogramas aglomerativos y divisivo}
 	\label{fig:compDendro}
 	\end{figure}
 
@@ -407,38 +413,9 @@ Vemos que inglés, noruego, danés, holandés y alemán parecen formar un grupo.
 	\textbf{Distancia entre dos clústers}
 
 	\begin{equation}\label{eq:distAgloEjm}
-		d(R, S) = min \{d_{rs}\ :\ r \in R, \ s \in S\}
+		d(R, S) = min \{d_{rs}\ :\ r \in R, \ s \in S\}.
 	\end{equation}
-
-
-\end{frame}
-
-\begin{frame}{Ejemplo \textit{Single Link Method}}
-
-	\textbf{Matriz de distancias}
-	\[ \mathcal{D} =
-	\left[ \begin{array}{c}
-	d_{rs}
-	\end{array} \right] =
-	\begin{blockarray}{cccccc}
-		& 1 & 2 & 3 & 4 & 5 \\
-		\begin{block}{c[ccccc]}
-			\\
-			1 & 0 & 2 & 4 & 7 & 9 \\
-			2 & 2 & 0 & 8 & 9 & 8 \\
-			3 & 4 & 8 & 0 & 3 & 7 \\
-			4 & 7 & 9 & 3 & 0 & 5 \\
-			5 & 9 & 8 & 7 & 5 & 0 \\
-			\\
-		\end{block}
-	\end{blockarray}  
-	\] 
-
-\end{frame}
-
-\begin{frame}{Ejemplo \textit{Single Link Method}}
-
-	\textbf{Matriz de distancias}
+\textbf{Matriz de distancias}
 	\[ \mathcal{D} =
 	\left[ \begin{array}{c}
 	d_{rs}
@@ -454,24 +431,20 @@ Vemos que inglés, noruego, danés, holandés y alemán parecen formar un grupo.
 			5 & 9 & 8 & 7 & 5 & 0 \\
 			\\
 		\end{block}
-	\end{blockarray}  
+	\end{blockarray}  .
 	\] 
 
- Tomamos los clúster \textit{1} y \textit{2} y formamos el nuevo clúster \textit{(12)}
 \end{frame}
+
 
 \begin{frame}{Ejemplo \textit{Single Link Method}}
 
-	Cálculo de las nuevas distancias
+	Cálculo de las nuevas distancias:
 	\begin{center}
-	$d_{(12)(3)}$ = min\{$d_{13}$, $d_{23}$\} = min \{4, 8\} = 4\\
-	$d_{(12)(4)}$ = min\{$d_{14}$, $d_{24}$\} = min \{7, 9\} = 7\\
-	$d_{(12)(5)}$ = min\{$d_{15}$, $d_{25}$\} = min \{9, 8\} = 8\\
+	$d_{(12)(3)}$ = min\{$d_{13}$, $d_{23}$\} = min \{4, 8\} = 4,\\
+	$d_{(12)(4)}$ = min\{$d_{14}$, $d_{24}$\} = min \{7, 9\} = 7,\\
+	$d_{(12)(5)}$ = min\{$d_{15}$, $d_{25}$\} = min \{9, 8\} = 8.\\
 	\end{center}
-\end{frame}
-
-\begin{frame}{Ejemplo \textit{Single Link Method}}
-
 	\textbf{Matriz de distancias}
 	\[ \mathcal{D}_1  =
 	\begin{blockarray}{ccccc}
@@ -484,21 +457,17 @@ Vemos que inglés, noruego, danés, holandés y alemán parecen formar un grupo.
 			5 & 8 & 7 & 5 & 0 \\
 			\\
 		\end{block}
-	\end{blockarray}  
+	\end{blockarray} . 
 	\]
-	Tomamos los clúster \textit{3} y \textit{4} y formamos el nuevo clúster \textit{(34)}
 \end{frame}
 
 \begin{frame}{Ejemplo \textit{Single Link Method}}
 
-	Cálculo de las nuevas distancias\\
+	Cálculo de las nuevas distancias:\\
 	\begin{center}
-		$d_{(34)(12)}$ = min\{$d_{(3)(12)}$, $d_{(4)(12)}$\} = min \{4, 7\} = 4\\
-		$d_{(34)(5)}$ = min\{$d_{(3)(5)}$, $d_{(4)(5)}$\} = min \{7, 5\} = 5\\
+		$d_{(34)(12)}$ = min\{$d_{(3)(12)}$, $d_{(4)(12)}$\} = min \{4, 7\} = 4,\\
+		$d_{(34)(5)}$ = min\{$d_{(3)(5)}$, $d_{(4)(5)}$\} = min \{7, 5\} = 5.\\
 	\end{center}
-\end{frame}
-
-\begin{frame}{Ejemplo \textit{Single Link Method}}
 	\textbf{Matriz de distancias}
 	\[ \mathcal{D}_2  =
 	\begin{blockarray}{cccc}
@@ -510,120 +479,37 @@ Vemos que inglés, noruego, danés, holandés y alemán parecen formar un grupo.
 			5 & 8 & 5 & 0 \\
 			\\
 		\end{block}
-	\end{blockarray}  
+	\end{blockarray}  .
 	\] 
-	Tomamos los clúster \textit{(12)} y \textit{(34)} y formamos el nuevo clúster \textit{(1234)}
 \end{frame}
 
 \begin{frame}{Ejemplo \textit{Single Link Method}}
 
-	Cálculo de la nueva distancia
+	Cálculo de la nueva distancia:
 	\begin{center}
-	$d_{(12)(34)5}$ = min\{$d_{(12)(5)}$, $d_{(34)(5)}$\} = min \{8, 5\} = 5
+	$d_{(12)(34)5}$ = min\{$d_{(12)(5)}$, $d_{(34)(5)}$\} = min \{8, 5\} = 5.
 	\end{center}
-	Finalmente se obtiene el clúster \textit{(12345)}
-\end{frame}
+	Finalmente se obtiene el clúster \textit{(12345)}.
+%% \end{frame}
 
-\begin{frame}{Ejemplo \textit{Single Link Method}}
+%% \begin{frame}{Ejemplo \textit{Single Link Method}}
 	\begin{figure}[H]
 		\centering
-		\includegraphics[scale=0.56]{victoria/agloEjem}
-		\caption{Dendrograma ejemplo \textit{Single Link}.}
+		\includegraphics[scale=0.48]{victoria/agloEjem}
 		\label{fig:agloEjem}
 	\end{figure}
 \end{frame}
 
-\begin{frame}{DBSCAN}
-\begin{itemize}
-\item Se basa en la densidad de las muestras para identificar los clústeres.
-\item Los clústers pueden tener cualquier forma.
-\item Dos parámetros para definir este algoritmo son: \textbf{eps} y \textbf{min\_samples}.
-\end{itemize}
-\begin{figure}[h]
-\centering
-\includegraphics[scale=1.2]{dani/DBSCAN.png}
-\end{figure}
-\end{frame}
-
-\begin{frame}{DBSCAN}
-La técnica de agrupación DBSCAN clasifica los puntos como:
-
-\begin{itemize}
-\item Un punto $p$ pertenece al núcleo si al menos \textit{min\_samples} puntos están a una distancia $\epsilon$ de él y esos puntos son directamente alcanzables desde $p$.
-\item Un punto $q$ es alcanzable desde $p$ si existe una secuencia de puntos $p_1\dots p_n$ donde $p_1=p$ y $p_n=q$ y cada punto $p_{i+1}$ es directamente alcanzable desde $p_i$.
-\item Un punto que no sea alcanzable desde cualquier otro se considera ruido.
-\end{itemize}
-\end{frame}
-
-\begin{frame}{DBSCAN}
-Un clúster generado por DBSCAN satisface dos propiedades:
-
-\begin{itemize}
-\item Todos los puntos de un mismo clúster están densamente conectados entre sí.
-\item Si un punto $A$ es alcanzable desde cualquier otro punto $B$ del clúster, entonces $A$ también forma parte del clúster.
-\end{itemize}
-\begin{figure}[h]
-\centering
-\includegraphics[scale=0.37]{dani/DBSCAN2.png}
-\end{figure}
-\end{frame}
-
-\begin{frame}{Mean Shift}
-\begin{itemize}
-\item Método iterativo que parte de una estimación inicial $x$.
-\item Define una función núcleo $K(x_i-x)$ que determina los pesos de los puntos cercanos para la reestimación media.
-\end{itemize}\
-
-La media ponderada de la densidad en $K$ es:
-
-$$m(x)=\dfrac{\sum_{x_i\in N(x)}K(x_i-x)x_i}{\sum_{x_i\in N(x)}K(x_i-x)}$$
-
-donde $N(x)$ es el vecindario de x, un conjunto de puntos donde $K(x_i)\neq0$.\\
-\end{frame}
-
-\begin{frame}{Mean Shift}
-\begin{itemize}
-\item La diferencia $m(x)-x$ se denomina Mean Shift.\break
-
-\item El algoritmo establece $m(x)\rightarrow x$ y repite la estimación hasta que $m(x)$ converja.\break
-
-\item No existe ninguna prueba de la convergencia del algoritmo en espacios de alta dimensión.
-\end{itemize}
-
-\begin{figure}[h]
-\centering
-\includegraphics[scale=0.45]{dani/MS.png}
-\end{figure}
-\end{frame}
-
-\begin{frame}{Mean Shift}
-Sea un conjunto de datos finito $S$ embebido en el espacio euclídeo n-dimensional $X$. Sea $K$ un núcleo plano con función característica:
-
-$$K(x)=\left\{
-1 \ si \ ||x||\leq \lambda \atop
-0 \ si \ ||x||> \lambda
-\right.$$
-
-En cada iteración del algoritmo, se establece $m(x)\rightarrow x$ para todo $s\in S$ a la vez.\break 
-
-En un conjunto pequeño, estimaremos la función de densidad como:
-
-$$f(x)=\sum_i K(x-x_i)=\sum_i k\dfrac{||x-x_i||^2}{h^2}$$
-
-donde $x_i$ son las muestras de entrada y $k$ la función núcleo y h es el \textit{bandwidth}. 
-\end{frame}
-
 \section{Métodos de agrupamiento\\ Particionamiento}
 
+%% \begin{frame}{Particionamiento}
+%%   \begin{itemize}
+%%   \item No hay dependencia jerárquica entre soluciones.
+%%   \item Se explora un número limitado de agrupaciones.
+%%   \item Se busca maximizar la similitud en los clústeres.
+%%   \end{itemize}
 
-\begin{frame}{Particionamiento}
-  \begin{itemize}
-  \item No hay dependencia jerárquica entre soluciones.
-  \item Se explora un número limitado de agrupaciones.
-  \item Se busca maximizar la similitud en los clústeres.
-  \end{itemize}
-
-\end{frame}
+%% \end{frame}
 
 
 
@@ -654,70 +540,43 @@ donde $\overline{\textbf{x}}_k$ es el centroide del $k$-ésimo clúster y $c(i)$
 
 \end{frame}
 
-
-
-\begin{frame}{\textit{K-medoides y PAM}}
-\begin{enumerate}
-\item Entrada: $\textbf{D}=(d_{ij})$, K=número de clústeres.
-\item Formar una asignación inicial en los K clústeres.
-\item Localizar el medoide de cada clúster. El medoide del $k$-ésimo clúster esta definido como ese dato en el $k$-ésimo clúster que minimiza la disimilitud total a los otros datos dentro del clúster, $k=1,2,...,K$.
-\end{enumerate}
-
+\begin{frame}{Otros métodos de particionamiento}
+K-Medoides:
+\begin{itemize}
+\item Medoide: dato más representativo del clúster.
+\item No se utiliza la distacia euclídea.
+\end{itemize}
+PAM:
+\begin{itemize}
+\item Modificación de K-Medoides.
+\end{itemize}
+Análisis difuso:
+\begin{itemize}
+\item Se asigna una probabilidad de pertenecer a cada clúster.
+\end{itemize}
+Mean Shift:
+\begin{itemize}
+\item Método iterativo que parte de una estimación inicial $x$.
+\item Localiza los máximos de una función de densidad.
+ \end{itemize}
 \end{frame}
 
-
-
-
-\begin{frame}{\textit{K-medoides y PAM}}
-\begin{enumerate}
-
-\item[$4a.$] K-medoides:
+\begin{frame}{DBSCAN}
 \begin{itemize}
-\item Para el $k$-ésimo clúster, reasignamos el $i_k$ésimo dato al clúster con su medoide más cercano para que la función objetivo, $$ESS_{med}=\sum_{k=1}^{K}\sum_{c(i)=k}d_{ii_k}$$
-sea reducida en magnitud, donde $c(i)$ es el clúster que contiene el $i$-ésimo dato.
-\item Repetir el paso 3 y el paso de reasignación hasta que no se produzcan mas reasignaciones.
+\item Se basa en la densidad de las muestras para identificar los clústeres.
+  \begin{figure}[h]
+\centering
+\includegraphics[scale=1.]{dani/DBSCAN.png}
+\end{figure}
+
+\item Todos los puntos de un mismo clúster están conectados entre sí.
+\item Si un punto $A$ es alcanzable desde cualquier otro punto $B$ del clúster, entonces $A$ también forma parte del clúster.
 \end{itemize}
 
-\end{enumerate}
-
-\end{frame}
-
-
-\begin{frame}{\textit{K-medoides y PAM}}
-\begin{enumerate}
-
-\item[$4b.$] Particionamiento Alrededor de Medoides:
-
-\begin{itemize}
-\item Buscamos un dato no medoide tal que al intercambiarlo por otro medoide se produce una reducción en $ESS_{med}$, considerando el cambio que se produce en los clusters al cambiar de medoide (si hay varios medoides que cumplen esta condición, seleccionar el que mayor reducción produzca) y se produce el cambio.
-
-\item Repetir el proceso de intercambio hasta que no se produzca ninguna reducción del $ESS_{med}$.
-\end{itemize}
-\end{enumerate}
-
-\end{frame}
-
-\begin{frame}{Análisis difuso}
-
-A los datos se les asigna la probabilidad de pertenercer a cada uno de los clústeres. Notamos como $u_{ik}$ la fuerza de pertenencia del i-ésimo dato al k-ésimo clúster.
-\newline
-\newline
-Para que $u_{ik}$ se comporte como una probabilidad se tiene que cumplir que $\sum_{k=1}^Ku_{ik}=1$ y $u_{ik}\geq0$
-\newline
-\newline
-Dada $D=d_{ij}$ matriz de proximidades, $u_{ik}$ se encuentra minimizando, bajo las restricciones de no negatividad y unidad de la suma usando un algoritmo iterativo., la función objetivo
-$$\sum_{k=1}^{K}\frac{\sum_i\sum_ju_{ik}^2u_{jk}^2d_{ij}}{2\sum_lu_{lk}^2}$$
 \end{frame}
 
 
 \section{Número de clústeres}
-\begin{frame}{Consideraciones generales}
-	\begin{itemize}
-		\item En los algoritmos de \textit{clustering}, uno de los problemas es determinar el número idóneo de clústeres $ k $. 
-		\item Es un proceso ambiguo. Depende de las interpretaciones según la forma y la escala de de la distribución de los datos y la solución deseada.
-		\item Como $ k $ decrece de $ n $ a 1, el valor de la distancia debería aumentar ya que tendría que ser mayor cuando dos clústeres distintos se agrupan en uno solo.
-	\end{itemize}
-\end{frame}
 
 \begin{frame}{Método del codo}
 	Consiste en dibujar la gráfica de las distancia a los centros de cada clúster en función del número de clústeres. Definimos:
@@ -744,8 +603,9 @@ $$\sum_{k=1}^{K}\frac{\sum_i\sum_ju_{ik}^2u_{jk}^2d_{ij}}{2\sum_lu_{lk}^2}$$
 	\[
 	R^{2}_{k} = \frac{T - \sum_k SSE_k}{T}.
 	\]
-	Para $ n $ clústeres $ SSE_k = 0 $ por lo que $ R^2 = 1 $. Una gran disminución en $ R^2_k $ representaría un mal agrupamiento. \\
-	También podríamos tener en cuenta el cambio en $ R^2 $ al unir los clústeres $ R $ y $ S $ como $ SR^2 = R_k^2 - R^2_{k-1} $. El estadístico $ SR^2 $ representa, en función de $ T $, la proporción de $ SSE_t - (SSE_r + SSE_s) $ donde los clústeres $ C_R $ y $ C_S $ se han unido para formar el clúster $ C_T $.  Cuanto mayor sea el índice mayor será la pérdida de homogeneidad.
+	Para $ n $ clústeres $ SSE_k = 0 $ por lo que $ R^2 = 1 $. Una gran disminución en $ R^2_k $ representaría un mal agrupamiento. \break
+       
+También podríamos tener en cuenta el cambio en $ R^2 $ al unir los clústeres $ R $ y $ S $ como $ SR^2 = R_k^2 - R^2_{k-1} $.
 \end{frame}
 
 \begin{frame}{Varianza agrupada}
@@ -823,16 +683,16 @@ $$\sum_{k=1}^{K}\frac{\sum_i\sum_ju_{ik}^2u_{jk}^2d_{ij}}{2\sum_lu_{lk}^2}$$
 
 \begin{frame}{Conclusiones}
 \begin{itemize}
-\item Busca relaciones entre objetos.
-\item Depende del conjunto de datos, variables seleccionadas, medida de proximidad y método de agrupamiento.
-\item Métodos jerárquicos: exploratorios, métodos no jerárquicos: confirmatorios.
-\item Problema: validación de la solución.
+\item Busca relaciones entre objetos.\break
+\item Depende del conjunto de datos, variables seleccionadas, medida de proximidad y método de agrupamiento.\break
+\item Métodos jerárquicos: exploratorios, métodos no jerárquicos: confirmatorios.\break
+\item Problema: validación de la solución.\break
 \end{itemize}
 \end{frame}
 
 %%% Parte Práctica
 
-\section{Caso Práctico: Clustering en Python}
+\section{Caso Práctico: \textit{Clustering} en Python}
 
 \begin{frame}{Flor de Iris}
 
@@ -893,19 +753,6 @@ MeanShift     & 3                    & 290.470683  & 0.476961    & 0.289073     
 \end{table}
 \end{frame}
 
-\begin{frame}{Gráficas}
-Para cada algoritmo, se mostrarán algunas gráficas que nos ayudarán a comprender como funciona el agrupamiento para el caso de estudio.\break
-
-Las gráficas usadas son: 
-\begin{itemize}
-\item \textbf{Scatter Matrix.}
-\item \textbf{Heatmap.}
-\item \textbf{KPlot y BoxPlot.}
-\end{itemize}\
-
-Para el caso del algoritmo \textbf{Agglomerative Clustering} mostraremos como se forman los distintos clústers a partir del \textbf{Dendrograma} generado.
-\end{frame}
-
 \begin{frame}[fragile]
 \frametitle{K-Means}
 Para el algoritmo \textbf{K-Means} se ha utilizado el siguiente código en python y se ha obtenido la siguiente agrupación de las muestras:\break
@@ -940,13 +787,6 @@ cluster 2: 39 (26.00%)
 \end{figure}
 \end{frame}
 
-\begin{frame}
-\begin{figure}[h]
-\centering
-\includegraphics[scale=0.24]{dani/boxplotK-MeansIRIS.png}
-\end{figure}
-\end{frame}
-
 \begin{frame}[fragile]
 \frametitle{Agrupamiento Jerárquico}
 Para el algoritmo \textbf{Agglomerative Clustering}, se ha utilizado el siguiente código en python y se ha obtenido la siguiente agrupación de las muestras:\break
@@ -965,19 +805,6 @@ cluster 2: 33 (22.00%)
 \centering
 \includegraphics[scale=0.34]{dani/scatmatrixAggClusterIRIS.png}
 \end{figure}
-\end{frame}
-
-\begin{frame}
-\begin{figure}[h]
-\centering
-\includegraphics[scale=0.29]{dani/heatmapAggClusterIRIS.png}
-\end{figure}
-\end{frame}
-
-\begin{frame}{Dendrogramas}
-Un \textbf{dendrograma} es un diagrama de árbol que muestra los grupos que se forman al crear clústers de observaciones en cada paso y sus niveles de similitud.\break
-
-La decisión acerca de la agrupación final también se conoce como \textit{cortar el dendrograma}. Cortar el dendrograma es similar a trazar una línea a lo largo del dendrograma para especificar la agrupación final.
 \end{frame}
 
 \begin{frame}
@@ -1016,14 +843,6 @@ cluster 2:  30 (20.00%)
 \end{figure}
 \end{frame}
 
-\begin{frame}
-\begin{figure}[h]
-\centering
-\includegraphics[scale=0.29]{dani/heatmapDBSCANIRIS.png}
-\end{figure}
-\end{frame}
-
-
 \begin{frame}[fragile]
 \frametitle{Mean Shift}
 Para \textbf{Mean Shift}, se ha utilizado el siguiente código en python y se ha obtenido la siguiente agrupación de las muestras:\break
@@ -1043,14 +862,6 @@ cluster 2: 19 (12.67%)
 \includegraphics[scale=0.34]{dani/scatmatrixMeanShiftIRIS.png}
 \end{figure}
 \end{frame}
-
-\begin{frame}
-\begin{figure}[h]
-\centering
-\includegraphics[scale=0.29]{dani/heatmapMeanShiftIRIS.png}
-\end{figure}
-\end{frame}
-
 
 \begin{frame}[fragile, allowframebreaks]
   \frametitle{Referencias}
