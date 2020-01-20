@@ -733,60 +733,6 @@ Así, el dendograma quedaría como muestra la Figura \ref{fig:agloEjem}.
 	\label{fig:agloEjem}
 \end{figure}
 
-\paragraph{DBSCAN}
-
-Al contrario de la estrategia seguida por K-Means, DBSCAN (\textit{Density-Based Spatial \textit{clustering} of Applications with Noise}) no presupone clústeres convexos, sino que se basa en la densidad de las muestras para identificar los clústeres. Por este motivo, los clústeres identificados por DBSCAN pueden ser de cualquier forma.\\
-
-Dos parámetros importantes para definir este algoritmo son: \textbf{eps}, máxima distancia entre dos muestras para poder ser consideradas pertenecientes al mismo "vecindario", y \textbf{min\_samples}, número de muestras en un vecindario para que una región pueda ser considerada densa.\\
-
-Consideremos un conjunto de puntos a ser agrupados en un espacio determinado. La técnica de agrupación DBSCAN clasifica los puntos como puntos núcleo, puntos (densamente-)alcanzables, o ruido de la siguiente forma:
-
-\begin{itemize}
-\item Un punto $p$ pertenece al núcleo si al menos \textit{min\_samples} puntos están a una distancia $\varepsilon$ de él y esos puntos son directamente alcanzables desde $p$. No es posible tener puntos directamente alcanzables desde un punto distinto al núcleo.
-\item Un punto $q$ es alcanzable desde $p$ si existe una secuencia de puntos $p_1\dots p_n$ donde $p_1=p$ y $p_n=q$ y cada punto $p_{i+1}$ es directamente alcanzable desde $p_i$.
-\item Un punto que no sea alcanzable desde cualquier otro se considera ruido.
-\end{itemize}
-
-Si $p$ es un punto núcleo, este forma un clúster junto a otros puntos que sean alcanzables desde él. Cada clúster contiene al menos un punto núcleo. Los puntos no núcleos alcanzables pueden pertenecer a un clúster pero actúan como una barrera puesto que no es posible alcanzar más puntos desde estos.\\
-
-Se puede observar que la relación de ser alcanzable no es simétrica. Por definición, ningún punto puede ser alcanzable desde un punto que no sea núcleo, sin importar la distancia a la que se encuentre. Por lo tanto la noción de connectividad es necesaria para definir formalmente la extensión de un clúster dada por DBSCAN. Dos puntos $p$ y $q$ están conectados densamente si existe un punto $o$ tal que ambos $p$ y $q$ sean directamente alcanzables desde $o$. La relación estar densamente conectado es simétrica.\\
-
-Por tanto un clúster generado por el método DBSCAN satisface dos propiedades:
-
-\begin{itemize}
-\item Todos los puntos de un mismo clúster están densamente conectados entre sí.
-\item Si un punto $A$ es densamente alcanzable desde cualquier otro punto $B$ del clúster, entonces $A$ también forma parte del clúster.
-\end{itemize}
-
-\paragraph{Mean Shift}
-
-Mean Shift es una técnica de análisis de espacio de características no paramétrica para localizar los máximos de una función de densidad. Es un método iterativo que parte de una estimación inicial $x$. Dada una función núcleo $K(x_i-x)$. Esta función determina el peso de los puntos cercanos para la reestimación de la media. Normalmente se usa un núcleo gaussiano en la distancia de la estimación actual, $K(x_i-x)=e^{-c||x_i-x||^2}$. La media ponderada de la densidad en la ventana determinada por K es:
-
-$$m(x)=\dfrac{\sum_{x_i\in N(x)}K(x_i-x)x_i}{\sum_{x_i\in N(x)}K(x_i-x)},$$
-
-donde $N(x)$ es el vecindario de x, un conjunto de puntos donde $K(x_i)\neq0$.\\
-
-La diferencia $m(x)-x$ se denomina Mean Shift. El algoritmo establece $m(x)\rightarrow x$ y repite la estimación hasta que $m(x)$ converja.\\
-
-Todavía no se conoce una prueba rígida de la convergencia del algoritmo utilizando un núcleo general en un espacio de alta dimensión. Aliyari Ghassabeh mostró la convergencia del algoritmo de cambio medio en una dimensión con una función de perfil diferenciable, convexa y estrictamente decreciente. Sin embargo, el caso unidimensional tiene aplicaciones limitadas en el mundo real.\\
-
-Además, se ha demostrado la convergencia del algoritmo en dimensiones superiores con un número finito de los puntos estacionarios (o aislados). Sin embargo, no se han proporcionado condiciones suficientes para que una función general del núcleo tenga puntos estacionarios finitos (o aislados).\\
-
-Sea un conjunto de datos finito $S$ embebido en el espacio euclídeo n-dimensional $X$. Sea $K$ un núcleo plano que tiene como función característica en X:
-
-$$K(x)=\left\{
-1 \ si \ ||x||\leq \lambda \atop
-0 \ si \ ||x||> \lambda
-\right. .$$
-
-En cada iteración del algoritmo, se establece $m(x)\rightarrow x$ para todo $s\in S$ simultáneamente. Una de las preguntas que nos podemos hacer es cómo estimar la función de densidad dado un conjunto escaso de muestras. Uno de los enfoques más simples es simplemente suavizar los datos, por ejemplo, convolucionándolos con un núcleo fijo de ancho $h$:
-
-$$f(x)=\sum_i K(x-x_i)=\sum_i k\dfrac{||x-x_i||^2}{h^2},$$
-
-donde $x_i$ son las muestras de entrada y $k$ la función núcleo y $h$ es el único parámetro que toma el algoritmo que se denomina \textit{bandwidth}. Una vez que hemos calculado $f(x)$ a partir de la ecuación anterior, podemos encontrar sus máximos locales utilizando el ascenso de gradiente o alguna otra técnica de optimización.\\
-
-Usando esta aproximación por fuerza bruta hace que el problema sea computacionalmente inviable conforme aumentamos las dimensiones del problema sobre el espacio de búsqueda total. Por tanto, Mean Shift utiliza la técnica del reinicio de gradiente descendiente múltiple, la cual empieza desde un máximo local $y_k$ y calcula su aproximación $f(x)$ y avanza en esa dirección.
-
 \subsubsection{Técnicas divisivas}
 
 Los algoritmos divisivos parten de un único clúster y en cada iteración van dividiendo clústeres según la disimilitud entre los componentes del mismo, bajando así en la jerarquía.
@@ -806,9 +752,6 @@ Como podemos ver en la Figura \ref{fig:divisivo} es similar al dendrograma de la
 	\caption{Ejemplo de dendrograma divisivo.}
 	\label{fig:divisivo}
 \end{figure}
-
-
-
 
 \subsection{No jerárquicos}
 Los métodos de \textit{clustering} no jerárquicos, también denominados de particionamiento, simplemente  dividen los datos observados en un número $K$ predeterminado de grupos o clústeres, donde no hay una relación jerárquica entre la solución de $K$-clústeres y la solución de $(K+1)$-clústeres. Dado un valor $K$ buscamos una partición de los datos en $K$ clústeres de tal manera que los datos dentro de cada clúster sean similares entre ellos, mientras que los datos de diferentes clústeres están bastante diferenciados.
@@ -872,6 +815,61 @@ sea reducida en magnitud, donde $c(i)$ es el clúster que contiene el $i$ésimo 
 
 La idea detrás del \textit{clustering} difuso es que a los datos, para ser agrupados, se les asigna probabilidades de pertenencia a cada uno de los $K$ clústeres. Sea $u_{ik}$ como denotamos a la fuerza de pertenencia del $i$-ésimo dato al $k$-ésimo clúster. Para el $i$-ésimo dato, necesitamos que $\{u_{ik}\}$ se comporte como una probabilidad. Eso es que $u_{ik}\geq0$, para todo $i$ y $k=1,2,...,K$, y $\sum_{k=1}^{K}u_{ik}=1$ para cada $i$. Esto choca con los métodos de particionamiento de $K$-medias o PAM, donde cada dato es asignado a un solo clúster.
 Dada la matriz de proximidad $D=(d_{ij})$ y un número de clústeres $K$, la desconocida fuerza de pertenencia, $\{u_{ik}\}$, es encontrada minimizando la función objetivo, $$\sum_{k=1}^{K}\frac{\sum_i\sum_ju_{ik}^2u_{jk}^2d_{ij}}{2\sum_lu_{lk}^2}.$$ La función objetivo se minimiza bajo las restricciones de no negatividad y unidad de la suma usando un algoritmo iterativo.
+
+
+\subsubsection{DBSCAN}
+
+Al contrario de la estrategia seguida por K-Means, DBSCAN (\textit{Density-Based Spatial \textit{clustering} of Applications with Noise}) no presupone clústeres convexos, sino que se basa en la densidad de las muestras para identificar los clústeres. Por este motivo, los clústeres identificados por DBSCAN pueden ser de cualquier forma.\\
+
+Dos parámetros importantes para definir este algoritmo son: \textbf{eps}, máxima distancia entre dos muestras para poder ser consideradas pertenecientes al mismo "vecindario", y \textbf{min\_samples}, número de muestras en un vecindario para que una región pueda ser considerada densa.\\
+
+Consideremos un conjunto de puntos a ser agrupados en un espacio determinado. La técnica de agrupación DBSCAN clasifica los puntos como puntos núcleo, puntos (densamente-)alcanzables, o ruido de la siguiente forma:
+
+\begin{itemize}
+\item Un punto $p$ pertenece al núcleo si al menos \textit{min\_samples} puntos están a una distancia $\varepsilon$ de él y esos puntos son directamente alcanzables desde $p$. No es posible tener puntos directamente alcanzables desde un punto distinto al núcleo.
+\item Un punto $q$ es alcanzable desde $p$ si existe una secuencia de puntos $p_1\dots p_n$ donde $p_1=p$ y $p_n=q$ y cada punto $p_{i+1}$ es directamente alcanzable desde $p_i$.
+\item Un punto que no sea alcanzable desde cualquier otro se considera ruido.
+\end{itemize}
+
+Si $p$ es un punto núcleo, este forma un clúster junto a otros puntos que sean alcanzables desde él. Cada clúster contiene al menos un punto núcleo. Los puntos no núcleos alcanzables pueden pertenecer a un clúster pero actúan como una barrera puesto que no es posible alcanzar más puntos desde estos.\\
+
+Se puede observar que la relación de ser alcanzable no es simétrica. Por definición, ningún punto puede ser alcanzable desde un punto que no sea núcleo, sin importar la distancia a la que se encuentre. Por lo tanto la noción de connectividad es necesaria para definir formalmente la extensión de un clúster dada por DBSCAN. Dos puntos $p$ y $q$ están conectados densamente si existe un punto $o$ tal que ambos $p$ y $q$ sean directamente alcanzables desde $o$. La relación estar densamente conectado es simétrica.\\
+
+Por tanto un clúster generado por el método DBSCAN satisface dos propiedades:
+
+\begin{itemize}
+\item Todos los puntos de un mismo clúster están densamente conectados entre sí.
+\item Si un punto $A$ es densamente alcanzable desde cualquier otro punto $B$ del clúster, entonces $A$ también forma parte del clúster.
+\end{itemize}
+
+\subsubsection{Mean Shift}
+
+Mean Shift es una técnica de análisis de espacio de características no paramétrica para localizar los máximos de una función de densidad. Es un método iterativo que parte de una estimación inicial $x$. Dada una función núcleo $K(x_i-x)$. Esta función determina el peso de los puntos cercanos para la reestimación de la media. Normalmente se usa un núcleo gaussiano en la distancia de la estimación actual, $K(x_i-x)=e^{-c||x_i-x||^2}$. La media ponderada de la densidad en la ventana determinada por K es:
+
+$$m(x)=\dfrac{\sum_{x_i\in N(x)}K(x_i-x)x_i}{\sum_{x_i\in N(x)}K(x_i-x)},$$
+
+donde $N(x)$ es el vecindario de x, un conjunto de puntos donde $K(x_i)\neq0$.\\
+
+La diferencia $m(x)-x$ se denomina Mean Shift. El algoritmo establece $m(x)\rightarrow x$ y repite la estimación hasta que $m(x)$ converja.\\
+
+Todavía no se conoce una prueba rígida de la convergencia del algoritmo utilizando un núcleo general en un espacio de alta dimensión. Aliyari Ghassabeh mostró la convergencia del algoritmo de cambio medio en una dimensión con una función de perfil diferenciable, convexa y estrictamente decreciente. Sin embargo, el caso unidimensional tiene aplicaciones limitadas en el mundo real.\\
+
+Además, se ha demostrado la convergencia del algoritmo en dimensiones superiores con un número finito de los puntos estacionarios (o aislados). Sin embargo, no se han proporcionado condiciones suficientes para que una función general del núcleo tenga puntos estacionarios finitos (o aislados).\\
+
+Sea un conjunto de datos finito $S$ embebido en el espacio euclídeo n-dimensional $X$. Sea $K$ un núcleo plano que tiene como función característica en X:
+
+$$K(x)=\left\{
+1 \ si \ ||x||\leq \lambda \atop
+0 \ si \ ||x||> \lambda
+\right. .$$
+
+En cada iteración del algoritmo, se establece $m(x)\rightarrow x$ para todo $s\in S$ simultáneamente. Una de las preguntas que nos podemos hacer es cómo estimar la función de densidad dado un conjunto escaso de muestras. Uno de los enfoques más simples es simplemente suavizar los datos, por ejemplo, convolucionándolos con un núcleo fijo de ancho $h$:
+
+$$f(x)=\sum_i K(x-x_i)=\sum_i k\dfrac{||x-x_i||^2}{h^2},$$
+
+donde $x_i$ son las muestras de entrada y $k$ la función núcleo y $h$ es el único parámetro que toma el algoritmo que se denomina \textit{bandwidth}. Una vez que hemos calculado $f(x)$ a partir de la ecuación anterior, podemos encontrar sus máximos locales utilizando el ascenso de gradiente o alguna otra técnica de optimización.\\
+
+Usando esta aproximación por fuerza bruta hace que el problema sea computacionalmente inviable conforme aumentamos las dimensiones del problema sobre el espacio de búsqueda total. Por tanto, Mean Shift utiliza la técnica del reinicio de gradiente descendiente múltiple, la cual empieza desde un máximo local $y_k$ y calcula su aproximación $f(x)$ y avanza en esa dirección.
 
 
 \section{Número de clústeres}\label{sec:num}
