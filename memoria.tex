@@ -202,7 +202,7 @@ El \textit{clustering} consiste en agrupar objetos similares. Dos objetos se con
 
 %Las técnicas de clustering se desarrollaron por primera vez en el ámbito aplicado de la taxonomía o clasificación biológica
 
-Si tenemos una serie de observaciones sin clasificar, el objetivo del \textit{clustering} es agrupar los datos en clases o clústeres. Por ejemplo, en ámbitos biológicos para determinar la especie de una planta concreta. Este tipo de problema aparece cuando queremos no solo identificar especies nuevas, sino también cuando queremos establecer las relaciones entre ellas. El término \textit{clustering} se considera sinónimo a taxonomía numérica o clasificación. En el ámbito de la ciencia de datos se considera problemas diferentes clasificación donde se conocen a priori las clases posibles (aprendizaje supervisado) y agrupamiento (aprendizaje no supervisado) donde el número de grupos es desconocido. En el primero conocemos de antemano las clases de los objetos, mientras que en el segundo, a partir de los grupos creados se inferirán las características principales de los grupos.
+Si tenemos una serie de observaciones sin clasificar, el objetivo del \textit{clustering} es agrupar los datos en clases o clústeres. Por ejemplo, en ámbitos biológicos para determinar la especie de una planta concreta. Este tipo de problema aparece cuando queremos no solo identificar especies nuevas, sino también cuando queremos establecer las relaciones entre ellas. El término \textit{clustering} se considera sinónimo a taxonomía numérica o clasificación. En el ámbito de la ciencia de datos se consideran dos problemas diferentes: clasificación, donde se conocen a priori las clases posibles (aprendizaje supervisado) y agrupamiento (aprendizaje no supervisado), donde el número de grupos es desconocido. En el primero conocemos de antemano las clases de los objetos, mientras que en el segundo, a partir de los grupos creados se inferirán las características principales de los grupos.
 
 Utilizando el lenguaje matemático, podemos definir el problema como sigue:
 
@@ -302,7 +302,7 @@ y la distancia euclídea al cuadrado, $\sum_{j=1}^p{(x_{ij}-x_{kj})^2}$, proporc
 $$\sum_{j=1}^5{(x_{ij}-x_{kj})^2}=(1-1)^2+(0-1)^2+(0-0)^2+(1-1)^2+(1-0)^2=2.$$
 
 Aunque la distancia usada en el Ejemplo \ref{ej:binarizacion} puede ser usada para medir la similitud, tiene la desventaja de que valora por igual las parejas 1-1 y 0-0. En algunos casos, una pareja 1-1 es una indicación mayor de similitud que una pareja 0-0. Por ejemplo, al agrupar gente, que dos personas sean capaz de leer griego antiguo es una evidencia mayor de similitud que la ausencia de dicha habilidad. Para reflejar este trato diferente entre las parejas de 1-1 y 0-0, se han sugerido diversos esquemas para definir los coeficientes de similitud.\\
-Para introducir dichos esquemas, vamos a organizar las frecuencias de las parejas que coinciden y las que no para los ítems $i$ y $k$ en la forma de una tabla de contingencia:
+Para introducir dichos esquemas, vamos a organizar las frecuencias de las parejas que coinciden y las que no para los ítems $i$ y $k$ en la forma de una tabla de contingencia, que podemos encontrar en la Tabla \ref{tab:contingencia}.
 
 \begin{table}[H]
   \centering
@@ -322,7 +322,7 @@ Para introducir dichos esquemas, vamos a organizar las frecuencias de las pareja
 }
 \end{table}
 
-En esta tabla, $a$ representa la frecuencia de parejas 1-1,  $b$ es la frecuencia de parejas 1-0 y así sucesivamente. Dadas las cinco parejas de la tabla \ref{tab:binarizacion}, $a=2$ y $b=c=d=1$.\\
+En esta tabla, $a$ representa la frecuencia de parejas 1-1,  $b$ es la frecuencia de parejas 1-0 y así sucesivamente. Dadas las cinco parejas de la Tabla \ref{tab:binarizacion}, $a=2$ y $b=c=d=1$.\\
 
 La Tabla \ref{tab:similitud} lista coeficientes de similitud comunes definidos en términos de frecuencias de la Tabla \ref{tab:contingencia}.
 
@@ -367,7 +367,8 @@ Individuo 1 & 68                       & 140                    & Verde         
 Individuo 2 & 73 & 185 & Marrón & Moreno & Derecha & Masculino                  \\
 Individuo 3 & 67 & 165 & Azul & Rubio & Derecha & Masculino                  \\
 Individuo 4 & 64 & 120 & Marrón & Moreno                            & Derecha & Femenino \\
-Individuo 5 & 76 & 210 & Marrón & Moreno & Izquierda & Masculino                 
+Individuo 5 & 76 & 210 & Marrón & Moreno & Izquierda & Masculino\\
+\bottomrule
 \end{tabular}
 }
 \end{table}
@@ -564,7 +565,7 @@ En los ejemplo hasta el momento, hemos utilizado nuestra impresión visual de la
 \section{Métodos de agrupamiento}\label{sec:algoritmos}
 Un método de agrupamiento es un procedimiento de agrupación de una serie de vectores de acuerdo con un criterio. Estos criterios pueden ser, por ejemplo, la distancia o la similitud de una característica. La cercanía se define en términos de una determinada función de distancia como las vista en la Sección \ref{sec:medidas}. Aunque la medida más utilizada para calcular la simulitud entre los casos es la matriz de correlación entre los casos, también existen muchos algoritmos que se basan en la maximización de la verosimilitud.
 
-Los métodos de agrupamiento se pueden dividir en dos tipos: jerárquicos y no jerárquicos (o de particionamiento). La principal diferencia entre ambos métodos es que en los jerárquicos una vez que se asigna un elemento a un grupo, no se puede cambiar, mientras que en los no jerárquicos sí. Además, en los métodos no jerárquicos se necesita que el número de clústers esté fijado a priori, en cambio en el agrupamiento jerárquico el propio método va fijando el número de clústers. En la Figura \ref{fig:ejemplo_metodos} observamos a la izquierda la representación de un método jerárquico (las líneas horizontales indican diferentes divisiones) y a la derecha la representación del resultado de un método de particionamiento, donde cada grupo está indicado en un color diferente).
+Los métodos de agrupamiento se pueden dividir en dos tipos: jerárquicos y no jerárquicos (o de particionamiento). La principal diferencia entre ambos métodos es que en los jerárquicos una vez que se asigna un elemento a un grupo, no se puede cambiar, mientras que en los no jerárquicos sí. Además, en los métodos no jerárquicos se necesita que el número de clústers esté fijado a priori, en cambio en el agrupamiento jerárquico el propio método va fijando el número de clústers. En la Figura \ref{fig:ejemplo_metodos} observamos a la izquierda la representación de un método jerárquico (las líneas horizontales indican diferentes divisiones) y a la derecha la representación del resultado de un método de particionamiento, donde cada grupo está indicado en un color diferente.
 
 \begin{figure}[H]
 	\centering
@@ -605,7 +606,7 @@ Los algoritmos aglomerativos son prácticamente los más usados. Consisten en fo
 Sean $P$ y $Q$ dos grupos que vamos a unir, generando un nuevo grupo $P$ + $Q$. Ahora calculamos la distancia entre $P$ + $Q$ y $R$ utilizando la siguiente función (\ref{eq:distAglo}):
 
 \begin{equation}\label{eq:distAglo}
-	d(R, P+Q) = \delta_1 d(R,P) + \delta_2 d(R,Q) + \delta_3 d(P,Q) + \delta_4 \textvertline d(R,P) - d(R,Q) \textvertline
+	d(R, P+Q) = \delta_1 d(R,P) + \delta_2 d(R,Q) + \delta_3 d(P,Q) + \delta_4 \textvertline d(R,P) - d(R,Q). \textvertline
 \end{equation}
 
 Donde los $\delta_i$ son los factores de ponderación que dan lugar a los diferentes algoritmos de aglomeración, algunos se describen en la Tabla \ref{tab:groupDist}. Definimos $n_P$ como el número de elementos que hay en el grupo $P$, de la misma forma se definen $n_Q$ y $n_R$.
@@ -639,17 +640,17 @@ La secuencia de clúster se representan gráficamente mediante un dendrograma, e
 	\label{fig:aglomerativo}
 \end{figure}
 
-A continuación se muestran algunos métodos aglomerativos
+A continuación se muestran algunos métodos aglomerativos.
 
 \paragraph{Single Link Method}
 
-Para entender mejor este método se presentará un ejemplo usando \textit{Single Link Method}. Este método es una combinación de los objetos de los clústers teniendo en cuenta las disimilitudes entre los clústers. Para realizar este ejemplo introducimos algunos términos de notación, $r$ representa a cualquier elemento en el clúster $R$, $r \in R$, y $s$ será cualquier elemento del clúster $S$, $s \in S$. Calculamos la distancia entre $R$ y $S$ mediante la  fórmula \ref{eq:distAgloEjm}
+Para entender mejor este método se presentará un ejemplo usando \textit{Single Link Method}. Este método es una combinación de los objetos de los clústeres teniendo en cuenta las disimilitudes entre los mismos. Para realizar este ejemplo introducimos algunos términos de notación, $r$ representa a cualquier elemento en el clúster $R$, $r \in R$, y $s$ será cualquier elemento del clúster $S$, $s \in S$. Calculamos la distancia entre $R$ y $S$ mediante la  fórmula \ref{eq:distAgloEjm}:
 
 \begin{equation}\label{eq:distAgloEjm}
-	d(R, S) = min \{d_{rs}\ :\ r \in R, \ s \in S\}
+	d(R, S) = min \{d_{rs}\ :\ r \in R, \ s \in S\}.
 \end{equation}
 
-Consideremos la matriz de distancias $D$
+Consideremos la matriz de distancias $D$ dada por
 
 \[ \mathcal{D} =
 \left[ \begin{array}{c}
@@ -666,16 +667,16 @@ d_{rs}
 		5 & 9 & 8 & 7 & 5 & 0 \\
 		\\
 	\end{block}
-\end{blockarray}  
+\end{blockarray}  .
 \] 
 
-Si observamos la matriz $D$ encontramos que la distancia más pequeña es 2, el elemento $d_{12}$ esto nos quiere decir que los elementos $1$ y $2$ son los más cercanos o los más similares. siguiendo el algoritmo los agrupamos en un mismo clúster $(12)$. Ahora calculamos las nuevas distancias entre el nuevo clúster y el resto de elementos.
+Si observamos la matriz $D$ encontramos que la distancia más pequeña es 2, el elemento $d_{12}$ esto nos quiere decir que los elementos $1$ y $2$ son los más cercanos o los más similares. siguiendo el algoritmo los agrupamos en un mismo clúster $(12)$. Ahora calculamos las nuevas distancias entre el nuevo clúster y el resto de elementos:
 
-\begin{center}
-	$d_{(12)(3)}$ = min\{$d_{13}$, $d_{23}$\} = min \{4, 8\} = 4
-	$d_{(12)(4)}$ = min\{$d_{14}$, $d_{24}$\} = min \{7, 9\} = 7
-	$d_{(12)(5)}$ = min\{$d_{15}$, $d_{25}$\} = min \{9, 8\} = 8
-\end{center}
+\begin{align*}
+	d_{(12)(3)} &= \min\{d_{13}, d_{23}\} = \min \{4, 8\} = 4,\\
+	d_{(12)(4)} &= \min\{d_{14}, d_{24}\} = \min \{7, 9\} = 7,\\
+	d_{(12)(5)} &= \min\{d_{15}, d_{25}\} = \min \{9, 8\} = 8.\\
+\end{align*}
 
 Borramos los elementos $1$ y $2$, y añadimos las nuevas filas y columnas correspodientes al nuevo clúster $(12)$.
 
@@ -690,17 +691,17 @@ Borramos los elementos $1$ y $2$, y añadimos las nuevas filas y columnas corres
 		5 & 8 & 7 & 5 & 0 \\
 		\\
 	\end{block}
-\end{blockarray}  
+\end{blockarray}.  
 \] 
 
 Volvemos a observar la matriz fijandonos en el elemento $d_{34}$, así los elementos que están más cerca son $3$ y $4$. Formamos el nuevo clúster $(34)$. Calculamos los nuevo valores de la matriz.
 
-\begin{center}
-	$d_{(34)(12)}$ = min\{$d_{(3)(12)}$, $d_{(4)(12)}$\} = min \{4, 7\} = 4
-	$d_{(34)(5)}$ = min\{$d_{(3)(5)}$, $d_{(4)(5)}$\} = min \{7, 5\} = 5
-\end{center}
+\begin{align*}
+	d_{(34)(12)} &= \min\{d_{(3)(12)}, d_{(4)(12)}\} = \min \{4, 7\} = 4,\\
+	d_{(34)(5)} &= \min\{d_{(3)(5)}, d_{(4)(5)}\} = \min \{7, 5\} = 5.
+\end{align*}
 
-La matriz quedaría
+La matriz quedaría:
 
 \[ \mathcal{D}_2  =
 \begin{blockarray}{cccc}
@@ -712,18 +713,18 @@ La matriz quedaría
 		5 & 8 & 5 & 0 \\
 		\\
 	\end{block}
-\end{blockarray}  
+\end{blockarray}.
 \] 
 
-El valor más similar en $D_2$ es 4 que corresponde con los elementos $(34)$ y $(12)$. Calculamos la última distancia
+El valor más similar en $D_2$ es 4 que se corresponde con los elementos $(34)$ y $(12)$. Calculamos la última distancia:
 
 \begin{center}
-	$d_{(12)(34)5}$ = min\{$d_{(12)(5)}$, $d_{(34)(5)}$\} = min \{8, 5\} = 5
+	$d_{(12)(34)5}$ = $\min$\{$d_{(12)(5)}$,\ $d_{(34)(5)}$\} = $\min$ \{8, 5\} = 5.
 \end{center}
 
-Finalemente juntamos el elemento $5$ con los clústers $(12)$ y $(34)$ formando el clúster $(12345)$.
+Finalemente juntamos el elemento $5$ con los clústeres $(12)$ y $(34)$ formando el clúster $(12345)$.
 
-Así el dendograma quedaría de la siguiente forma \ref{fig:agloEjem}
+Así, el dendograma quedaría como muestra la Figura \ref{fig:agloEjem}.
 
 \begin{figure}[H]
 	\centering
@@ -741,7 +742,7 @@ Dos parámetros importantes para definir este algoritmo son: \textbf{eps}, máxi
 Consideremos un conjunto de puntos a ser agrupados en un espacio determinado. La técnica de agrupación DBSCAN clasifica los puntos como puntos núcleo, puntos (densamente-)alcanzables, o ruido de la siguiente forma:
 
 \begin{itemize}
-\item Un punto $p$ pertenece al núcleo si al menos \textit{min\_samples} puntos están a una distancia $\epsilon$ de él y esos puntos son directamente alcanzables desde $p$. No es posible tener puntos directamente alcanzables desde un punto distinto al núcleo.
+\item Un punto $p$ pertenece al núcleo si al menos \textit{min\_samples} puntos están a una distancia $\varepsilon$ de él y esos puntos son directamente alcanzables desde $p$. No es posible tener puntos directamente alcanzables desde un punto distinto al núcleo.
 \item Un punto $q$ es alcanzable desde $p$ si existe una secuencia de puntos $p_1\dots p_n$ donde $p_1=p$ y $p_n=q$ y cada punto $p_{i+1}$ es directamente alcanzable desde $p_i$.
 \item Un punto que no sea alcanzable desde cualquier otro se considera ruido.
 \end{itemize}
@@ -761,7 +762,7 @@ Por tanto un clúster generado por el método DBSCAN satisface dos propiedades:
 
 Mean Shift es una técnica de análisis de espacio de características no paramétrica para localizar los máximos de una función de densidad. Es un método iterativo que parte de una estimación inicial $x$. Dada una función núcleo $K(x_i-x)$. Esta función determina el peso de los puntos cercanos para la reestimación de la media. Normalmente se usa un núcleo gaussiano en la distancia de la estimación actual, $K(x_i-x)=e^{-c||x_i-x||^2}$. La media ponderada de la densidad en la ventana determinada por K es:
 
-$$m(x)=\dfrac{\sum_{x_i\in N(x)}K(x_i-x)x_i}{\sum_{x_i\in N(x)}K(x_i-x)}$$
+$$m(x)=\dfrac{\sum_{x_i\in N(x)}K(x_i-x)x_i}{\sum_{x_i\in N(x)}K(x_i-x)},$$
 
 donde $N(x)$ es el vecindario de x, un conjunto de puntos donde $K(x_i)\neq0$.\\
 
@@ -776,13 +777,13 @@ Sea un conjunto de datos finito $S$ embebido en el espacio euclídeo n-dimension
 $$K(x)=\left\{
 1 \ si \ ||x||\leq \lambda \atop
 0 \ si \ ||x||> \lambda
-\right.$$
+\right. .$$
 
-En cada iteración del algoritmo, se establece $m(x)\rightarrow x$ para todo $s\in S$ simultáneamente. Una de las preguntas que nos podemos hacer es, cómo estimar la función de densidad dado un conjunto escaso de muestras. Uno de los enfoques más simples es simplemente suavizar los datos, por ejemplo, convolucionándolos con un núcleo fijo de ancho $h$:
+En cada iteración del algoritmo, se establece $m(x)\rightarrow x$ para todo $s\in S$ simultáneamente. Una de las preguntas que nos podemos hacer es cómo estimar la función de densidad dado un conjunto escaso de muestras. Uno de los enfoques más simples es simplemente suavizar los datos, por ejemplo, convolucionándolos con un núcleo fijo de ancho $h$:
 
-$$f(x)=\sum_i K(x-x_i)=\sum_i k\dfrac{||x-x_i||^2}{h^2}$$
+$$f(x)=\sum_i K(x-x_i)=\sum_i k\dfrac{||x-x_i||^2}{h^2},$$
 
-donde $x_i$ son las muestras de entrada y $k$ la función núcleo y h es el único parámetro que toma el algoritmo que se denomina \textit{bandwidth}. Una vez que hemos calculado $f(x)$ a partir de la ecuación anterior, podemos encontrar sus máximos locales utilizando el ascenso de gradiente o alguna otra técnica de optimización.\\
+donde $x_i$ son las muestras de entrada y $k$ la función núcleo y $h$ es el único parámetro que toma el algoritmo que se denomina \textit{bandwidth}. Una vez que hemos calculado $f(x)$ a partir de la ecuación anterior, podemos encontrar sus máximos locales utilizando el ascenso de gradiente o alguna otra técnica de optimización.\\
 
 Usando esta aproximación por fuerza bruta hace que el problema sea computacionalmente inviable conforme aumentamos las dimensiones del problema sobre el espacio de búsqueda total. Por tanto, Mean Shift utiliza la técnica del reinicio de gradiente descendiente múltiple, la cual empieza desde un máximo local $y_k$ y calcula su aproximación $f(x)$ y avanza en esa dirección.
 
@@ -798,7 +799,7 @@ En cada paso del algoritmo divisivo se deben de aplicar tres opciones:
 	\item Dar una fórmula para determinar los niveles de nodo de la jerarquía resultante.
 \end{itemize}
 
-Como podemos ver en la figura \ref{fig:divisivo} es similar al dendrograma de la figura \ref{fig:aglomerativo}, donde la diferencia es que en lugar de mirarlo de izquierda a derecha, lo miramos de derecha a izquierda.
+Como podemos ver en la Figura \ref{fig:divisivo} es similar al dendrograma de la Figura \ref{fig:aglomerativo}, donde la diferencia es que en lugar de mirarlo de izquierda a derecha, lo miramos de derecha a izquierda.
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.7]{victoria/disociativo}
@@ -905,7 +906,7 @@ R^{2}_{k} = \frac{T - \sum_k SSE_k}{T}.
 \]
 Para $ n $ clústeres $ SSE_k = 0 $ por lo que $ R^2 = 1 $. A medida que vamos realizando los agrupamientos, estos estarán más separados. Una gran disminución en $ R^2_k $ representaría un mal agrupamiento. También podríamos tener en cuenta el cambio en $ R^2 $ al unir los clústeres $ R $ y $ S $ como $ SR^2 = R_k^2 - R^2_{k-1} $. El estadístico $ SR^2 $ representa, en función de $ T $, la proporción de $ SSE_t - (SSE_r + SSE_s) $ donde los clústeres $ C_R $ y $ C_S $ se han unido para formar el clúster $ C_T $.  Cuanto mayor sea el índice mayor será la pérdida de homogeneidad, ya que, significaría que la suma de los errores al cuadrado ha aumentado con la formación del nuevo clúster.\\
 
-El objetivo del análisis clúster es encontrar el menor número de clústeres homogéneos. Para un solo clúster, la varianza agrupada para todas las variables es la media de las varianzas de cada una de las variables, es decir, $ s^2 = \sum_{i=1}^{n} \norm{\yy_i - \bar{\yy}}^2/ p(n-1)$. También podemos calcularla para un clúster $ C_k $ con $ n_k $ observaciones de la siguiente manera:
+El objetivo del análisis clúster es encontrar el menor número de clústeres homogéneos. Para un solo clúster, la varianza agrupada para todas las variables es la media de las varianzas de cada una de las variables, es decir, $ s^2 = \sum_{i=1}^{n} \norm{\yy_i - \bar{\yy}}^2/ p(n-1)$, donde $p$ indica el número de características consideradas. También podemos calcularla para un clúster $ C_k $ con $ n_k $ observaciones de la siguiente manera:
 \[
 s^2 = \sum_{i=1}^{n_k} \norm{\yy_i - \bar{\yy}_k}^2/ p(n_k-1).
 \]
@@ -973,6 +974,14 @@ Notamos que se puede usar para cualquier método y distancia. Según \cite{tibsh
 \end{figure}
 Así, lo ideal sería tomar $ k = 4 $.
 
+\section{Conclusiones}
+El análisis clúster es una metodología de análisis exploratorio de datos. Trata de descubrir cómo algunos objetos se relacionan. Este tipo de análisis depende de la cantidad de ruido en los datos, la existencia de datos anómalos, las variables seleccionadas para el análisis, la medida de proximidad utilizada, las propiedades espaciales de los datos y el método de agrupamiento empleado.
+
+Una ventaja de los métodos jerárquicos sobre los no jerárquicos es que uno no tiene que saber de antemano el número de clústeres (que hemos visto que no es fácil). Además los métodos jerárquicos muchas veces son llamados ``exploratorios'' mientras que los no jerárquicos se denominan ``confirmatorios''. Podemos ver ambos métodos como complementarios. Los métodos jerárquicos no solo dependen de la medida de proximidad utilizada, se ven afectados por el encadenamiento: los objetos tienen a unirse a un clúster existente más que a iniciar uno nuevo.
+
+Un problema importante del \textit{clustering} es la validación de la solución. Para ello deberemos usar criterios internos, externos y métodos de replicación o validación cruzada.
+\clearpage
+
 \section{Parte práctica}\label{sec:practica}
 
 El objetivo de este apartado consiste en el estudio de técnicas de aprendizaje no supervisado para análisis relacional mediante segmentación. Usaremos distintos algoritmos de \textit{clustering} sobre el conjunto de datos de prueba y extraeremos conclusiones sobre los resultados obtenidos.\\
@@ -986,20 +995,21 @@ El conjunto de datos contiene 50 muestras de cada una de tres especies de flor \
   \begin{minipage}[h]{0.29\textwidth}
     \includegraphics[width=\textwidth]{dani/setosa.jpg}
     \caption{Iris Setosa.}
+    \label{fig:setosa}
   \end{minipage}
   \hfill
   \begin{minipage}[h]{0.3\textwidth}
     \includegraphics[width=\textwidth]{dani/virginica.jpg}
     \caption{Iris virginica.}
+    \label{fig:virginica}
   \end{minipage}
   \hfill
   \begin{minipage}[h]{0.31\textwidth}
     \includegraphics[width=\textwidth]{dani/versicolor.jpg}
     \caption{Iris versicolor.}
+    \label{fig:versicolor}
   \end{minipage}
 \end{figure}
-
-\clearpage
 
 A continuación, se mostrarán los resultados obtenidos por los algoritmos en este caso de estudio. Utilizaremos una tabla comparativa donde incluiremos el nombre de los algoritmos, los resultados obtenidos por las métricas utilizadas (Calinski-Harabaz y Silhouette) y los tiempos de ejecución de los mismos. Las métricas utilizadas se interpretarán de la siguiente forma:
 
@@ -1036,8 +1046,6 @@ MeanShift     & 3                    & 290.470683  & 0.476961    & 0.289073     
 \label{tab:comparativa}
 \end{table}
 
-\clearpage
-
 \subsection{K-Means}
 
 K-Means es un algoritmo de clasificación no supervisada (clusterización) que agrupa objetos en K grupos basándose en sus características. El agrupamiento se realiza minimizando la suma de distancias entre cada objeto y el centroide de su grupo o clúster.\\ 
@@ -1062,14 +1070,12 @@ En la Figura \ref{hmkm} y \ref{kpkm} podemos ver la media y forma de las distrib
 
 Las muestras del clúster 1 (tipo setosa) se caracteriza por tener un pétalo corto y delgado, mientras que el ancho del sépalo es más ancho que la media. Las del clúster 2 (tipo virginica), se caracterizan por tener un pétalo y sépalo más grandes respecto a los otros tipos y las del clúster 3 (tipo versicolor) tienen un pétalo similar al de la virginica pero se caracteriza por tener el sépalo un poco más delgado. Podemos observar que las flores más dificiles de diferenciar serán las de los tipos virginica y versicolor puesto que tienen más características en común. Esto se puede visualizar en la matriz de dispersión y en la Figura \ref{kpkm}.
 
-\clearpage
-
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.63]{dani/scatmatrixK-MeansIRIS.png}
+\includegraphics[scale=0.58]{dani/scatmatrixK-MeansIRIS.png}
 \caption{Scatter Matrix para K-Means con 3 clústeres.}
 \label{smkm}
-\end{figure}\
+\end{figure}
 
 \begin{figure}[h]
 \centering
@@ -1225,12 +1231,6 @@ Las gráficas obtenidas para este caso, serán la matriz de dispersión (Scatter
 
 \clearpage
 
-\section{Conclusiones}
-El análisis clúster es una metodología de análisis exploratorio de datos. Trata de descubrir cómo algunos objetos se relacionan. Este tipo de análisis depende de la cantidad de ruido en los datos, la existencia de datos anómalos, las variables seleccionadas para el análisis, la medida de proximidad utilizada, las propiedades espaciales de los datos y el método de agrupamiento empleado.
-
-Una ventaja de los métodos jerárquicos sobre los no jerárquicos es que uno no tiene que saber de antemano el número de clústeres (que hemos visto que no es fácil). Además los métodos jerárquicos muchas veces son llamados ``exploratorios'' mientras que los no jerárquicos se denominan ``confirmatorios''. Podemos ver ambos métodos como complementarios. Los métodos jerárquicos no solo dependen de la medida de proximidad utilizada, se ven afectados por el encadenamiento: los objetos tienen a unirse a un clúster existente más que a iniciar uno nuevo.
-
-Un problema importante del \textit{clustering} es la validación de la solución. Para ello deberemos usar criterios internos, externos y métodos de replicación o validación cruzada.
 
 \clearpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
